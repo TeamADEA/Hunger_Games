@@ -5,16 +5,16 @@ MUTATE_CHANCE = .01
 ALLOWED_ROLLS = [0,2,4,6] #To make sure the Rolls don't make [0,0], [-1,1] possible
 
 
-class T1Instruction:
+class T1Instruction(object):
     move_array = np.zeros(shape=(4,2))
     save_array = np.zeros(shape=(4,2))
     condition = 0
     x = 0
     y = 0
     
-    def __init__(self, condidtion1, cond1x, cond1y):
-        # Condidtion (Grass:0|Lava:1|Berry:2|Kat:3|Wall:4)
-        self.condition = condidtion1 
+    def __init__(self, condition1, cond1x, cond1y):
+        # Condition (Grass:0|Lava:1|Berry:2|Kat:3|Wall:4)
+        self.condition = condition1 
         self.x = cond1x # Relative X location of condition
         self.y = cond1y # Relative Y location of condition
         

@@ -5,7 +5,7 @@ MUTATE_CHANCE = .01
 ALLOWED_ROLLS = [0,2,4,6] #To make sure the Rolls don't make [0,0], [-1,1] possible
 
 
-class T2Instruction:
+class T2Instruction(object):
     move_array = np.zeros(shape=(4,2))
     save_array = np.zeros(shape=(4,2))
 
