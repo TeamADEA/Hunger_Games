@@ -41,14 +41,14 @@ class simManager():
                 if(self.grid[k.yLoc,k.xLoc] == LAVA):
                     k.dead = True
                 
-                elif(self.grid[k.yLoc,k.xLoc] == BERRY):
+                elif(self.grid[nextY, nextX] == BERRY):
                     k.eat_berry()
                     k.take_step(nextY, nextX)
-                    self.grid[k.yLoc, k.xLoc] = KAT
+                    self.grid[nextY, nextX] = KAT
                 
-                elif(self.grid[k.yLoc,k.xLoc] == GRASS):
+                elif(self.grid[nextY, nextX] == GRASS):
                     k.take_step(nextY, nextX)
-                    self.grid[k.yLoc, k.xLoc] = KAT
+                    self.grid[nextY, nextX] = KAT
                     
             self.visualize()
 

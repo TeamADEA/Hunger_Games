@@ -30,5 +30,6 @@ def createHungerGrid(M = 34, N = 34, STATIC=True):
     tempGrid[:, 0:2] = 4    # Left Side
     tempGrid[:, -2:] = 4    # Right Side
     
-    return tempGrid
+    hungGrid = np.array(tempGrid, dtype=int)
+    return hungGrid
 
