@@ -1,5 +1,6 @@
 import numpy.random as ra
 import numpy as np
+from hg_settings import *
 # Condition (Grass:0|Lava:1|Berry:2|Kat:3|Wall:4)
 # decision code (down:0| left:1| up:2| right:3
 
