@@ -90,5 +90,5 @@ class Kat(object):
                        [[(yGrab,-xGrab,state)],(init_decision+1)%4],\
                        [[(-yGrab,-xGrab,state)],(init_decision+2)%4],\
                        [[(-yGrab,xGrab,state)],(init_decision+3)%4]]
-        instruction_set_1 = [instruction] + self.instruction_set_1
+        self.instruction_set_1 = [instruction] + self.instruction_set_1
         return init_decision
