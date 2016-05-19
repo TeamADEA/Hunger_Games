@@ -6,6 +6,6 @@ LEFT = 4
 
 GRASS = 0
 LAVA = 1
-BERRIES = 2
-KATS = 3
-WALLS  = 4
+BERRY = 2
+KAT = 3
+WALL  = 4
