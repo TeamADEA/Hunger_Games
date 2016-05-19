@@ -8,8 +8,8 @@ from hg_settings import *
 GRID_DIMENSION = 34
 NUM_KATS = 20
 
-#MOVE = {[0,0]:"NOTHING", [-1,0]:"UP", []:"RIGHT", []:"DOWN", []:"LEFT"}
-MOVE = [[-1,0],[0,1],[1,0],[0-1]]
+# MOVE = {[-1,0]:"UP", [0,1]:"RIGHT", [1,0]:"DOWN", [0,-1]:"LEFT"}
+MOVE = [[-1,0],[0,1],[1,0],[0,-1]]
 class simManager():
     grid = None
     kats = []
@@ -18,7 +18,7 @@ class simManager():
         self.grid = hg.createHungerGrid(GRID_DIMENSION,GRID_DIMENSION)
         self.kats.append(seedKat)
         for i in range(1, NUM_KATS):
-            if(i <= 4):
+            if(i <= 20):
                self. kats.append(seedKat.clone())
             """
             else:
