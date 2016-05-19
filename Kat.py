@@ -33,7 +33,7 @@ class Kat(object):
         
     # Only reads 1 instruction set at the moment
     def make_decision(self, grid):
-        for instruction in self.instr_set_1:
+        for instruction in self.instruction_set_1:
             for mirror in instruction:
                 for plc_state in mirror[0]:
                     if not place_is_state(grid, plc_state):

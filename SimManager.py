@@ -61,10 +61,10 @@ class simManager():
         ax = fig.add_axes((0,0,1,1))
         
         LAVA_COLOR    = '#FF6600'
-        GRASS_COLOR   = '#00FF00'
-        BERRY_COLOR   = '#0000FF'
-        KATS_KOLOR    = '#EEFF11'
-        WALL_COLOR    = '#696969'
+        GRASS_COLOR   = '#A5D414'
+        BERRY_COLOR   = '#7722FF'
+        KATS_KOLOR    = '#552222'
+        WALL_COLOR    = '#898989'
         hunger_color = col.ListedColormap([GRASS_COLOR, LAVA_COLOR, BERRY_COLOR, KATS_KOLOR, WALL_COLOR])
         img = ax.imshow(self.grid, cmap= hunger_color, interpolation='none')
         plt.pause(.1) 
