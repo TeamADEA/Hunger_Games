@@ -43,7 +43,7 @@ class Kat(object):
                 else:
                     pass #TODO Shuffle mirror
                     break
-        return generate_behavior(grid)
+        return self.generate_behavior(grid)
         
     def place_is_state(self, grid, plc_state):
         if grid[self.yLoc + plc_state[0]][self.xLoc + plc_state[1]] == plc_state[2]:
@@ -80,7 +80,7 @@ class Kat(object):
         self.berries_eaten += 1
     
     def generate_behavior(self, grid):
-        yGrab, xGrab = 0
+        yGrab, xGrab = 0, 0
         while (yGrab,xGrab) == (0,0):      
             yGrab = random.randint(-2,2)
             xGrab = random.randint(-2,2)
@@ -90,5 +90,5 @@ class Kat(object):
                        [[(yGrab,-xGrab,state)],(init_decision+1)%4],\
                        [[(-yGrab,-xGrab,state)],(init_decision+2)%4],\
                        [[(-yGrab,xGrab,state)],(init_decision+3)%4]]
-        instruction_set_1 = [instruction] + instruction_set_1
+        instruction_set_1 = [instruction] + self.instruction_set_1
         return init_decision

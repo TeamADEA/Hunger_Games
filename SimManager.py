@@ -31,13 +31,13 @@ class simManager():
             direction = MOVE[k.make_decision(self.grid)]
             nextX = k.xLoc + direction[1]
             nextY = k.yLoc + direction[0]
-            self.grid[kat.y,kat.x] = GRASS
+            self.grid[kat.yLoc,kat.xLoc] = GRASS
             k.take_step(nextY, nextX)
             
             if(self.grid[k.yLoc,k.xLoc] == LAVA):
                 k.dead = True
             elif(self.grid[k.yLoc,k.xLoc] == BERRY):
-                k.eat_berries()
+                k.eat_berry()
                 self.grid[k.yLoc, k.xLoc] = KAT
             elif(self.grid[k.yLoc,k.xLoc] == GRASS):
                 self.grid[k.yLoc, k.xLoc] = KAT
