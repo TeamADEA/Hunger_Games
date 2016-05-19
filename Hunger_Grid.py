@@ -31,3 +31,4 @@ def createHungerGrid(M = 34, N = 34, STATIC=True):
     tempGrid[:, -2:] = 4    # Right Side
     
     return tempGrid
+
