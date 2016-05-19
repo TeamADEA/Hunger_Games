@@ -22,22 +22,25 @@ class simManager():
                self. kats.append(seedKat.clone())
             """
             else:
-                kats.append(mutateKat(seedKat.cloe()))
+                kats.append(mutateKat(seedKat.clone()))
             """
         for k in self.kats:
             self.setKatPosition(k)
     def update(self):
-        for k in kats:
-            direction = MOVE[k.makeDecision(self.grid)]
+        for k in self.kats:
+            direction = MOVE[k.make_decision(self.grid)]
             nextX = k.xLoc + direction[1]
             nextY = k.yLoc + direction[0]
-            grid[kat.y,kat.x] = GRASS
+            self.grid[kat.y,kat.x] = GRASS
             k.take_step(nextY, nextX)
             
             if(self.grid[k.yLoc,k.xLoc] == LAVA):
                 k.dead = True
             elif(self.grid[k.yLoc,k.xLoc] == BERRY):
-                k.eat_berries
+                k.eat_berries()
+                self.grid[k.yLoc, k.xLoc] = KAT
+            elif(self.grid[k.yLoc,k.xLoc] == GRASS):
+                self.grid[k.yLoc, k.xLoc] = KAT
                 
     def setKatPosition(self, kat):
         randX = np.random.randint(2, GRID_DIMENSION - 2)
@@ -68,4 +71,5 @@ class simManager():
         
 kat = Kat(0,0)
 test = simManager(kat)
+test.update()
 test.visualize()
