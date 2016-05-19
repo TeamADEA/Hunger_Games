@@ -1,5 +1,6 @@
 import numpy.random as ra
 import numpy as np
+import random
 from hg_settings import *
 # Condition (Grass:0|Lava:1|Berry:2|Kat:3|Wall:4)
 # decision code (down:0| left:1| up:2| right:3
@@ -42,7 +43,7 @@ class Kat(object):
                 else:
                     pass #TODO Shuffle mirror
                     break
-        # If it gets here, generate new behavior and return its decision
+        return generate_behavior(grid)
         
     def place_is_state(self, grid, plc_state):
         if grid[self.yLoc + plc_state[0]][self.xLoc + plc_state[1]] == plc_state[2]:
@@ -77,3 +78,17 @@ class Kat(object):
     
     def eat_berry(self):
         self.berries_eaten += 1
+    
+    def generate_behavior(self, grid):
+        yGrab, xGrab = 0
+        while (yGrab,xGrab) == (0,0):      
+            yGrab = random.randint(-2,2)
+            xGrab = random.randint(-2,2)
+        init_decision = random.randint(0,3)
+        state = grid[self.yLoc + yGrab][self.xLoc + xGrab]
+        instruction = [[[(yGrab,xGrab,state)],init_decision],\
+                       [[(yGrab,-xGrab,state)],(init_decision+1)%4],\
+                       [[(-yGrab,-xGrab,state)],(init_decision+2)%4],\
+                       [[(-yGrab,xGrab,state)],(init_decision+3)%4]]
+        instruction_set_1 = [instruction] + instruction_set_1
+        return init_decision
