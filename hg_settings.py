@@ -1,0 +1,11 @@
+NOTHING = 0
+UP = 1
+RIGHT = 2
+DOWN = 3
+LEFT = 4
+
+GRASS = 0
+LAVA = 1
+BERRIES = 2
+KATS = 3
+WALLS  = 4
