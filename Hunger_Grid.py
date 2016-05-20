@@ -11,8 +11,7 @@ LAVA_CHANCE = .02
 BERRY_CHANCE = .05
 
 def createHungerGrid(M = 34, N = 34, STATIC=True):
-    """
-    Create a grid of MxN size (default 34x34), 2 thick 'Wall' on the outsdie.
+    """Create a grid of MxN size (default 34x34), 2 thick 'Wall' on the outside.
     Randomly place lava and berries based on the global LAVA/BERRY_CHANCE. STATIC
     determines how random numbers are generated, if TRUE, seed is 123456. Else
     make new seed each time.

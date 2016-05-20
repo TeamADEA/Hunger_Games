@@ -2,11 +2,23 @@ import Kat
 import numpy as np
 import numpy.random as ra
 
-#assume mutation of only one instruction (default) from each set
+# Assume mutation of only one instruction (default) from each set
 def mutate_kat(Kat, numOfMutateInstr=1, mutate_prob=0.01):
+	"""Mutate the Kat agent by changing its instruction.
+	
+    Attributes
+    ----------
+    numOfMutateInstr : int
+        The number of instruction to mutate.
+
+    mutate_prob : floats
+        The probability of Kat agent mutates.
+	"""
     if ra.random() < mutate_prob:
         num_instr_to_mutate = numOfMutateInstr
         
+		# Getting the size of the instruction set and choose instructions
+		# randomly to mutate.
         num_Instr_in_set1 = np.size(Kat.instruction_set_1)
         rand_chosen_instr_set1 = Kat.instruction_set_1[ra.randint(0, high=num_Instr_in_set1, size=num_instr_to_mutate)]
         
@@ -16,9 +28,8 @@ def mutate_kat(Kat, numOfMutateInstr=1, mutate_prob=0.01):
         num_Instr_in_set3 = np.size(Kat.instruction_set_3)
         rand_chosen_instr_set3 = Kat.instruction_set_1[ra.randint(0, high=num_Instr_in_set3, size=num_instr_to_mutate)]
 
-        
+        #NOTE: this is rotation mutation
         for instruction in xrange(num_instr_to_mutate):
-            #NOTE: this is rotation mutation
             #saving last mirror
             temp_decision_set1 = rand_chosen_instr_set1[instruction][-1][1]
             temp_decision_set2 = rand_chosen_instr_set2[instruction][-1][1]

@@ -9,11 +9,17 @@ WALL_COLOR    = '#898989'
 HUNGER_COLOR = col.ListedColormap([GRASS_COLOR, LAVA_COLOR, BERRY_COLOR, KATS_KOLOR, WALL_COLOR])
 
 class Visualizer():
-    fig = plt.figure(figsize=(6,6))
-    ax = fig.add_axes((0,0,1,1))
-    img = ax
-    
+    """Visualize the simulation.
+	
+    Attributes
+    ----------
+    grid : 2D numpy array
+        The environment that Kat agent lives in.
+	"""
     def __init__(self, grid):
+		self.fig = plt.figure(figsize=(6,6))
+		self.ax = self.fig.add_axes((0,0,1,1))
+		self.img = self.ax
         self.img = self.ax.imshow(grid, cmap= HUNGER_COLOR, interpolation='none')
     
     def show(self, grid):
