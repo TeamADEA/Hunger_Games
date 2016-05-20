@@ -50,7 +50,9 @@ class simManager():
                     k.take_step(nextY, nextX)
                     self.grid[k.yLoc, k.xLoc] = KAT
                     
-            self.visualize()
+            print("step")
+                    
+        self.visualize()
 
                 
     def setKatPosition(self, kat):
