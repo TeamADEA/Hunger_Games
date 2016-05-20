@@ -15,11 +15,7 @@ TIME_STEPS = 1000
 MOVE = [[-1,0],[0,1],[1,0],[0,-1]]
 
 class simManager():
-    grid = hg.createHungerGrid(GRID_DIMENSION,GRID_DIMENSION)
-    kats = [Kat(0,0) for i in range(NUM_KATS)]
-    vis = Visualizer(grid)
-
-<<<<<<< HEAD
+    """
     Attributes
     ----------
     seedKat : Kat
@@ -28,14 +24,21 @@ class simManager():
     Other Attributes
     ----------------
     grid : 2D numpy array
-        The environment that Kat agents will live in, with the states
+        The environment that Kats agents will live in, with the states
         of each cell already set.
 
-    kats : list of Kats agent
+    kats : list
+        A list of Kats agent
+
+    vis : Visualizer
+	    A Visualizer class used to visualize simulation, observe
+        simulation, and diagnose possible problem.
     """
-=======
->>>>>>> b8e2e511141ee63603fb143f2fcf40adbc4bfc7d
     def __init__(self, seedKat):
+        self.grid = hg.createHungerGrid(GRID_DIMENSION,GRID_DIMENSION)
+        self.kats = [Kat(0,0) for i in range(NUM_KATS)]
+        self.vis = Visualizer(grid)
+		
         for i in range(NUM_KATS):
             if(i <= AMT_MUTATE):
                self.kats[i] = seedKat.clone()
