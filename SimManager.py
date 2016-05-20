@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.colors as col
 import Hunger_Grid as hg
+#import Mutate as m
 from Kat import Kat
 from Visualize import Visualizer
 from hg_settings import *
@@ -20,14 +21,14 @@ class simManager():
     ----------
     seedKat : Kat
         The first Kat agent.
-		
-	Other Attributes
-	----------------
-	grid : 2D numpy array
-	    The environment that Kat agents will live in, with the states
-		of each cell already set.
-	
-	kats : list of Kats agent
+
+    Other Attributes
+    ----------------
+    grid : 2D numpy array
+        The environment that Kat agents will live in, with the states
+        of each cell already set.
+
+    kats : list of Kats agent
     """
     def __init__(self, seedKat):
 		self.grid = hg.createHungerGrid(GRID_DIMENSION,GRID_DIMENSION)
@@ -38,7 +39,7 @@ class simManager():
                self.kats[i] = seedKat.clone()
             """
             else:
-                kats.append(mutateKat(seedKat.clone()))
+                kats.append(m.mutate_kat(seedKat.clone()))
             """
         for k in self.kats:
             self.setKatPosition(k)

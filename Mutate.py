@@ -4,7 +4,7 @@ import numpy.random as ra
 
 # Assume mutation of only one instruction (default) from each set
 def mutate_kat(Kat, numOfMutateInstr=1, mutate_prob=0.01):
-	"""Mutate the Kat agent by changing its instruction.
+    """Mutate the Kat agent by changing its instruction.
 	
     Attributes
     ----------
@@ -13,7 +13,7 @@ def mutate_kat(Kat, numOfMutateInstr=1, mutate_prob=0.01):
 
     mutate_prob : floats
         The probability of Kat agent mutates.
-	"""
+    """
     if ra.random() < mutate_prob:
         num_instr_to_mutate = numOfMutateInstr
         
