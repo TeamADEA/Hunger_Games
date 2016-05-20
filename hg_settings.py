@@ -9,4 +9,4 @@ BERRY = 2
 KAT = 3
 WALL  = 4
 
-AMT_MUTATE = 4
+AMT_MUTATE = 9

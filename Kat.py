@@ -1,5 +1,6 @@
 import random
 import numpy as np 
+import copy
 from hg_settings import *
 # Condition (Grass:0| Lava:1| Berry:2| Kat:3| Wall:4)
 # Decision Code (down:0| left:1| up:2| right:3)
@@ -56,7 +57,8 @@ class Kat(object):
         
     def clone(self):
         self.reset()
-        return self
+        clone = copy.deepcopy(self)
+        return clone
     
     def calculate_fitness(self):
         """Calculate the fitness value of this Kat agent.
