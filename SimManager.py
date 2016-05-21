@@ -49,6 +49,13 @@ class sim_manager():
             self.setKatPosition(k)
     
     def update(self):
+        """Update the Kat agents at each time step.
+        
+        Only update Kat agents that are alive. First ask
+		Kat agent where they want to move, then record the
+		next move's x and y location. According to different
+		state of the next cell, different action will be taken.
+        """
         for k in self.kats:
             if(k.dead == False):
                 direction = MOVE[k.make_decision(self.grid)]
@@ -58,7 +65,7 @@ class sim_manager():
                 
                 
                 if(self.grid[nextY,nextX] == LAVA):
-                    k.dead = True
+                    k.die()
                 
                 elif(self.grid[nextY, nextX] == BERRY):
                     k.eat_berry()
@@ -73,6 +80,13 @@ class sim_manager():
 
                 
     def setKatPosition(self, kat):
+        """Set the Kat agent's initial position.
+        
+        A Kat agent object is passed in, a random cell is
+		selected (inside the wall), and until it finds 
+		a cell with GRASS as the state, it will continue 
+		call itself recursively.
+        """
         randX = np.random.randint(2, GRID_DIMENSION - 3)
         randY = np.random.randint(2, GRID_DIMENSION - 3)
         
@@ -80,7 +94,7 @@ class sim_manager():
             kat.xLoc = randX
             kat.yLoc = randY
             self.grid[randY, randX] = 3
-            return
+			return
         else:
             self.setKatPosition(kat)
 
@@ -88,6 +102,14 @@ class sim_manager():
         self.vis.show(self.grid)
     
     def top_kat(self):
+        """Find the top fitness score of all Kat agents.
+        
+        First it takes the fitness score of first Kat in
+		the list. As it loops through the list, when a higher
+		fitness score found, top_score is updated, the Kat with
+		the highest fitness score is cloned and returned along
+		with the fitness score.
+        """
         top_score = self.kats[0].calculate_fitness()
         top_location = 0
         for i in range(NUM_KATS):
