@@ -92,7 +92,7 @@ class sim_manager():
             kat.xLoc = randX
             kat.yLoc = randY
             self.grid[randY, randX] = 3
-			return
+            return
         else:
             self.setKatPosition(kat)
 
