@@ -81,7 +81,6 @@ class Kat(object):
         """
         for instruction in self.instruction_set_1:
             for mirror in instruction:
-                print mirror[0]
                 for plc_state in mirror[0]:
                     if not self.place_is_state(grid, plc_state):
                         break

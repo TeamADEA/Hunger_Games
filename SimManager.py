@@ -1,6 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.colors as col
 import Hunger_Grid as hg
 #import Mutate as m
 from Kat import Kat
@@ -9,12 +7,11 @@ from hg_settings import *
 
 GRID_DIMENSION = 34
 NUM_KATS = 20
-TIME_STEPS = 1000
 
 # MOVE = {[-1,0]:"UP", [0,1]:"RIGHT", [1,0]:"DOWN", [0,-1]:"LEFT"}
 MOVE = [[-1,0],[0,1],[1,0],[0,-1]]
 
-class simManager():
+class sim_manager():
     """
     Attributes
     ----------
@@ -37,8 +34,10 @@ class simManager():
     def __init__(self, seedKat):
         self.grid = hg.createHungerGrid(GRID_DIMENSION,GRID_DIMENSION)
         self.kats = [Kat(0,0) for i in range(NUM_KATS)]
-        self.vis = Visualizer(grid)
-		
+        self.vis = Visualizer(self.grid)
+	
+	print "Seed Kat T1: ", seedKat.instruction_set_1
+			
         for i in range(NUM_KATS):
             if(i <= AMT_MUTATE):
                self.kats[i] = seedKat.clone()
@@ -69,9 +68,7 @@ class simManager():
                 elif(self.grid[nextY, nextX] == GRASS):
                     k.take_step(nextY, nextX)
                     self.grid[k.yLoc, k.xLoc] = KAT
-                    
-            print("step")
-                    
+            
         self.visualize()
 
                 
@@ -89,10 +86,13 @@ class simManager():
 
     def visualize(self):
         self.vis.show(self.grid)
+    
+    def top_kat(self):
+        top_score = self.kats[0].calculate_fitness()
+        top_location = 0
+        for i in range(NUM_KATS):
+            if(self.kats[i].calculate_fitness() > top_score):
+                top_score = self.kats[i].calculate_fitness()
+                top_location = i    
+        return self.kats[top_location].clone(), top_score
         
-first = Kat(0,0)
-test = simManager(first)
-for i in range(TIME_STEPS):
-    test.update()
-#for i in range(2):
-#    test.update()
