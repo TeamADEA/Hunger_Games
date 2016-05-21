@@ -6,6 +6,7 @@ from Kat import Kat
 from Visualize import Visualizer
 from hg_settings import *
 
+
 GRID_DIMENSION = 34
 NUM_KATS = 20
 
@@ -75,8 +76,8 @@ class sim_manager():
                     k.take_step(nextY, nextX)
                     self.grid[k.yLoc, k.xLoc] = KAT
         
-        self.playback.append(self.grid)
-                            
+        self.playback.append(copy.deepcopy(self.grid))
+               
     def setKatPosition(self, kat):
         """Set the Kat agent's initial position.
         

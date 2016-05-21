@@ -10,7 +10,7 @@ import matplotlib.colors as col
 LAVA_CHANCE = .02
 BERRY_CHANCE = .05
 
-def createHungerGrid(M = 34, N = 34, STATIC=True):
+def createHungerGrid(M = 34, N = 34, STATIC=True, P_LAVA = .02, P_BERRY = .05):
     """Create a grid of MxN size (default 34x34), 2 thick 'Wall' on the outside.
     Randomly place lava and berries based on the global LAVA/BERRY_CHANCE. STATIC
     determines how random numbers are generated, if TRUE, seed is 123456. Else
@@ -20,9 +20,9 @@ def createHungerGrid(M = 34, N = 34, STATIC=True):
     if(STATIC):
         np.random.seed(123456)
     randLavaGrid = np.random.rand(M,N)
-    np.place(tempGrid, randLavaGrid < LAVA_CHANCE, 1)
+    np.place(tempGrid, randLavaGrid < P_LAVA, 1)
     randBerryGrid = np.random.rand(M,N)
-    np.place(tempGrid, randBerryGrid < BERRY_CHANCE, 2)
+    np.place(tempGrid, randBerryGrid < P_BERRY, 2)
     
     tempGrid[0:2, :] = 4    # Top Row
     tempGrid[-2:, :] = 4    # Bottom Row
