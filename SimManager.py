@@ -35,7 +35,7 @@ class sim_manager():
     def __init__(self, seedKat):
         self.grid = hg.createHungerGrid(GRID_DIMENSION,GRID_DIMENSION)
         self.kats = [Kat(0,0) for i in range(NUM_KATS)]
-	self.playback = []
+        self.playback = []
 				
         for i in range(NUM_KATS):
             if(i <= AMT_MUTATE):
