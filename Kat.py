@@ -119,6 +119,35 @@ class Kat(object):
         else:
             return True
     
+    def print_ins_1(self):
+        print "\nKat T1: "
+        if(len(self.instruction_set_1) == 0):
+            print "NO T1 INSTRUCTIONS"
+            return
+        for i in range(len(self.instruction_set_1)):
+            ins_string = (str(i) + '.) IF ('+ str(self.instruction_set_1[i][0][0][0][0])+\
+                     ',' + str(self.instruction_set_1[i][0][0][0][1]) + ') IS ') 
+            if(self.instruction_set_1[i][0][0][0][2] == 0):
+                ins_string += "[GRASS] "
+            elif(self.instruction_set_1[i][0][0][0][2] == 1):
+                ins_string += "[LAVA] "
+            elif(self.instruction_set_1[i][0][0][0][2] == 2):
+                ins_string += "[BERRY] "
+            elif(self.instruction_set_1[i][0][0][0][2] == 3):
+                ins_string += "[KAT] "
+            else:
+                ins_string += "[WALL] "
+            
+            if(self.instruction_set_1[i][0][1] == 0):
+                ins_string += "MOVE [UP]"
+            elif(self.instruction_set_1[i][0][1] == 1):
+                ins_string += "MOVE [RIGHT]"
+            elif(self.instruction_set_1[i][0][1] == 2):
+                ins_string += "MOVE [DOWN]"
+            else:
+                ins_string += "MOVE [LEFT]"
+            print ins_string
+    
     def take_step(self,yLoc,xLoc):
         self.yLoc = yLoc
         self.xLoc = xLoc

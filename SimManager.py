@@ -37,7 +37,9 @@ class sim_manager():
         self.grid = hg.createHungerGrid(GRID_DIMENSION,GRID_DIMENSION)
         self.kats = [Kat(0,0) for i in range(NUM_KATS)]
         self.playback = []
-				
+	
+	seedKat.print_ins_1()			
+										
         for i in range(NUM_KATS):
             if(i <= AMT_MUTATE):
                self.kats[i] = seedKat.clone()
@@ -115,5 +117,5 @@ class sim_manager():
             if(self.kats[i].calculate_fitness() > top_score):
                 top_score = self.kats[i].calculate_fitness()
                 top_location = i    
-        return self.kats[top_location].clone(), top_score
+        return copy.deepcopy(self.kats[top_location].clone()), top_score
         

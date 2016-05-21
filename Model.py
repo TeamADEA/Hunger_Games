@@ -1,4 +1,5 @@
 import numpy as np
+import copy
 from Kat import Kat
 from Visualize import Visualizer
 from SimManager import sim_manager
@@ -6,9 +7,9 @@ from hg_settings import *
 import Hunger_Grid as hg
 
 top_kats = []
-NUM_SIMS = 300
+NUM_SIMS = 10
 STEPS_PER_SIM = 300
-STEP_SIZE = 0# 0 = only last frame, 1 = every frame, N = every N frames
+STEP_SIZE = -1# 0 = only last frame, 1 = every frame, N = every N frames
 
 def one_sim(seed_kat):
     """Run one simulation of number of time steps (default: 300)
@@ -23,11 +24,11 @@ def one_sim(seed_kat):
         sim_temp.update()
     
     kat_temp, score_temp = sim_temp.top_kat()
-    return kat_temp, score_temp, sim_temp.return_playback()
+    return copy.deepcopy(kat_temp), score_temp, sim_temp.return_playback()
 
 def playback(vis, pb):
-
-
+    if (STEP_SIZE == -1):
+        return
     if (STEP_SIZE == 0):
         vis.show(pb[-1])
     else:
@@ -45,24 +46,16 @@ def model(seed_kat, vis):
 	generations (simulations).
     """
     for i in np.arange(1, NUM_SIMS):
-        print "Gen:",i
         seed_kat, fit_score, play = one_sim(seed_kat)
         top_kats.append(fit_score)
         playback(vis, play)
     vis.graph(top_kats)
 
+
+
 progenitor = Kat(0,0)
 vis = Visualizer(hg.createHungerGrid())
-
-#### GEN 0 ####
-fit_kat, fit_score, play = one_sim(progenitor)
-top_kats.append(fit_score)  
-playback(vis, play)
-print "Gen: 0"
-###############
-
-#### GEN 1+ ###
-model(fit_kat, vis)
+model(progenitor, vis)
 ###############
 #print top_kats
         
