@@ -7,9 +7,12 @@ from hg_settings import *
 import Hunger_Grid as hg
 
 top_kats = []
-NUM_SIMS = 10
+NUM_SIMS = 300
 STEPS_PER_SIM = 300
-STEP_SIZE = -1# 0 = only last frame, 1 = every frame, N = every N frames
+STEP_SIZE = 0 # 0 = only last frame, 
+                # 1 = every frame, 
+                # N = every N frames
+                # -1 = don't show
 
 def one_sim(seed_kat):
     """Run one simulation of number of time steps (default: 300)
@@ -55,7 +58,4 @@ def model(seed_kat, vis):
 
 progenitor = Kat(0,0)
 vis = Visualizer(hg.createHungerGrid())
-model(progenitor, vis)
-###############
-#print top_kats
-        
+model(progenitor, vis)    
