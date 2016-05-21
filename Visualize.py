@@ -19,10 +19,19 @@ class Visualizer():
     def __init__(self, grid):
 	self.fig = plt.figure(figsize=(6,6))
 	self.ax = self.fig.add_axes((0,0,1,1))
-	self.img = self.ax
         self.img = self.ax.imshow(grid, cmap= HUNGER_COLOR, interpolation='none')
+        
 
     def show(self, grid):
         self.img.set_data(grid)
+        plt.draw()
+        plt.pause(.01)
+    
+    def graph(self, array):
+        plt.figure()
+        plt.plot(array)
+        plt.title('Fitness over time')
+        plt.xlabel('Number of generations')
+        plt.ylabel('Fitness')
         plt.show()
-        plt.pause(.01) 
+        
