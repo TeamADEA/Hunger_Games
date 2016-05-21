@@ -10,6 +10,12 @@ STEPS_PER_SIM = 300
 
 
 def one_sim(seedKat):
+    """Run one simulation of number of time steps (default: 300)
+        
+    First initialize a sim_manager with first Kat agent.
+	Then update at each time steps, finally taking the top
+	Kat and top fitness score, returns it.
+    """
     sim_temp = sim_manager(seedKat)
     
     for i in range(STEPS_PER_SIM):
@@ -22,6 +28,14 @@ def playback(vis, pb):
     vis.show(pb[0])
 
 def model(seed_kat, vis):
+    """Run multiple simulation of number of time steps each,
+	(default: 300 simulations).
+        
+    In a loop, keep running each simulation of 300 
+	number of time steps, append the top fitness score,
+	and after loops ended, graph the fitness score over
+	generations (simulations).
+    """
     for i in range(NUM_SIMS):
         seed_kat, fit_score, play = one_sim(seed_kat)
         top_kats.append(fit_score)
