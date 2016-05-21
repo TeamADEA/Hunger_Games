@@ -1,3 +1,4 @@
+import copy
 import numpy as np
 import Hunger_Grid as hg
 #import Mutate as m
@@ -34,10 +35,8 @@ class sim_manager():
     def __init__(self, seedKat):
         self.grid = hg.createHungerGrid(GRID_DIMENSION,GRID_DIMENSION)
         self.kats = [Kat(0,0) for i in range(NUM_KATS)]
-        self.vis = Visualizer(self.grid)
-	
-	print "Seed Kat T1: ", seedKat.instruction_set_1
-			
+	self.playback = []
+				
         for i in range(NUM_KATS):
             if(i <= AMT_MUTATE):
                self.kats[i] = seedKat.clone()
@@ -68,10 +67,9 @@ class sim_manager():
                 elif(self.grid[nextY, nextX] == GRASS):
                     k.take_step(nextY, nextX)
                     self.grid[k.yLoc, k.xLoc] = KAT
-            
-        self.visualize()
-
-                
+        
+        self.playback.append(self.grid)
+                            
     def setKatPosition(self, kat):
         randX = np.random.randint(2, GRID_DIMENSION - 3)
         randY = np.random.randint(2, GRID_DIMENSION - 3)
@@ -84,9 +82,9 @@ class sim_manager():
         else:
             self.setKatPosition(kat)
 
-    def visualize(self):
-        self.vis.show(self.grid)
-    
+    def return_playback(self):
+        return self.playback
+        
     def top_kat(self):
         top_score = self.kats[0].calculate_fitness()
         top_location = 0
