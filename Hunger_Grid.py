@@ -20,15 +20,15 @@ def createHungerGrid(M = 34, N = 34, STATIC=True, P_LAVA = .02, P_BERRY = .05):
     if(STATIC):
         np.random.seed(123456)
     randLavaGrid = np.random.rand(M,N)
-    np.place(tempGrid, randLavaGrid < P_LAVA, 1)
+    np.place(tempGrid, randLavaGrid < P_LAVA, LAVA)
     randBerryGrid = np.random.rand(M,N)
-    np.place(tempGrid, randBerryGrid < P_BERRY, 2)
-    
-    tempGrid[0:2, :] = 4    # Top Row
-    tempGrid[-2:, :] = 4    # Bottom Row
-    tempGrid[:, 0:2] = 4    # Left Side
-    tempGrid[:, -2:] = 4    # Right Side
-    
+    np.place(tempGrid, randBerryGrid < P_BERRY, BERRY)
+
+    # Walls
+    tempGrid[0:2, :] = WALL    # Top Row
+    tempGrid[-2:, :] = WALL    # Bottom Row
+    tempGrid[:, 0:2] = WALL    # Left Side
+    tempGrid[:, -2:] = WALL    # Right Side
+
     hungGrid = np.array(tempGrid, dtype=int)
     return hungGrid
-

@@ -4,7 +4,7 @@ import numpy as np
 # Assume mutation of only one instruction (default) from each set
 def mutate_kat(kat, mutate_fraction = .5):
     """Mutate the Kat agent by changing its instruction.
-	
+
     Attributes
     ----------
     mutate_fraction
@@ -13,11 +13,11 @@ def mutate_kat(kat, mutate_fraction = .5):
     inst_size = len(kat.instruction_set_1)
     if(inst_size > 0):
         num_mutate = int(max(1,inst_size * mutate_fraction))
-    
+
         change_state(kat, num_mutate,inst_size)
         rotate(kat, num_mutate,inst_size)
         flip(kat, num_mutate,inst_size)
-    
+
 def change_state(kat, num_mutate, instruction_1_size):
     """Mutate function that will randomly reasign the state of the given number
     of instructions.
@@ -29,8 +29,8 @@ def change_state(kat, num_mutate, instruction_1_size):
             newTuple = (kat.instruction_set_1[instruction][i][0][0][0], \
             kat.instruction_set_1[instruction][i][0][0][1], newState)
             kat.instruction_set_1[instruction][i][0][0] = newTuple
-            
-    
+
+
 def rotate(kat, num_mutate, instruction_1_size):
     """Mutate function that will randomly rotate the decision of
     the given number of instructions
@@ -54,7 +54,7 @@ def rotate(kat, num_mutate, instruction_1_size):
 def flip(kat, num_mutate, instruction_1_size):
         """Mutate function that will randomly flip the decision of the
         number given number of instructions
-        
+
         """
         rand_chosen_instr_set1 = np.random.randint(0, high=instruction_1_size, size=num_mutate)
         for instruction in rand_chosen_instr_set1:
@@ -73,4 +73,6 @@ def flip(kat, num_mutate, instruction_1_size):
                 kat.instruction_set_1[instruction][mirror+2][1]
                 kat.instruction_set_1[instruction][mirror+2][1] = \
                 temp_decision_set1
-                
+
+def create_compound(kat, num_mutate, instruction_1_size):
+    pass
