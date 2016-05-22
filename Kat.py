@@ -79,6 +79,9 @@ class Kat(object):
         decision is not valid, shuffle the mirrors in that
         instruction and generate a new behavior.
         """
+        #adding code for other instruction sets
+        #for instruction_set in [self.instruction_set_3, self.instruction_set_2, self.instruction_set_1]:
+        #for instruction in instruction_set:
         for instruction in self.instruction_set_1:
             for mirror in instruction:
                 for plc_state in mirror[0]:
