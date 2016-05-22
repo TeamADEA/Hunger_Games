@@ -123,9 +123,9 @@ class Kat(object):
             return True
     
     def print_ins_1(self):
-        print "\nKat T1: "
+        print ("\nKat T1: ")
         if(len(self.instruction_set_1) == 0):
-            print "NO T1 INSTRUCTIONS"
+            print ("NO T1 INSTRUCTIONS")
             return
         for i in range(len(self.instruction_set_1)):
             ins_string = (str(i) + '.) IF ('+ str(self.instruction_set_1[i][0][0][0][0])+\
@@ -149,7 +149,7 @@ class Kat(object):
                 ins_string += "MOVE [DOWN]"
             else:
                 ins_string += "MOVE [LEFT]"
-            print ins_string
+            print (ins_string)
     
     def take_step(self,yLoc,xLoc):
         self.yLoc = yLoc

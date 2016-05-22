@@ -1,7 +1,7 @@
 import copy
 import numpy as np
 import Hunger_Grid as hg
-#import Mutate as m
+import Mutate as m
 from Kat import Kat
 from Visualize import Visualizer
 from hg_settings import *
@@ -38,15 +38,12 @@ class sim_manager():
         self.kats = [Kat(0,0) for i in range(NUM_KATS)]
         self.playback = []
 	
-	seedKat.print_ins_1()			
-										
+        seedKat.print_ins_1()	
         for i in range(NUM_KATS):
-            if(i <= AMT_MUTATE):
-               self.kats[i] = seedKat.clone()
-            """
-            else:
-                kats.append(m.mutate_kat(seedKat.clone()))
-            """
+            self.kats[i] = seedKat.clone()
+            if(i > AMT_CLONE):
+                m.mutate_kat(self.kats[i])
+                
         for k in self.kats:
             self.setKatPosition(k)
     
