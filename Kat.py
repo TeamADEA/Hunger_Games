@@ -3,7 +3,7 @@ import numpy as np
 import copy
 from hg_settings import *
 # Condition (Grass:0| Lava:1| Berry:2| Kat:3| Wall:4)
-# Decision Code (down:0| left:1| up:2| right:3)
+# Decision Code (up:0| right:1| down:2| left:3)
 
 class Kat(object):
     """Create and manage a Kat agent.
