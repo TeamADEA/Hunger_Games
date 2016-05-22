@@ -7,9 +7,9 @@ from hg_settings import *
 import Hunger_Grid as hg
 
 top_kats = []
-NUM_SIMS = 300
+NUM_SIMS = 1000
 STEPS_PER_SIM = 300
-STEP_SIZE = 0 # 0 = only last frame, 
+STEP_SIZE = -1 # 0 = only last frame, 
                 # 1 = every frame, 
                 # N = every N frames
                 # -1 = don't show
@@ -49,6 +49,7 @@ def model(seed_kat, vis):
 	generations (simulations).
     """
     for i in np.arange(1, NUM_SIMS):
+        print "Gen:", i
         seed_kat, fit_score, play = one_sim(seed_kat)
         top_kats.append(fit_score)
         playback(vis, play)

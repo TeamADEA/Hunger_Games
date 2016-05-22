@@ -2,7 +2,7 @@ import Kat
 import numpy as np
 
 # Assume mutation of only one instruction (default) from each set
-def mutate_kat(kat, mutate_fraction = .1):
+def mutate_kat(kat, mutate_fraction = .5):
     """Mutate the Kat agent by changing its instruction.
 	
     Attributes

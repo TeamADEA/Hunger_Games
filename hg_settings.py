@@ -9,4 +9,4 @@ BERRY = 2
 KAT = 3
 WALL  = 4
 
-AMT_CLONE = 4
+AMT_CLONE = 0

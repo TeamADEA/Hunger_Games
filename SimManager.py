@@ -74,7 +74,7 @@ class sim_manager():
                 elif(self.grid[nextY, nextX] == GRASS):
                     k.take_step(nextY, nextX)
                     self.grid[k.yLoc, k.xLoc] = KAT
-        
+        np.random.seed(123456)
         self.playback.append(copy.deepcopy(self.grid))
                
     def setKatPosition(self, kat):
@@ -85,6 +85,7 @@ class sim_manager():
 		a cell with GRASS as the state, it will continue 
 		call itself recursively.
         """
+        
         randX = np.random.randint(2, GRID_DIMENSION - 3)
         randY = np.random.randint(2, GRID_DIMENSION - 3)
         
