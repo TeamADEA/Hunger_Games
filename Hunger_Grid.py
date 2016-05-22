@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.colors as col
+from hg_settings import *
 # GRASS = 0
 # LAVA = 1
 # BERRIES = 2
@@ -25,10 +26,11 @@ def createHungerGrid(M = 34, N = 34, STATIC=True, P_LAVA = .02, P_BERRY = .05):
     np.place(tempGrid, randBerryGrid < P_BERRY, BERRY)
 
     # Walls
-    tempGrid[0:2, :] = WALL    # Top Row
-    tempGrid[-2:, :] = WALL    # Bottom Row
-    tempGrid[:, 0:2] = WALL    # Left Side
-    tempGrid[:, -2:] = WALL    # Right Side
+    border = WALL
+    tempGrid[0:2, :] = border  # Top Row
+    tempGrid[-2:, :] = border  # Bottom Row
+    tempGrid[:, 0:2] = border  # Left Side
+    tempGrid[:, -2:] = border  # Right Side
 
     hungGrid = np.array(tempGrid, dtype=int)
     return hungGrid

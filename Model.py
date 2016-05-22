@@ -7,25 +7,25 @@ from hg_settings import *
 import Hunger_Grid as hg
 
 top_kats = []
-NUM_SIMS = 1000
+NUM_SIMS = 300
 STEPS_PER_SIM = 300
-STEP_SIZE = -1 # 0 = only last frame, 
-                # 1 = every frame, 
+STEP_SIZE = -1 # 0 = only last frame,
+                # 1 = every frame,
                 # N = every N frames
                 # -1 = don't show
 
 def one_sim(seed_kat):
     """Run one simulation of number of time steps (default: 300)
-        
+
     First initialize a sim_manager with first Kat agent.
 	Then update at each time steps, finally taking the top
 	Kat and top fitness score, returns it.
     """
     sim_temp = sim_manager(seed_kat)
-    
+
     for i in range(STEPS_PER_SIM):
         sim_temp.update()
-    
+
     kat_temp, score_temp = sim_temp.top_kat()
     return copy.deepcopy(kat_temp), score_temp, sim_temp.return_playback()
 
@@ -42,8 +42,8 @@ def playback(vis, pb):
 def model(seed_kat, vis):
     """Run multiple simulation of number of time steps each,
 	(default: 300 simulations).
-        
-    In a loop, keep running each simulation of 300 
+
+    In a loop, keep running each simulation of 300
 	number of time steps, append the top fitness score,
 	and after loops ended, graph the fitness score over
 	generations (simulations).
@@ -59,4 +59,4 @@ def model(seed_kat, vis):
 
 progenitor = Kat(0,0)
 vis = Visualizer(hg.createHungerGrid())
-model(progenitor, vis)    
+model(progenitor, vis)
