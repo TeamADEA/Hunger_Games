@@ -8,9 +8,9 @@ from Hunger_Grid import hunger_grid
 
 top_kats = []
 avg_kats = []
-NUM_SIMS = 40
+NUM_SIMS = 100
 STEPS_PER_SIM = 300
-STEP_SIZE = 0 # 0 = only last frame,
+STEP_SIZE = -1 # 0 = only last frame,
                 # 1 = every frame,
                 # N = every N frames
                 # -1 = don't show
