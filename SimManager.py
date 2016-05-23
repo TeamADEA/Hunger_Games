@@ -42,10 +42,10 @@ class sim_manager():
         #seedKat.print_ins_1()
         #seedKat.print_ins_2()
 
-        #for i in range(NUM_KATS):
+        for i in range(NUM_KATS):
             #self.kats[i] = seedKat.clone()
-            #if(i > AMT_CLONE):
-            #    m.mutate_kat(self.kats[i])
+            if(i >= AMT_CLONE):
+                m.mutate_kat(self.kats[i])
 
         for k in self.kats:
             self.setKatPosition(k)
