@@ -8,7 +8,7 @@ from hg_settings import *
 
 
 GRID_DIMENSION = 34
-NUM_KATS = 20
+NUM_KATS = 50
 
 # MOVE = {[-1,0]:"UP", [0,1]:"RIGHT", [1,0]:"DOWN", [0,-1]:"LEFT"}
 MOVE = [[-1,0],[0,1],[1,0],[0,-1]]
@@ -33,9 +33,16 @@ class sim_manager():
 	    A Visualizer class used to visualize simulation, observe
         simulation, and diagnose possible problem.
     """
-    def __init__(self, seedKat, hunger_grid):
+    def __init__(self, seedKat, hunger_grid, multi_cat=False):
         self.grid = np.array(hunger_grid.get_grid())
-        self.kats = [seedKat.clone() for i in range(NUM_KATS)]
+
+        if not multi_cat:
+            self.kats = [seedKat.clone() for i in range(NUM_KATS)]
+        else:
+            temp_kats = seedKat * (NUM_OF_TRIALS/5)
+            self.kats = []
+            for kat in temp_kats:
+                self.kats.append(kat.clone())
         self.playback = []
 
         # Print Statements
@@ -87,7 +94,7 @@ class sim_manager():
 		call itself recursively.
         """
         kat.xLoc = GRID_DIMENSION/2
-        kat.yLoc = GRID_DIMENSION/2        
+        kat.yLoc = GRID_DIMENSION/2
         """
         randX = np.random.randint(2, GRID_DIMENSION - 3)
         randY = np.random.randint(2, GRID_DIMENSION - 3)
@@ -126,10 +133,15 @@ class sim_manager():
         self.kats[top_location].print_ins_1()
         return copy.deepcopy(self.kats[top_location].clone()), top_score
 
+    def top_kats(self):
+        def get_key(kat):
+            return kat.calculate_fitness()
+        top_kats = sorted(self.kats, key=get_key)
+        return top_kats[-5:]
+
     def average_fitness(self):
         total_fitness = sum([i.calculate_fitness() for i in self.kats])
         return total_fitness / float(len(self.kats))
-        
+
     def clear_grid(self, hunger_grid):
         self.grid = np.array(hunger_grid.get_grid())
-        
