@@ -93,12 +93,13 @@ class Kat(object):
                         if not self.place_is_state(grid, plc_state):
                             break
                     if self.is_valid_move(grid, mirror[1]):
+                        print (mirror[1])
                         return mirror[1] # Return its decision
                     else:
-                        print ("roll instructions")
-                        print(instruction)
+                        #print ("roll instructions")
+                        #print(instruction)
                         instruction = np.roll(instruction,2) # Shuffle mirror
-                        print(instruction)
+                        #print(instruction)
                         break
         return self.generate_behavior(grid)
 

@@ -8,7 +8,7 @@ from Hunger_Grid import hunger_grid
 
 top_kats = []
 avg_kats = []
-NUM_SIMS = 50
+NUM_SIMS = 1
 STEPS_PER_SIM = 300
 STEP_SIZE = 1 # 0 = only last frame,
                 # 1 = every frame,
@@ -54,7 +54,7 @@ def model(seed_kat, vis, grid):
 	and after loops ended, graph the fitness score over
 	generations (simulations).
     """
-    for i in np.arange(1, NUM_SIMS):
+    for i in np.arange(0, NUM_SIMS):
         print "Gen:", i
         seed_kat, fit_score, play, avg_fitness = one_sim(seed_kat, grid)
         top_kats.append(fit_score)
