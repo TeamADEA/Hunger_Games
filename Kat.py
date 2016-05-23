@@ -41,11 +41,18 @@ class Kat(object):
         self.yLoc = y
         self.berries_eaten = 0
         self.steps_taken = 0
+        self.safe_instruction_set_1 = []
         self.instruction_set_1 = []
         self.instruction_set_2 = []
         self.instruction_set_3 = []
         self.dead = False
 
+    def set_instructions_to_safe(self):
+        """reset the moving instructions to the safe instructions,
+        intended for use after exteranally mutating the safe instrctions
+        ,or when cloning
+        """
+        self.instruction_set_1 = self.safe_instruction_set_1
     def reset(self):
         """Reset the Kat agent's attributes.
 
@@ -56,7 +63,8 @@ class Kat(object):
         self.dead = False
 
     def clone(self):
-        self.reset() 
+        self.reset()
+        self.set_instructions_to_safe() 
         return copy.deepcopy(self)
 
     def calculate_fitness(self):
@@ -65,7 +73,7 @@ class Kat(object):
         The metrics to consider are the number of steps the Kat
         agent has taken and the amount of berries eaten.
         """
-        return self.steps_taken + (self.berries_eaten * 10)
+        return (self.steps_taken * STEP_VALUE) + (self.berries_eaten * BERRY_VALUE)
 
     # Only reads 1 instruction set at the moment
     def make_decision(self, grid):
@@ -87,7 +95,7 @@ class Kat(object):
                     if self.is_valid_move(grid, mirror[1]):
                         return mirror[1] # Return its decision
                     else:
-                        np.random.shuffle(instruction) # Shuffle mirror
+                        np.roll(instruction,2) # Shuffle mirror
                         break
         return self.generate_behavior(grid)
 
@@ -184,5 +192,7 @@ class Kat(object):
                        [[( yGrab, -xGrab, state)],(init_decision+1)%4],\
                        [[(-yGrab, -xGrab, state)],(init_decision+2)%4],\
                        [[(-yGrab,  xGrab, state)],(init_decision+3)%4]]
-        self.instruction_set_1 = [instruction] + self.instruction_set_1
+        self.instruction_set_1 = self.instruction_set_1 + [instruction] 
+        self.safe_instruction_set_1 = self.safe_instruction_set_1 + \
+        [instruction]
         return init_decision

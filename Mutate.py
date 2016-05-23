@@ -1,8 +1,9 @@
 import Kat
 import numpy as np
+from hg_settings import *
 
 # Assume mutation of only one instruction (default) from each set
-def mutate_kat(kat, mutate_fraction = .5):
+def mutate_kat(kat, grid, mutate_fraction = MUTATE_FRACTIO):
     """Mutate the Kat agent by changing its instruction.
 
     Attributes
@@ -18,6 +19,9 @@ def mutate_kat(kat, mutate_fraction = .5):
         rotate(kat, num_mutate,inst_size)
         flip(kat, num_mutate,inst_size)
         create_compound(kat, num_mutate,inst_size)
+        generate_new_behavior(kat,grid)
+        
+        kat.set_instructions_to_safe
 
 def change_state(kat, num_mutate, instruction_1_size):
     """Mutate function that will randomly reasign the state of the given number
@@ -86,3 +90,6 @@ def create_compound(kat, num_mutate, instruction_1_size):
                        [[temp_instr_1[3][0][0],temp_instr_2[3][0][0]],temp_instr_1[3][1]]]
     #print new_instruction
     kat.instruction_set_2.append(new_instruction)
+
+def generate_new_behavior(kat, grid):
+    kat.generate_behavior(grid)

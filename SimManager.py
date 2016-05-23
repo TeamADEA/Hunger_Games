@@ -38,14 +38,14 @@ class sim_manager():
         self.kats = [seedKat.clone() for i in range(NUM_KATS)]
         self.playback = []
 
-        # Print Statements
-        #seedKat.print_ins_1()
+         #Print Statements
+        seedKat.print_ins_1()
         #seedKat.print_ins_2()
 
         for i in range(NUM_KATS):
             #self.kats[i] = seedKat.clone()
             if(i >= AMT_CLONE):
-                m.mutate_kat(self.kats[i])
+                m.mutate_kat(self.kats[i], grid = self.grid)
 
         for k in self.kats:
             self.setKatPosition(k)
