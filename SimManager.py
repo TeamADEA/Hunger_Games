@@ -33,13 +33,13 @@ class sim_manager():
 	    A Visualizer class used to visualize simulation, observe
         simulation, and diagnose possible problem.
     """
-    def __init__(self, seedKat):
-        self.grid = hg.createHungerGrid(GRID_DIMENSION,GRID_DIMENSION)
+    def __init__(self, seedKat, hunger_grid):
+        self.grid = np.array(hunger_grid.get_grid())
         self.kats = [seedKat.clone() for i in range(NUM_KATS)]
         self.playback = []
 
         # Print Statements
-        seedKat.print_ins_1()
+        #seedKat.print_ins_1()
         #seedKat.print_ins_2()
 
         #for i in range(NUM_KATS):
@@ -122,12 +122,14 @@ class sim_manager():
                 top_score = self.kats[i].calculate_fitness()
                 top_location = i
         print "Winning Score: ", top_score
+        print "TOP KAT INS1: "
+        self.kats[top_location].print_ins_1()
         return copy.deepcopy(self.kats[top_location].clone()), top_score
 
     def average_fitness(self):
         total_fitness = sum([i.calculate_fitness() for i in self.kats])
         return total_fitness / float(len(self.kats))
         
-    def clear_grid(self):
-        self.grid = hg.createHungerGrid(GRID_DIMENSION,GRID_DIMENSION)
+    def clear_grid(self, hunger_grid):
+        self.grid = np.array(hunger_grid.get_grid())
         

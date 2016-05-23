@@ -56,9 +56,8 @@ class Kat(object):
         self.dead = False
 
     def clone(self):
-        self.reset()
-        clone = copy.deepcopy(self)
-        return clone
+        self.reset() 
+        return copy.deepcopy(self)
 
     def calculate_fitness(self):
         """Calculate the fitness value of this Kat agent.
@@ -150,7 +149,7 @@ class Kat(object):
             print (ins_string)
 
     def print_ins_2(self):
-        print ("\nKat T1: ")
+        print ("\nKat T2: ")
         print (self.instruction_set_2)
 
     def take_step(self,yLoc,xLoc):

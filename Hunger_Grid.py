@@ -1,4 +1,5 @@
 import numpy as np
+import copy
 import matplotlib.pyplot as plt
 import matplotlib.colors as col
 from hg_settings import *
@@ -11,32 +12,40 @@ from hg_settings import *
 LAVA_CHANCE = .02
 BERRY_CHANCE = .05
 
-def createHungerGrid(M = 34, N = 34, STATIC=True, P_LAVA = .02, P_BERRY = .05):
-    """Create a grid of MxN size (default 34x34), 2 thick 'Wall' on the outside.
-    Randomly place lava and berries based on the global LAVA/BERRY_CHANCE. STATIC
-    determines how random numbers are generated, if TRUE, seed is 123456. Else
-    make new seed each time.
-    """
-    tempGrid = np.zeros(shape=(M,N))
-    if(STATIC):
-        np.random.seed(123456)
-    randLavaGrid = np.random.rand(M,N)
-    np.place(tempGrid, randLavaGrid < P_LAVA, LAVA)
-    randBerryGrid = np.random.rand(M,N)
-    np.place(tempGrid, randBerryGrid < P_BERRY, BERRY)
 
-    # Intentional placements (tests)
-    # tempGrid[2,2:-2] = LAVA
-    # tempGrid[-3,2:-2] = LAVA
-    # tempGrid[2,6] = LAVA
+class hunger_grid():
+    
+    def __init__(self):
+        self.hung_grid = self.createHungerGrid()
+    
+    def createHungerGrid(self, M = 34, N = 34, P_LAVA = .02, P_BERRY = .05):
+        """Create a grid of MxN size (default 34x34), 2 thick 'Wall' on the outside.
+        Randomly place lava and berries based on the global LAVA/BERRY_CHANCE. STATIC
+        determines how random numbers are generated, if TRUE, seed is 123456. Else
+        make new seed each time.
+        """
+        tempGrid = np.zeros(shape=(M,N))
+        
+        randLavaGrid = np.random.rand(M,N)
+        np.place(tempGrid, randLavaGrid < P_LAVA, LAVA)
+        randBerryGrid = np.random.rand(M,N)
+        np.place(tempGrid, randBerryGrid < P_BERRY, BERRY)
+    
+        # Intentional placements (tests)
+        # tempGrid[2,2:-2] = LAVA
+        # tempGrid[-3,2:-2] = LAVA
+        # tempGrid[2,6] = LAVA
+    
+        # Walls
+        border = WALL
+        tempGrid[0:2, :] = border  # Top Row
+        tempGrid[-2:, :] = border  # Bottom Row
+        tempGrid[:, 0:2] = border  # Left Side
+        tempGrid[:, -2:] = border  # Right Side
+    
+    
+        hung_grid = np.array(tempGrid, dtype=int)
+        return hung_grid
 
-    # Walls
-    border = WALL
-    tempGrid[0:2, :] = border  # Top Row
-    tempGrid[-2:, :] = border  # Bottom Row
-    tempGrid[:, 0:2] = border  # Left Side
-    tempGrid[:, -2:] = border  # Right Side
-
-
-    hungGrid = np.array(tempGrid, dtype=int)
-    return hungGrid
+    def get_grid(self):
+        return copy.deepcopy(self.hung_grid)
