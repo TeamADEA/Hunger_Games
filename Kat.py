@@ -95,7 +95,10 @@ class Kat(object):
                     if self.is_valid_move(grid, mirror[1]):
                         return mirror[1] # Return its decision
                     else:
-                        np.roll(instruction,2) # Shuffle mirror
+                        print ("roll instructions")
+                        print(instruction)
+                        instruction = np.roll(instruction,2) # Shuffle mirror
+                        print(instruction)
                         break
         return self.generate_behavior(grid)
 
