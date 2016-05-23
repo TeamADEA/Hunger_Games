@@ -46,6 +46,10 @@ class Kat(object):
         self.instruction_set_3 = []
         self.dead = False
 
+    def __repr__(self):
+        return "<Fitness: %s, End Loc: (%s,%s)>" % \
+               (self.calculate_fitness(),self.yLoc,self.xLoc)
+
     def reset(self):
         """Reset the Kat agent's attributes.
 
