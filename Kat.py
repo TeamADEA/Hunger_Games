@@ -129,6 +129,10 @@ class Kat(object):
             return True
 
     def print_ins_1(self):
+        """Print Kat agent's tier 1 instructions
+		
+		Prints all the place, state, and decision of the instructions.
+		"""
         print ("\nKat T1: ")
         if(len(self.instruction_set_1) == 0):
             print ("NO T1 INSTRUCTIONS")
@@ -158,6 +162,10 @@ class Kat(object):
             print (ins_string)
 
     def print_ins_2(self):
+        """Print Kat agent's tier 2 instructions
+		
+        Prints all the place, state, and decision of the instructions.
+        """
         print ("\nKat T2: ")
         print (self.instruction_set_2)
 
