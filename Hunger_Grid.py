@@ -25,12 +25,18 @@ def createHungerGrid(M = 34, N = 34, STATIC=True, P_LAVA = .02, P_BERRY = .05):
     randBerryGrid = np.random.rand(M,N)
     np.place(tempGrid, randBerryGrid < P_BERRY, BERRY)
 
+    # Intentional placements (tests)
+    # tempGrid[2,2:-2] = LAVA
+    # tempGrid[-3,2:-2] = LAVA
+    # tempGrid[2,6] = LAVA
+
     # Walls
     border = WALL
     tempGrid[0:2, :] = border  # Top Row
     tempGrid[-2:, :] = border  # Bottom Row
     tempGrid[:, 0:2] = border  # Left Side
     tempGrid[:, -2:] = border  # Right Side
+
 
     hungGrid = np.array(tempGrid, dtype=int)
     return hungGrid

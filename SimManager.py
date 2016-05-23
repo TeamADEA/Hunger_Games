@@ -37,19 +37,22 @@ class sim_manager():
         self.grid = hg.createHungerGrid(GRID_DIMENSION,GRID_DIMENSION)
         self.kats = [Kat(0,0) for i in range(NUM_KATS)]
         self.playback = []
-	
-        seedKat.print_ins_1()	
+
+        # Print Statements
+        #seedKat.print_ins_1()
+        #seedKat.print_ins_2()
+
         for i in range(NUM_KATS):
             self.kats[i] = seedKat.clone()
             if(i > AMT_CLONE):
                 m.mutate_kat(self.kats[i])
-                
+
         for k in self.kats:
             self.setKatPosition(k)
-    
+
     def update(self):
         """Update the Kat agents at each time step.
-        
+
         Only update Kat agents that are alive. First ask
 		Kat agent where they want to move, then record the
 		next move's x and y location. According to different
@@ -61,34 +64,34 @@ class sim_manager():
                 nextX = k.xLoc + direction[1]
                 nextY = k.yLoc + direction[0]
                 self.grid[k.yLoc, k.xLoc] = GRASS
-                
-                
+
+
                 if(self.grid[nextY,nextX] == LAVA):
                     k.die()
-                
+
                 elif(self.grid[nextY, nextX] == BERRY):
                     k.eat_berry()
                     k.take_step(nextY, nextX)
                     self.grid[k.yLoc, k.xLoc] = KAT
-                
+
                 elif(self.grid[nextY, nextX] == GRASS):
                     k.take_step(nextY, nextX)
                     self.grid[k.yLoc, k.xLoc] = KAT
         np.random.seed(123456)
         self.playback.append(copy.deepcopy(self.grid))
-               
+
     def setKatPosition(self, kat):
         """Set the Kat agent's initial position.
-        
+
         A Kat agent object is passed in, a random cell is
-		selected (inside the wall), and until it finds 
-		a cell with GRASS as the state, it will continue 
+		selected (inside the wall), and until it finds
+		a cell with GRASS as the state, it will continue
 		call itself recursively.
         """
-        
+
         randX = np.random.randint(2, GRID_DIMENSION - 3)
         randY = np.random.randint(2, GRID_DIMENSION - 3)
-        
+
         if(self.grid[randY,randX] == GRASS):
             kat.xLoc = randX
             kat.yLoc = randY
@@ -99,10 +102,10 @@ class sim_manager():
 
     def return_playback(self):
         return self.playback
-        
+
     def top_kat(self):
         """Find the top fitness score of all Kat agents.
-        
+
         First it takes the fitness score of first Kat in
 		the list. As it loops through the list, when a higher
 		fitness score found, top_score is updated, the Kat with
@@ -114,6 +117,9 @@ class sim_manager():
         for i in range(NUM_KATS):
             if(self.kats[i].calculate_fitness() > top_score):
                 top_score = self.kats[i].calculate_fitness()
-                top_location = i    
+                top_location = i
         return copy.deepcopy(self.kats[top_location].clone()), top_score
-        
+
+    def average_fitness(self):
+        total_fitness = sum([i.calculate_fitness() for i in self.kats])
+        return total_fitness / float(len(self.kats))

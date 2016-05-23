@@ -128,26 +128,30 @@ class Kat(object):
         for i in range(len(self.instruction_set_1)):
             ins_string = (str(i) + '.) IF ('+ str(self.instruction_set_1[i][0][0][0][0])+\
                      ',' + str(self.instruction_set_1[i][0][0][0][1]) + ') IS ')
-            if(self.instruction_set_1[i][0][0][0][2] == 0):
+            if(self.instruction_set_1[i][0][0][0][2] == GRASS):
                 ins_string += "[GRASS] "
-            elif(self.instruction_set_1[i][0][0][0][2] == 1):
+            elif(self.instruction_set_1[i][0][0][0][2] == LAVA):
                 ins_string += "[LAVA] "
-            elif(self.instruction_set_1[i][0][0][0][2] == 2):
+            elif(self.instruction_set_1[i][0][0][0][2] == BERRY):
                 ins_string += "[BERRY] "
-            elif(self.instruction_set_1[i][0][0][0][2] == 3):
+            elif(self.instruction_set_1[i][0][0][0][2] == KAT):
                 ins_string += "[KAT] "
             else:
                 ins_string += "[WALL] "
 
-            if(self.instruction_set_1[i][0][1] == 0):
+            if(self.instruction_set_1[i][0][1] == UP):
                 ins_string += "MOVE [UP]"
-            elif(self.instruction_set_1[i][0][1] == 1):
+            elif(self.instruction_set_1[i][0][1] == RIGHT):
                 ins_string += "MOVE [RIGHT]"
-            elif(self.instruction_set_1[i][0][1] == 2):
+            elif(self.instruction_set_1[i][0][1] == DOWN):
                 ins_string += "MOVE [DOWN]"
             else:
                 ins_string += "MOVE [LEFT]"
             print (ins_string)
+
+    def print_ins_2(self):
+        print ("\nKat T1: ")
+        print (self.instruction_set_2)
 
     def take_step(self,yLoc,xLoc):
         self.yLoc = yLoc

@@ -7,6 +7,7 @@ from hg_settings import *
 import Hunger_Grid as hg
 
 top_kats = []
+avg_kats = []
 NUM_SIMS = 300
 STEPS_PER_SIM = 300
 STEP_SIZE = -1 # 0 = only last frame,
@@ -26,8 +27,9 @@ def one_sim(seed_kat):
     for i in range(STEPS_PER_SIM):
         sim_temp.update()
 
+    avg_fitness = sim_temp.average_fitness()
     kat_temp, score_temp = sim_temp.top_kat()
-    return copy.deepcopy(kat_temp), score_temp, sim_temp.return_playback()
+    return copy.deepcopy(kat_temp), score_temp, sim_temp.return_playback(), avg_fitness
 
 def playback(vis, pb):
     if (STEP_SIZE == -1):
@@ -50,11 +52,11 @@ def model(seed_kat, vis):
     """
     for i in np.arange(1, NUM_SIMS):
         print "Gen:", i
-        seed_kat, fit_score, play = one_sim(seed_kat)
+        seed_kat, fit_score, play, avg_fitness = one_sim(seed_kat)
         top_kats.append(fit_score)
+        avg_kats.append(avg_fitness)
         playback(vis, play)
     vis.graph(top_kats)
-
 
 
 progenitor = Kat(0,0)
