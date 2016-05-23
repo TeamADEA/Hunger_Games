@@ -56,7 +56,7 @@ class Kat(object):
         self.dead = False
 
     def clone(self):
-        self.reset() 
+        self.reset()
         return copy.deepcopy(self)
 
     def calculate_fitness(self):
@@ -180,9 +180,9 @@ class Kat(object):
             xGrab = random.randint(-2,2)
         init_decision = random.randint(0,3)
         state = grid[self.yLoc + yGrab][self.xLoc + xGrab]
-        instruction = [[[( yGrab,  xGrab, state)],init_decision],\
-                       [[( yGrab, -xGrab, state)],(init_decision+1)%4],\
-                       [[(-yGrab, -xGrab, state)],(init_decision+2)%4],\
-                       [[(-yGrab,  xGrab, state)],(init_decision+3)%4]]
+        instruction = [[[( yGrab,  xGrab, state)],init_decision,0],\
+                       [[( yGrab, -xGrab, state)],(init_decision+1)%4,1],\
+                       [[(-yGrab, -xGrab, state)],(init_decision+2)%4,2],\
+                       [[(-yGrab,  xGrab, state)],(init_decision+3)%4,3]]
         self.instruction_set_1 = [instruction] + self.instruction_set_1
         return init_decision

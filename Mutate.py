@@ -80,9 +80,9 @@ def create_compound(kat, num_mutate, instruction_1_size):
     temp_instr_1 = kat.instruction_set_1[temp_instr[0]]
     temp_instr_2 = kat.instruction_set_1[temp_instr[1]]
     #                   Place/state of 1st|Place/state of second|Decision of first
-    new_instruction = [[[temp_instr_1[0][0][0],temp_instr_2[0][0][0]],temp_instr_1[0][1]],\
-                       [[temp_instr_1[1][0][0],temp_instr_2[1][0][0]],temp_instr_1[1][1]],\
-                       [[temp_instr_1[2][0][0],temp_instr_2[2][0][0]],temp_instr_1[2][1]],\
-                       [[temp_instr_1[3][0][0],temp_instr_2[3][0][0]],temp_instr_1[3][1]]]
+    new_instruction = [[[temp_instr_1[0][0][0],temp_instr_2[0][0][0]],temp_instr_1[0][1],0],\
+                       [[temp_instr_1[1][0][0],temp_instr_2[1][0][0]],temp_instr_1[1][1],1],\
+                       [[temp_instr_1[2][0][0],temp_instr_2[2][0][0]],temp_instr_1[2][1],2],\
+                       [[temp_instr_1[3][0][0],temp_instr_2[3][0][0]],temp_instr_1[3][1],3]]
     #print new_instruction
     kat.instruction_set_2.append(new_instruction)
