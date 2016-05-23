@@ -35,17 +35,17 @@ class sim_manager():
     """
     def __init__(self, seedKat):
         self.grid = hg.createHungerGrid(GRID_DIMENSION,GRID_DIMENSION)
-        self.kats = [Kat(0,0) for i in range(NUM_KATS)]
+        self.kats = [seedKat.clone() for i in range(NUM_KATS)]
         self.playback = []
 
         # Print Statements
         seedKat.print_ins_1()
         #seedKat.print_ins_2()
 
-        for i in range(NUM_KATS):
-            self.kats[i] = seedKat.clone()
-            if(i > AMT_CLONE):
-                m.mutate_kat(self.kats[i])
+        #for i in range(NUM_KATS):
+            #self.kats[i] = seedKat.clone()
+            #if(i > AMT_CLONE):
+            #    m.mutate_kat(self.kats[i])
 
         for k in self.kats:
             self.setKatPosition(k)
@@ -113,12 +113,15 @@ class sim_manager():
 		the highest fitness score is cloned and returned along
 		with the fitness score.
         """
-        top_score = self.kats[0].calculate_fitness()
+        top_score = 0
         top_location = 0
+        print "Kat Fitness: "
         for i in range(NUM_KATS):
+            print self.kats[i].calculate_fitness()
             if(self.kats[i].calculate_fitness() > top_score):
                 top_score = self.kats[i].calculate_fitness()
                 top_location = i
+        print "Winning Score: ", top_score
         return copy.deepcopy(self.kats[top_location].clone()), top_score
 
     def average_fitness(self):
