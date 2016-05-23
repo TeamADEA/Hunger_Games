@@ -25,7 +25,7 @@ class Visualizer():
     def show(self, grid):
         self.img.set_data(grid)
         plt.draw()
-        plt.pause(.01)
+        plt.pause(.001)
     
     def graph(self, array):
         #plt.figure(figsize=(6,6))

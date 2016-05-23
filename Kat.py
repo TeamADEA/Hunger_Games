@@ -52,7 +52,7 @@ class Kat(object):
         intended for use after exteranally mutating the safe instrctions
         ,or when cloning
         """
-        self.instruction_set_1 = self.safe_instruction_set_1
+        self.instruction_set_1 = copy.deepcopy(self.safe_instruction_set_1)
     def reset(self):
         """Reset the Kat agent's attributes.
 
@@ -93,14 +93,18 @@ class Kat(object):
                         if not self.place_is_state(grid, plc_state):
                             break
                     if self.is_valid_move(grid, mirror[1]):
-                        print (mirror[1])
+                        print("move")
+                        print (mirror)
                         return mirror[1] # Return its decision
                     else:
-                        #print ("roll instructions")
-                        #print(instruction)
-                        instruction = np.roll(instruction,2) # Shuffle mirror
-                        #print(instruction)
+                        print("ROLL")
+                        print(instruction)
+                        #np.random.shuffle(instruction)
+                        temp = instruction.pop(0)#new method for shuffling
+                        instruction.append(temp)
+                        print(instruction)
                         break
+        
         return self.generate_behavior(grid)
 
     def place_is_state(self, grid, plc_state):
@@ -193,10 +197,13 @@ class Kat(object):
         init_decision = random.randint(0,3)
         state = grid[self.yLoc + yGrab][self.xLoc + xGrab]
         instruction = [[[( yGrab,  xGrab, state)],init_decision],\
-                       [[( yGrab, -xGrab, state)],(init_decision+1)%4],\
+                       [[( xGrab, -yGrab, state)],(init_decision+1)%4],\
                        [[(-yGrab, -xGrab, state)],(init_decision+2)%4],\
-                       [[(-yGrab,  xGrab, state)],(init_decision+3)%4]]
+                       [[(-xGrab,  yGrab, state)],(init_decision+3)%4]]
+        print("generated new")
+        print (instruction)
         self.instruction_set_1 = self.instruction_set_1 + [instruction] 
-        self.safe_instruction_set_1 = self.safe_instruction_set_1 + \
-        [instruction]
+        self.safe_instruction_set_1 = copy.deepcopy(self.safe_instruction_set_1 + \
+        [instruction])
+        print (init_decision)
         return init_decision

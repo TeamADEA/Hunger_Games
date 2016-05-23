@@ -21,7 +21,7 @@ def mutate_kat(kat, grid, mutate_fraction = MUTATE_FRACTIO):
         create_compound(kat, num_mutate,inst_size)
         generate_new_behavior(kat,grid)
         
-        kat.set_instructions_to_safe
+        kat.set_instructions_to_safe()
 
 def change_state(kat, num_mutate, instruction_1_size):
     """Mutate function that will randomly reasign the state of the given number

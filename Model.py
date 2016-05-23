@@ -8,23 +8,23 @@ from Hunger_Grid import hunger_grid
 
 top_kats = []
 avg_kats = []
-NUM_SIMS = 1
+NUM_SIMS = 2
 STEPS_PER_SIM = 300
 STEP_SIZE = 1 # 0 = only last frame,
                 # 1 = every frame,
                 # N = every N frames
                 # -1 = don't show
 
-def one_sim(seed_kat, grid):
+def one_sim(seed_kat, MasterGrid):
     """Run one simulation of number of time steps (default: 300)
 
     First initialize a sim_manager with first Kat agent.
 	Then update at each time steps, finally taking the top
 	Kat and top fitness score, returns it.
     """
-    sim_temp = sim_manager(seed_kat, grid)
+    sim_temp = sim_manager(seed_kat, MasterGrid)
     for i in range(NUM_OF_TRIALS):
-        sim_temp.clear_grid(grid)
+        sim_temp.clear_grid(MasterGrid)
         for j in range(STEPS_PER_SIM):
             if(sim_temp.kats[i].dead == False):
                 sim_temp.update(i)
@@ -45,7 +45,7 @@ def playback(vis, pb):
             vis.show(pb[i])
 
 
-def model(seed_kat, vis, grid):
+def model(seed_kat, vis, MasterGrid):
     """Run multiple simulation of number of time steps each,
 	(default: 300 simulations).
 
@@ -55,8 +55,8 @@ def model(seed_kat, vis, grid):
 	generations (simulations).
     """
     for i in np.arange(0, NUM_SIMS):
-        print "Gen:", i
-        seed_kat, fit_score, play, avg_fitness = one_sim(seed_kat, grid)
+        print ("Gen:", i)
+        seed_kat, fit_score, play, avg_fitness = one_sim(seed_kat, MasterGrid)
         top_kats.append(fit_score)
         avg_kats.append(avg_fitness)
         playback(vis, play)
@@ -64,6 +64,6 @@ def model(seed_kat, vis, grid):
 
 
 progenitor = Kat(0,0)
-grid = hunger_grid()
-vis = Visualizer(grid)
-model(progenitor, vis, grid)
+MasterGrid = hunger_grid()
+vis = Visualizer(MasterGrid)
+model(progenitor, vis, MasterGrid)

@@ -30,13 +30,14 @@ class sim_manager():
 	    A Visualizer class used to visualize simulation, observe
         simulation, and diagnose possible problem.
     """
-    def __init__(self, seedKat, hunger_grid):
-        self.grid = np.array(hunger_grid.get_grid())
+    def __init__(self, seedKat, MasterGrid):
+        self.grid = np.array(MasterGrid.get_grid())
         self.kats = [seedKat.clone() for i in range(NUM_KATS)]
         self.playback = []
 
          #Print Statements
         seedKat.print_ins_1()
+        print(seedKat.instruction_set_1)
         #seedKat.print_ins_2()
 
         for i in range(NUM_KATS):
@@ -112,21 +113,23 @@ class sim_manager():
         """
         top_score = 0
         top_location = 0
-        print "Kat Fitness: "
+        print ("Kat Fitness: ")
         for i in range(NUM_KATS):
-            print self.kats[i].calculate_fitness()
+            print (self.kats[i].calculate_fitness())
             if(self.kats[i].calculate_fitness() > top_score):
                 top_score = self.kats[i].calculate_fitness()
                 top_location = i
-        print "Winning Score: ", top_score
-        print "TOP KAT INS1: "
+        print ("Winning Score: "), top_score
+        print ("TOP KAT INS1: ")
         self.kats[top_location].print_ins_1()
-        return copy.deepcopy(self.kats[top_location].clone()), top_score
+        print(self.kats[top_location].instruction_set_1)
+        return self.kats[top_location].clone(), top_score
+        #return copy.deepcopy(self.kats[top_location].clone()), top_score
 
     def average_fitness(self):
         total_fitness = sum([i.calculate_fitness() for i in self.kats])
         return total_fitness / float(len(self.kats))
         
-    def clear_grid(self, hunger_grid):
-        self.grid = np.array(hunger_grid.get_grid())
+    def clear_grid(self, MasterGrid):
+        self.grid = np.array(MasterGrid.get_grid())
         
