@@ -39,12 +39,10 @@ class Kat(object):
     def __init__(self, x=0, y=0):
         self.xLoc = x
         self.yLoc = y
-        self.berries_eaten = 0
-        self.steps_taken = 0
         self.instruction_set_1 = []
         self.instruction_set_2 = []
         self.instruction_set_3 = []
-        self.dead = False
+        self.reset()
 
     def __repr__(self):
         return "<Fitness: %s, End Loc: (%s,%s)>" % \
@@ -55,6 +53,13 @@ class Kat(object):
 
         Attributes resettable are steps_taken, berries_eaten, and dead.
         """
+        def get_key(mirror):
+            return mirror[2]
+        for instruction_set in [self.instruction_set_1, \
+                                self.instruction_set_2, \
+                                self.instruction_set_3]:
+            for instruction in instruction_set:
+                instruction = sorted(instruction, key=get_key)
         self.steps_taken = 0
         self.berries_eaten = 0
         self.dead = False
@@ -178,6 +183,8 @@ class Kat(object):
         The new instruction becomes the Kat's first
         priority instruction.
         """
+        def get_key(mirror):
+            return mirror[2]
         yGrab, xGrab = 0, 0
         while (yGrab,xGrab) == (0,0):
             yGrab = random.randint(-2,2)
