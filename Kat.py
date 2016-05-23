@@ -63,7 +63,7 @@ class Kat(object):
         self.steps_taken = 0
         self.berries_eaten = 0
         self.dead = False
-
+        
     def clone(self):
         self.reset()
         return copy.deepcopy(self)
@@ -130,7 +130,7 @@ class Kat(object):
 
     def print_ins_1(self):
         """Print Kat agent's tier 1 instructions
-		
+
 		Prints all the place, state, and decision of the instructions.
 		"""
         print ("\nKat T1: ")
@@ -163,7 +163,7 @@ class Kat(object):
 
     def print_ins_2(self):
         """Print Kat agent's tier 2 instructions
-		
+
         Prints all the place, state, and decision of the instructions.
         """
         print ("\nKat T2: ")
@@ -200,8 +200,9 @@ class Kat(object):
         init_decision = random.randint(0,3)
         state = grid[self.yLoc + yGrab][self.xLoc + xGrab]
         instruction = [[[( yGrab,  xGrab, state)],init_decision,0],\
-                       [[( yGrab, -xGrab, state)],(init_decision+1)%4,1],\
+                       [[( xGrab, -yGrab, state)],(init_decision+1)%4,1],\
                        [[(-yGrab, -xGrab, state)],(init_decision+2)%4,2],\
-                       [[(-yGrab,  xGrab, state)],(init_decision+3)%4,3]]
+                       [[(-xGrab,  yGrab, state)],(init_decision+3)%4,3]]
+        print instruction
         self.instruction_set_1 = [instruction] + self.instruction_set_1
         return init_decision
