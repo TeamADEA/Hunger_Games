@@ -76,6 +76,11 @@ def flip(kat, num_mutate, instruction_1_size):
                 temp_decision_set1
 
 def create_compound(kat, num_mutate, instruction_1_size):
+    """Create new compound instruction
+	
+	Combination of two lower tier instruction into one higher level
+	instruction. 
+	"""
     temp_instr = np.random.randint(0, high=instruction_1_size, size=2)
     temp_instr_1 = kat.instruction_set_1[temp_instr[0]]
     temp_instr_2 = kat.instruction_set_1[temp_instr[1]]
