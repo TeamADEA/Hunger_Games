@@ -39,7 +39,7 @@ class sim_manager():
         self.playback = []
 
         # Print Statements
-        #seedKat.print_ins_1()
+        seedKat.print_ins_1()
         #seedKat.print_ins_2()
 
         for i in range(NUM_KATS):
@@ -50,7 +50,7 @@ class sim_manager():
         for k in self.kats:
             self.setKatPosition(k)
 
-    def update(self):
+    def update(self, kat_num):
         """Update the Kat agents at each time step.
 
         Only update Kat agents that are alive. First ask
@@ -58,26 +58,24 @@ class sim_manager():
 		next move's x and y location. According to different
 		state of the next cell, different action will be taken.
         """
-        for k in self.kats:
-            if(k.dead == False):
-                direction = MOVE[k.make_decision(self.grid)]
-                nextX = k.xLoc + direction[1]
-                nextY = k.yLoc + direction[0]
-                self.grid[k.yLoc, k.xLoc] = GRASS
+        if(self.kats[kat_num].dead == False):
+            direction = MOVE[self.kats[kat_num].make_decision(self.grid)]
+            nextX = self.kats[kat_num].xLoc + direction[1]
+            nextY = self.kats[kat_num].yLoc + direction[0]
+            self.grid[self.kats[kat_num].yLoc, self.kats[kat_num].xLoc] = GRASS
 
 
-                if(self.grid[nextY,nextX] == LAVA):
-                    k.die()
+            if(self.grid[nextY,nextX] == LAVA):
+                self.kats[kat_num].die()
 
-                elif(self.grid[nextY, nextX] == BERRY):
-                    k.eat_berry()
-                    k.take_step(nextY, nextX)
-                    self.grid[k.yLoc, k.xLoc] = KAT
+            elif(self.grid[nextY, nextX] == BERRY):
+                self.kats[kat_num].eat_berry()
+                self.kats[kat_num].take_step(nextY, nextX)
+                self.grid[self.kats[kat_num].yLoc, self.kats[kat_num].xLoc] = KAT
 
-                elif(self.grid[nextY, nextX] == GRASS):
-                    k.take_step(nextY, nextX)
-                    self.grid[k.yLoc, k.xLoc] = KAT
-        np.random.seed(123456)
+            elif(self.grid[nextY, nextX] == GRASS):
+                self.kats[kat_num].take_step(nextY, nextX)
+                self.grid[self.kats[kat_num].yLoc, self.kats[kat_num].xLoc] = KAT
         self.playback.append(copy.deepcopy(self.grid))
 
     def setKatPosition(self, kat):
@@ -88,7 +86,9 @@ class sim_manager():
 		a cell with GRASS as the state, it will continue
 		call itself recursively.
         """
-
+        kat.xLoc = GRID_DIMENSION/2
+        kat.yLoc = GRID_DIMENSION/2        
+        """
         randX = np.random.randint(2, GRID_DIMENSION - 3)
         randY = np.random.randint(2, GRID_DIMENSION - 3)
 
@@ -99,6 +99,7 @@ class sim_manager():
             return
         else:
             self.setKatPosition(kat)
+        """
 
     def return_playback(self):
         return self.playback
@@ -123,3 +124,7 @@ class sim_manager():
     def average_fitness(self):
         total_fitness = sum([i.calculate_fitness() for i in self.kats])
         return total_fitness / float(len(self.kats))
+        
+    def clear_grid(self):
+        self.grid = hg.createHungerGrid(GRID_DIMENSION,GRID_DIMENSION)
+        

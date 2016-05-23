@@ -23,9 +23,13 @@ def one_sim(seed_kat):
 	Kat and top fitness score, returns it.
     """
     sim_temp = sim_manager(seed_kat)
-
-    for i in range(STEPS_PER_SIM):
-        sim_temp.update()
+    for i in range(NUM_OF_TRIALS):
+        sim_temp.clear_grid()
+        for j in range(STEPS_PER_SIM):
+            if(sim_temp.kats[i].dead == False):
+                sim_temp.update(i)
+            else:
+                break
 
     avg_fitness = sim_temp.average_fitness()
     kat_temp, score_temp = sim_temp.top_kat()
@@ -37,7 +41,7 @@ def playback(vis, pb):
     if (STEP_SIZE == 0):
         vis.show(pb[-1])
     else:
-        for i in np.arange(0,STEPS_PER_SIM, STEP_SIZE):
+        for i in np.arange(0,len(pb), STEP_SIZE):
             vis.show(pb[i])
 
 
