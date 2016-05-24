@@ -1,13 +1,14 @@
 import numpy as np
 import copy
+import time
 from Kat import Kat
 from Visualize import Visualizer
 from SimManager import sim_manager
 from hg_settings import *
 from Hunger_Grid import hunger_grid
 
-top_kats = []
-avg_kats = []
+
+
 
 
 STEP_SIZE = -1 # 0 = only last frame,
@@ -51,13 +52,13 @@ def playback(vis, pb, best_kats, gen):
     if (STEP_SIZE == -1):
         return
     if (STEP_SIZE == 0):
-        vis.show(pb[-1], best_kat, gen)
+        vis.show(pb[-1], best_kats, gen)
     else:
         for i in np.arange(0,len(pb), STEP_SIZE):
             vis.show(pb[i], copy.deepcopy(best_kats), gen)
 
 
-def model(seed_kat, vis, grid):
+def model(seed_kat, vis, grid, specie):
     """Run multiple simulation of number of time steps each,
 	(default: 300 simulations).
 
@@ -66,13 +67,16 @@ def model(seed_kat, vis, grid):
 	and after loops ended, graph the fitness score over
 	generations (simulations).
     """
-    print "Gen:1"
+    top_kats = []
+    avg_kats = []
+    print "Specie:",specie," | Gen: 1"
     seed_kat, fit_score, play, avg_fitness, seed_kats = one_sim(seed_kat, grid)
     top_kats.append(fit_score)
     avg_kats.append(avg_fitness)
     playback(vis, play, seed_kat, 1)
-    for i in np.arange(2, NUM_SIMS):
-        print "Gen:", i
+    
+    for i in np.arange(2, (NUM_SIMS+1)):
+        print "Specie:",specie," | Gen:",i
         temp_top = seed_kats
         seed_kat, fit_score, play, avg_fitness, seed_kats = one_sim(seed_kats, grid, multi_cat=True)
         if fit_score < top_kats[-1]:
@@ -83,10 +87,24 @@ def model(seed_kat, vis, grid):
             top_kats.append(fit_score)
         avg_kats.append(avg_fitness)
         playback(vis, play,copy.deepcopy(seed_kats),i)
-    vis.graph(top_kats)
+    #vis.graph(top_kats)
+    return copy.deepcopy(list(top_kats))
 
 
 progenitor = Kat(0,0)
 grid = hunger_grid()
 vis = Visualizer(grid)
-model(progenitor, vis, grid)
+
+start_time = time.time()
+
+full_graph = np.zeros(SEPERATE_MODELS*NUM_SIMS).reshape(SEPERATE_MODELS, NUM_SIMS)
+print full_graph
+for i in range(SEPERATE_MODELS):
+    grid = hunger_grid()
+    full_graph[i] = model(progenitor, vis, grid, i)
+
+for i in range(SEPERATE_MODELS):
+    print full_graph[i]
+
+vis.graph(full_graph)
+print("--- %s seconds ---" % (time.time() - start_time))

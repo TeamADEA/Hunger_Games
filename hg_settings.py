@@ -16,10 +16,10 @@ WALL  = 4
 AMT_CLONE = 50
 
 # AMOUNT OF TRIALS TO FIND BEST KAT
-NUM_OF_TRIALS = 200 # Should be divisible by 5
+NUM_OF_TRIALS = 100 # Should be divisible by 5
 
 # NUMBER OF GENERATIONS
-NUM_SIMS = 10
+NUM_SIMS = 100
 
 
 # MAXIMUM STEPS PER SIMULATION
@@ -32,3 +32,6 @@ VISION_RANGE = 1
 WALLS_OF_DEATH  = False  # Walls are lava
 WALL_PILLARS    = False  # Wall tiles periodically jut out
 MAZE            = False
+
+#HOW MANY TIMES THE MODEL WILL RUN IN A ROW
+SEPERATE_MODELS = 1

@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import matplotlib.colors as col
 import numpy as np
+from hg_settings import *
 LAVA_COLOR    = '#FF6600'
 GRASS_COLOR   = '#A5D414'
 BERRY_COLOR   = '#7722FF'
@@ -44,14 +45,14 @@ class Visualizer():
     def graph(self, array):
         #plt.figure(figsize=(6,6))
         #plt.axes([.1,.1,1,.8])
-        low_kat = np.amin(array)
-        low_kat += (low_kat *.1)
-        high_kat = np.amax(array)
-        high_kat += (high_kat *.1)
+        #high_kat = np.amax(array[:])
+        #high_kat += (high_kat *.1)
         plt.figure()
-        plt.plot(array)
+        for i in range(SEPERATE_MODELS): 
+            plt.plot(array[i])
+        #plt.plot(array[0])
         plt.title('Fitness over Generations')
         plt.xlabel('Number of generations')
         plt.ylabel('Fitness')
-        plt.ylim(0, high_kat)
+        #plt.ylim(0, high_kat)
         plt.show()

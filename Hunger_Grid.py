@@ -18,13 +18,13 @@ class hunger_grid():
     def __init__(self):
         self.hung_grid = self.createHungerGrid()
 
-    def createHungerGrid(self, M = 34, N = 34, P_LAVA = .02, P_BERRY = .05):
+    def createHungerGrid(self, M = 34, N = 34, seed = 123, P_LAVA = .02, P_BERRY = .05):
         """Create a grid of MxN size (default 34x34), 2 thick 'Wall' on the outside.
         Randomly place lava and berries based on the global LAVA/BERRY_CHANCE. STATIC
         determines how random numbers are generated, if TRUE, seed is 123456. Else
         make new seed each time.
         """
-        np.random.seed(123)
+        np.random.seed(seed)
         tempGrid = np.zeros(shape=(M,N))
 
         randLavaGrid = np.random.rand(M,N)

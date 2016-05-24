@@ -145,7 +145,7 @@ class Kat(object):
         print ("\nKat T1: ")
         if(len(self.instruction_set_1) == 0):
             print ("NO T1 INSTRUCTIONS")
-            return
+            return "\n"
         full_report = "\n"
         for i in range(len(self.instruction_set_1)):
             ins_string = (str(i) + '.) IF ('+ str(self.instruction_set_1[i][0][0][0][0])+\
