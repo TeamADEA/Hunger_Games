@@ -32,6 +32,9 @@ class hunger_grid():
         randBerryGrid = np.random.rand(M,N)
         np.place(tempGrid, randBerryGrid < P_BERRY, BERRY)
 
+        if WALL_PILLARS:
+            tempGrid[2,3:-2:5] = WALL
+            tempGrid[-3,5:-2:5] = WALL
         # Intentional placements (tests)
         # tempGrid[2,2:-2] = LAVA
         # tempGrid[-3,2:-2] = LAVA

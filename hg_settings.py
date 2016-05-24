@@ -29,6 +29,6 @@ VISION_RANGE = 2
 
 # FIXED MAP FEATURES
 WALLS_OF_DEATH  = False  # Walls are lava
-WALL_PILLARS    = False  # Wall tiles periodically jut out
+WALL_PILLARS    = True  # Wall tiles periodically jut out
 MAZE            = False
 

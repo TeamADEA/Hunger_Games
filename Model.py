@@ -40,9 +40,9 @@ def one_sim(seed_kat, grid, multi_cat=False):
 
     avg_fitness = sim_temp.average_fitness()
     top_kats = sim_temp.top_kats()
+    print top_kats
     for kat in top_kats:
         kat.reset()
-    print top_kats
     kat_temp, score_temp = sim_temp.top_kat()
     return copy.deepcopy(kat_temp), score_temp, sim_temp.return_playback(),\
            avg_fitness, copy.deepcopy(top_kats)
