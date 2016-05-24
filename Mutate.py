@@ -1,5 +1,6 @@
 import Kat
 import numpy as np
+import random
 
 # Assume mutation of only one instruction (default) from each set
 def mutate_kat(kat, mutate_fraction = .5):
@@ -19,6 +20,7 @@ def mutate_kat(kat, mutate_fraction = .5):
         flip(kat, num_mutate,inst_size)
         #create_compound(kat, num_mutate,inst_size)
         shuffle_instructions(kat)
+    generate_behavior(kat)
 
 def change_state(kat, num_mutate, instruction_1_size):
     """Mutate function that will randomly reasign the state of the given number
@@ -97,3 +99,16 @@ def shuffle_instructions(kat):
     np.random.shuffle(kat.instruction_set_1)
     np.random.shuffle(kat.instruction_set_2)
     np.random.shuffle(kat.instruction_set_3)
+
+def generate_behavior(kat):
+    yGrab, xGrab = 0, 0
+    while (yGrab,xGrab) == (0,0):
+        yGrab = random.randint(-2,2)
+        xGrab = random.randint(-2,2)
+    init_decision = random.randint(0,3)
+    state = random.randint(0,4)
+    new_instruction = [[[( yGrab,  xGrab, state)],init_decision,0],\
+                        [[( xGrab, -yGrab, state)],(init_decision+1)%4,1],\
+                        [[(-yGrab, -xGrab, state)],(init_decision+2)%4,2],\
+                        [[(-xGrab,  yGrab, state)],(init_decision+3)%4,3]]
+    kat.instruction_set_1.append(new_instruction)
