@@ -10,7 +10,7 @@ HUNGER_COLOR = col.ListedColormap([GRASS_COLOR, LAVA_COLOR, BERRY_COLOR, KATS_KO
 
 class Visualizer():
     """Visualize the simulation.
-	
+
     Attributes
     ----------
     grid : 2D numpy array
@@ -20,13 +20,13 @@ class Visualizer():
         self.fig = plt.figure(figsize=(6,6))
         self.ax = self.fig.add_axes((0,0,1,1))
         self.img = self.ax.imshow(grid.get_grid(), cmap= HUNGER_COLOR, interpolation='none')
-        
+
 
     def show(self, grid):
         self.img.set_data(grid)
         plt.draw()
         plt.pause(.01)
-    
+
     def graph(self, array):
         #plt.figure(figsize=(6,6))
         #plt.axes([.1,.1,1,.8])
@@ -39,6 +39,5 @@ class Visualizer():
         plt.title('Fitness over Generations')
         plt.xlabel('Number of generations')
         plt.ylabel('Fitness')
-        plt.ylim(0, high_kat)
+        plt.ylim(low_kat, high_kat)
         plt.show()
-        

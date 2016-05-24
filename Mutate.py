@@ -17,7 +17,8 @@ def mutate_kat(kat, mutate_fraction = .5):
         change_state(kat, num_mutate,inst_size)
         rotate(kat, num_mutate,inst_size)
         flip(kat, num_mutate,inst_size)
-        create_compound(kat, num_mutate,inst_size)
+        #create_compound(kat, num_mutate,inst_size)
+        shuffle_instructions(kat)
 
 def change_state(kat, num_mutate, instruction_1_size):
     """Mutate function that will randomly reasign the state of the given number
@@ -77,9 +78,9 @@ def flip(kat, num_mutate, instruction_1_size):
 
 def create_compound(kat, num_mutate, instruction_1_size):
     """Create new compound instruction
-	
+
 	Combination of two lower tier instruction into one higher level
-	instruction. 
+	instruction.
 	"""
     temp_instr = np.random.randint(0, high=instruction_1_size, size=2)
     temp_instr_1 = kat.instruction_set_1[temp_instr[0]]
@@ -91,3 +92,8 @@ def create_compound(kat, num_mutate, instruction_1_size):
                        [[temp_instr_1[3][0][0],temp_instr_2[3][0][0]],temp_instr_1[3][1],3]]
     #print new_instruction
     kat.instruction_set_2.append(new_instruction)
+
+def shuffle_instructions(kat):
+    np.random.shuffle(kat.instruction_set_1)
+    np.random.shuffle(kat.instruction_set_2)
+    np.random.shuffle(kat.instruction_set_3)
