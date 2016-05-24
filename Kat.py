@@ -137,6 +137,7 @@ class Kat(object):
         if(len(self.instruction_set_1) == 0):
             print ("NO T1 INSTRUCTIONS")
             return
+        full_report = "\n"
         for i in range(len(self.instruction_set_1)):
             ins_string = (str(i) + '.) IF ('+ str(self.instruction_set_1[i][0][0][0][0])+\
                      ',' + str(self.instruction_set_1[i][0][0][0][1]) + ') IS ')
@@ -160,6 +161,8 @@ class Kat(object):
             else:
                 ins_string += "MOVE [LEFT]"
             print (ins_string)
+            full_report += ins_string + "\n"
+        return full_report
 
     def print_ins_2(self):
         """Print Kat agent's tier 2 instructions

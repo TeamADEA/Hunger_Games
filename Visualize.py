@@ -17,15 +17,24 @@ class Visualizer():
         The environment that Kat agent lives in.
     """
     def __init__(self, grid):
-        self.fig = plt.figure(figsize=(6,6))
-        self.ax = self.fig.add_axes((0,0,1,1))
+        self.fig = plt.figure(figsize=(12,6))
+        self.ax = self.fig.add_axes((-.25,0,1,1))
+        self.info = self.fig.add_axes((0,0,1,1))
         self.img = self.ax.imshow(grid.get_grid(), cmap= HUNGER_COLOR, interpolation='none')
+        self.ax.axis('off')
+        self.info.axis('off')
 
-
-    def show(self, grid):
+    def show(self, grid, kat, gen):
         self.img.set_data(grid)
+        genNum = str("Generation " + str(gen))
+        generation = self.info.text(.5,.93,genNum, fontsize = 18 )
+        ins = kat.print_ins_1()
+        ins_set = self.info.text(.5,.8,ins,  verticalalignment='top', 
+                    horizontalalignment='left', fontsize = 18)
         plt.draw()
         plt.pause(.01)
+        generation.remove()
+        ins_set.remove()
 
     def graph(self, array):
         #plt.figure(figsize=(6,6))

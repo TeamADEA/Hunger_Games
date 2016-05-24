@@ -8,9 +8,8 @@ from Hunger_Grid import hunger_grid
 
 top_kats = []
 avg_kats = []
-NUM_SIMS = 200
-STEPS_PER_SIM = 300
-STEP_SIZE = -1 # 0 = only last frame,
+
+STEP_SIZE = 30 # 0 = only last frame,
                 # 1 = every frame,
                 # N = every N frames
                 # -1 = don't show
@@ -46,14 +45,14 @@ def one_sim(seed_kat, grid, multi_cat=False):
     return copy.deepcopy(kat_temp), score_temp, sim_temp.return_playback(),\
            avg_fitness, copy.deepcopy(top_kats)
 
-def playback(vis, pb):
+def playback(vis, pb, best_kat, gen):
     if (STEP_SIZE == -1):
         return
     if (STEP_SIZE == 0):
-        vis.show(pb[-1])
+        vis.show(pb[-1], best_kat, gen)
     else:
         for i in np.arange(0,len(pb), STEP_SIZE):
-            vis.show(pb[i])
+            vis.show(pb[i], best_kat, gen)
 
 
 def model(seed_kat, vis, grid):
@@ -69,7 +68,7 @@ def model(seed_kat, vis, grid):
     seed_kat, fit_score, play, avg_fitness, seed_kats = one_sim(seed_kat, grid)
     top_kats.append(fit_score)
     avg_kats.append(avg_fitness)
-    playback(vis, play)
+    playback(vis, play, seed_kat, 1)
     for i in np.arange(2, NUM_SIMS):
         print "Gen:", i
         temp_top = seed_kats
@@ -81,7 +80,7 @@ def model(seed_kat, vis, grid):
         else:
             top_kats.append(fit_score)
         avg_kats.append(avg_fitness)
-        playback(vis, play)
+        playback(vis, play,seed_kat,i)
     vis.graph(top_kats)
 
 
