@@ -49,7 +49,23 @@ class sim_manager():
 
         for k in self.kats:
             self.setKatPosition(k)
-
+    
+    #Was able to see kat's behavior near the wall, 
+    #which was exactly what we predicted, so thought to
+    #keep it here for a bit
+    def kat_surround(self, kat_num):
+        print "Kat's current fitness is"
+        print self.kats[kat_num].calculate_fitness
+        print "Kat's surround grid state"
+        print self.grid[self.kats[kat_num].yLoc-1, self.kats[kat_num].xLoc-1]
+        print self.grid[self.kats[kat_num].yLoc-1, self.kats[kat_num].xLoc]
+        print self.grid[self.kats[kat_num].yLoc-1, self.kats[kat_num].xLoc+1]
+        print self.grid[self.kats[kat_num].yLoc, self.kats[kat_num].xLoc+1]
+        print self.grid[self.kats[kat_num].yLoc+1, self.kats[kat_num].xLoc+1]
+        print self.grid[self.kats[kat_num].yLoc+1, self.kats[kat_num].xLoc]
+        print self.grid[self.kats[kat_num].yLoc+1, self.kats[kat_num].xLoc-1]
+        print self.grid[self.kats[kat_num].yLoc, self.kats[kat_num].xLoc-1]
+        
     def update(self, kat_num):
         """Update the Kat agents at each time step.
 
