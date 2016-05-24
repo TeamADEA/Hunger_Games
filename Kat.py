@@ -97,6 +97,8 @@ class Kat(object):
                         return mirror[1] # Return its decision
                     else:
                         np.random.shuffle(instruction) # Shuffle mirror
+                        #temp = instruction.pop(0)#new method for shuffling
+                        #instruction.append(temp)
                         break
         #return self.generate_behavior(grid)
         return DO_NOTHING

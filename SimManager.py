@@ -100,7 +100,10 @@ class sim_manager():
                     self.kats[kat_num].take_step(nextY, nextX)
                     self.grid[self.kats[kat_num].yLoc, self.kats[kat_num].xLoc] = KAT
         self.playback.append(copy.deepcopy(self.grid))
-
+    
+    def start_kat(self, kat_num):
+        self.grid[self.kats[kat_num].yLoc, self.kats[kat_num].xLoc] = KAT
+    
     def setKatPosition(self, kat):
         """Set the Kat agent's initial position.
 
