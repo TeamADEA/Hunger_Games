@@ -11,7 +11,6 @@ avg_kats = []
 
 
 STEP_SIZE = -1 # 0 = only last frame,
-
                 # 1 = every frame,
                 # N = every N frames
                 # -1 = don't show
@@ -32,6 +31,7 @@ def one_sim(seed_kat, grid, multi_cat=False):
 
     for i in range(NUM_OF_TRIALS):
         sim_temp.clear_grid(grid)
+        sim_temp.start_kat(i)
         for j in range(STEPS_PER_SIM):
             if(sim_temp.kats[i].dead == False):
                 sim_temp.update(i)
@@ -47,14 +47,14 @@ def one_sim(seed_kat, grid, multi_cat=False):
     return copy.deepcopy(kat_temp), score_temp, sim_temp.return_playback(),\
            avg_fitness, copy.deepcopy(top_kats)
 
-def playback(vis, pb, best_kat, gen):
+def playback(vis, pb, best_kats, gen):
     if (STEP_SIZE == -1):
         return
     if (STEP_SIZE == 0):
         vis.show(pb[-1], best_kat, gen)
     else:
         for i in np.arange(0,len(pb), STEP_SIZE):
-            vis.show(pb[i], best_kat, gen)
+            vis.show(pb[i], copy.deepcopy(best_kats), gen)
 
 
 def model(seed_kat, vis, grid):
@@ -82,7 +82,7 @@ def model(seed_kat, vis, grid):
         else:
             top_kats.append(fit_score)
         avg_kats.append(avg_fitness)
-        playback(vis, play,seed_kat,i)
+        playback(vis, play,copy.deepcopy(seed_kats),i)
     vis.graph(top_kats)
 
 

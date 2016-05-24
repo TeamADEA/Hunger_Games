@@ -24,6 +24,7 @@ class hunger_grid():
         determines how random numbers are generated, if TRUE, seed is 123456. Else
         make new seed each time.
         """
+        np.random.seed(123)
         tempGrid = np.zeros(shape=(M,N))
 
         randLavaGrid = np.random.rand(M,N)
