@@ -10,7 +10,7 @@ top_kats = []
 avg_kats = []
 
 
-STEP_SIZE = 30 # 0 = only last frame,
+STEP_SIZE = -1 # 0 = only last frame,
 
                 # 1 = every frame,
                 # N = every N frames

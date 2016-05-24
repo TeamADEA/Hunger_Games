@@ -89,11 +89,16 @@ class Kat(object):
         """
         for instruction_set in [self.instruction_set_3, self.instruction_set_2, self.instruction_set_1]:
             for instruction in instruction_set:
+                breaker = False
                 for mirror in instruction:
                     for plc_state in mirror[0]:
                         if not self.place_is_state(grid, plc_state):
+                            breaker = True
                             break
+                    if breaker == True:
+                        break
                     if self.is_valid_move(grid, mirror[1]):
+                        #print mirror[0]
                         return mirror[1] # Return its decision
                     else:
                         np.random.shuffle(instruction) # Shuffle mirror
@@ -106,6 +111,7 @@ class Kat(object):
         the expected state.
         """
         if (grid[(self.yLoc + plc_state[0]), (self.xLoc + plc_state[1])] == plc_state[2]):
+            #print plc_state
             return True
         return False
 

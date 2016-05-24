@@ -29,7 +29,7 @@ class Visualizer():
         genNum = str("Generation " + str(gen))
         generation = self.info.text(.5,.93,genNum, fontsize = 18 )
         ins = kat.print_ins_1()
-        ins_set = self.info.text(.5,.8,ins,  verticalalignment='top', 
+        ins_set = self.info.text(.5,.8,ins,  verticalalignment='top',
                     horizontalalignment='left', fontsize = 18)
         plt.draw()
         plt.pause(.01)
@@ -48,5 +48,5 @@ class Visualizer():
         plt.title('Fitness over Generations')
         plt.xlabel('Number of generations')
         plt.ylabel('Fitness')
-        plt.ylim(low_kat, high_kat)
+        plt.ylim(0, high_kat)
         plt.show()
