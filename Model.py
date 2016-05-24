@@ -9,7 +9,9 @@ from Hunger_Grid import hunger_grid
 top_kats = []
 avg_kats = []
 
+
 STEP_SIZE = 30 # 0 = only last frame,
+
                 # 1 = every frame,
                 # N = every N frames
                 # -1 = don't show

@@ -11,7 +11,7 @@ GRID_DIMENSION = 34
 NUM_KATS = NUM_OF_TRIALS
 
 # MOVE = {[-1,0]:"UP", [0,1]:"RIGHT", [1,0]:"DOWN", [0,-1]:"LEFT"}
-MOVE = [[-1,0],[0,1],[1,0],[0,-1]]
+MOVE = [[-1,0],[0,1],[1,0],[0,-1],[0,0]]
 
 class sim_manager():
     """
@@ -56,7 +56,23 @@ class sim_manager():
 
         for k in self.kats:
             self.setKatPosition(k)
-
+    
+    #Was able to see kat's behavior near the wall, 
+    #which was exactly what we predicted, so thought to
+    #keep it here for a bit
+    def kat_surround(self, kat_num):
+        print "Kat's current fitness is"
+        print self.kats[kat_num].calculate_fitness
+        print "Kat's surround grid state"
+        print self.grid[self.kats[kat_num].yLoc-1, self.kats[kat_num].xLoc-1]
+        print self.grid[self.kats[kat_num].yLoc-1, self.kats[kat_num].xLoc]
+        print self.grid[self.kats[kat_num].yLoc-1, self.kats[kat_num].xLoc+1]
+        print self.grid[self.kats[kat_num].yLoc, self.kats[kat_num].xLoc+1]
+        print self.grid[self.kats[kat_num].yLoc+1, self.kats[kat_num].xLoc+1]
+        print self.grid[self.kats[kat_num].yLoc+1, self.kats[kat_num].xLoc]
+        print self.grid[self.kats[kat_num].yLoc+1, self.kats[kat_num].xLoc-1]
+        print self.grid[self.kats[kat_num].yLoc, self.kats[kat_num].xLoc-1]
+        
     def update(self, kat_num):
         """Update the Kat agents at each time step.
 
@@ -69,20 +85,20 @@ class sim_manager():
             direction = MOVE[self.kats[kat_num].make_decision(self.grid)]
             nextX = self.kats[kat_num].xLoc + direction[1]
             nextY = self.kats[kat_num].yLoc + direction[0]
-            self.grid[self.kats[kat_num].yLoc, self.kats[kat_num].xLoc] = GRASS
+            if direction != MOVE[DO_NOTHING]:
+                self.grid[self.kats[kat_num].yLoc, self.kats[kat_num].xLoc] = GRASS
 
+                if(self.grid[nextY,nextX] == LAVA):
+                    self.kats[kat_num].die()
 
-            if(self.grid[nextY,nextX] == LAVA):
-                self.kats[kat_num].die()
+                elif(self.grid[nextY, nextX] == BERRY):
+                    self.kats[kat_num].eat_berry()
+                    self.kats[kat_num].take_step(nextY, nextX)
+                    self.grid[self.kats[kat_num].yLoc, self.kats[kat_num].xLoc] = KAT
 
-            elif(self.grid[nextY, nextX] == BERRY):
-                self.kats[kat_num].eat_berry()
-                self.kats[kat_num].take_step(nextY, nextX)
-                self.grid[self.kats[kat_num].yLoc, self.kats[kat_num].xLoc] = KAT
-
-            elif(self.grid[nextY, nextX] == GRASS):
-                self.kats[kat_num].take_step(nextY, nextX)
-                self.grid[self.kats[kat_num].yLoc, self.kats[kat_num].xLoc] = KAT
+                elif(self.grid[nextY, nextX] == GRASS):
+                    self.kats[kat_num].take_step(nextY, nextX)
+                    self.grid[self.kats[kat_num].yLoc, self.kats[kat_num].xLoc] = KAT
         self.playback.append(copy.deepcopy(self.grid))
 
     def setKatPosition(self, kat):

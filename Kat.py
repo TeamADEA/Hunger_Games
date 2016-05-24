@@ -63,7 +63,7 @@ class Kat(object):
         self.steps_taken = 0
         self.berries_eaten = 0
         self.dead = False
-        
+
     def clone(self):
         self.reset()
         return copy.deepcopy(self)
@@ -98,7 +98,8 @@ class Kat(object):
                     else:
                         np.random.shuffle(instruction) # Shuffle mirror
                         break
-        return self.generate_behavior(grid)
+        #return self.generate_behavior(grid)
+        return DO_NOTHING
 
     def place_is_state(self, grid, plc_state):
         """Check if the place (i.e. cell on a grid) is one of
@@ -206,6 +207,5 @@ class Kat(object):
                        [[( xGrab, -yGrab, state)],(init_decision+1)%4,1],\
                        [[(-yGrab, -xGrab, state)],(init_decision+2)%4,2],\
                        [[(-xGrab,  yGrab, state)],(init_decision+3)%4,3]]
-        print instruction
         self.instruction_set_1 = [instruction] + self.instruction_set_1
         return init_decision
