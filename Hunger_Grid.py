@@ -17,6 +17,7 @@ class hunger_grid():
 
     def __init__(self):
         self.hung_grid = self.createHungerGrid()
+        
 
     def createHungerGrid(self, M = 34, N = 34, seed = 123, P_LAVA = .02, P_BERRY = .05):
         """Create a grid of MxN size (default 34x34), 2 thick 'Wall' on the outside.

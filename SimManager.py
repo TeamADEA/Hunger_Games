@@ -164,3 +164,11 @@ class sim_manager():
 
     def clear_grid(self, hunger_grid):
         self.grid = np.array(hunger_grid.get_grid())
+        
+    def tk_breakdown(self):
+        """
+        Get the top kats instruction set by the amount of INS that use a 
+        particular instrucion
+        """
+        tk = self.top_kats()
+        return tk[0].report_ins()

@@ -34,4 +34,4 @@ WALL_PILLARS    = False  # Wall tiles periodically jut out
 MAZE            = False
 
 #HOW MANY TIMES THE MODEL WILL RUN IN A ROW
-SEPERATE_MODELS = 1
+SEPERATE_MODELS = 2

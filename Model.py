@@ -16,7 +16,10 @@ STEP_SIZE = -1 # 0 = only last frame,
                 # N = every N frames
                 # -1 = don't show
 
-def one_sim(seed_kat, grid, multi_cat=False):
+tki_breakdown = np.zeros(NUM_SIMS*6).reshape(NUM_SIMS, 6)
+full_graph = np.zeros(SEPERATE_MODELS*NUM_SIMS).reshape(SEPERATE_MODELS, NUM_SIMS)
+
+def one_sim(seed_kat, grid, gen , multi_cat=False):
     """Run one simulation of number of time steps (default: 300)
 
     First initialize a sim_manager with first Kat agent.
@@ -40,8 +43,9 @@ def one_sim(seed_kat, grid, multi_cat=False):
                 break
 
     avg_fitness = sim_temp.average_fitness()
-    top_kats = sim_temp.top_kats()
-    print top_kats
+    top_kats = sim_temp.top_kats() # ARRAY FOR DISPLAYING FITNESS
+    tki_breakdown[gen] += sim_temp.tk_breakdown() # FOR BREAKDOWN OF INSTRUCTIONS
+
     for kat in top_kats:
         kat.reset()
     kat_temp, score_temp = sim_temp.top_kat()
@@ -70,23 +74,23 @@ def model(seed_kat, vis, grid, specie):
     top_kats = []
     avg_kats = []
     print "Specie:",specie," | Gen: 1"
-    seed_kat, fit_score, play, avg_fitness, seed_kats = one_sim(seed_kat, grid)
+    seed_kat, fit_score, play, avg_fitness, seed_kats = one_sim(seed_kat, grid, 0)
     top_kats.append(fit_score)
     avg_kats.append(avg_fitness)
     playback(vis, play, seed_kat, 1)
     
     for i in np.arange(2, (NUM_SIMS+1)):
-        print "Specie:",specie," | Gen:",i
+        print "\n######################## Specie:",specie," | Gen:",i, "#######################"
         temp_top = seed_kats
-        seed_kat, fit_score, play, avg_fitness, seed_kats = one_sim(seed_kats, grid, multi_cat=True)
+        seed_kat, fit_score, play, avg_fitness, seed_kats = one_sim(seed_kats, grid, (i-1), multi_cat=True)
         if fit_score < top_kats[-1]:
             seed_kats = temp_top
             top_kats.append(top_kats[-1])
-            #avg_kats.append(avg_kats[-1])
         else:
             top_kats.append(fit_score)
         avg_kats.append(avg_fitness)
         playback(vis, play,copy.deepcopy(seed_kats),i)
+        print "######################## END GEN:",i,"################################\n"
     #vis.graph(top_kats)
     return copy.deepcopy(list(top_kats))
 
@@ -97,14 +101,12 @@ vis = Visualizer(grid)
 
 start_time = time.time()
 
-full_graph = np.zeros(SEPERATE_MODELS*NUM_SIMS).reshape(SEPERATE_MODELS, NUM_SIMS)
-print full_graph
 for i in range(SEPERATE_MODELS):
     grid = hunger_grid()
     full_graph[i] = model(progenitor, vis, grid, i)
 
-for i in range(SEPERATE_MODELS):
-    print full_graph[i]
-
+tki_breakdown /= SEPERATE_MODELS
 vis.graph(full_graph)
-print("--- %s seconds ---" % (time.time() - start_time))
+vis.ins_graph(tki_breakdown)
+#print tki_breakdown[:]
+print("--- TIME TO COMPLETE MODEL: %s seconds ---" % (time.time() - start_time))

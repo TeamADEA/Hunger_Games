@@ -217,3 +217,14 @@ class Kat(object):
                        [[(-xGrab,  yGrab, state)],(init_decision+3)%4,3]]
         self.instruction_set_1 = [instruction] + self.instruction_set_1
         return init_decision
+
+    def report_ins(self):
+        report = np.zeros(6)
+        for instruction_set in [self.instruction_set_3, self.instruction_set_2, self.instruction_set_1]:
+            for instruction in instruction_set:
+                report[instruction[0][0][0][2]] += 1
+                report[5] += 1
+        report[:5] /= report[5]
+        return report
+        
+                    
