@@ -37,7 +37,7 @@ def change_state(kat, num_mutate, instruction_1_size):
 
 def rotate(kat, num_mutate, instruction_1_size):
     """Mutate function that will randomly rotate the decision of
-    the given number of instructions
+    the given number of instructions.
     """
     # Getting the size of the instruction set and choose instructions
     # randomly to mutate.
@@ -57,7 +57,7 @@ def rotate(kat, num_mutate, instruction_1_size):
 
 def flip(kat, num_mutate, instruction_1_size):
         """Mutate function that will randomly flip the decision of the
-        number given number of instructions
+        number given number of instructions.
 
         """
         rand_chosen_instr_set1 = np.random.randint(0, high=instruction_1_size, size=num_mutate)
@@ -79,7 +79,7 @@ def flip(kat, num_mutate, instruction_1_size):
                 temp_decision_set1
 
 def create_compound(kat, num_mutate, instruction_1_size):
-    """Create new compound instruction
+    """Create new compound instruction.
 
 	Combination of two lower tier instruction into one higher level
 	instruction.
@@ -96,11 +96,16 @@ def create_compound(kat, num_mutate, instruction_1_size):
     kat.instruction_set_2.append(new_instruction)
 
 def shuffle_instructions(kat):
+    """Shuffle instructions in each set.
+	"""
     np.random.shuffle(kat.instruction_set_1)
     np.random.shuffle(kat.instruction_set_2)
     np.random.shuffle(kat.instruction_set_3)
 
 def generate_behavior(kat):
+    """Generate a new behavior
+	Unlike the generate_behavior method in Kat, the state is randomly chosen.
+	"""
     yGrab, xGrab = 0, 0
     while (yGrab,xGrab) == (0,0):
         yGrab = random.randint(-2,2)

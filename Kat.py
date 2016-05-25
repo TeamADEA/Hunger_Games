@@ -49,9 +49,10 @@ class Kat(object):
                (self.calculate_fitness(),self.yLoc,self.xLoc)
 
     def reset(self):
-        """Reset the Kat agent's attributes.
+        """Reset the Kat agent's attributes and mirror's position.
 
         Attributes resettable are steps_taken, berries_eaten, and dead.
+		Mirror's positions are sorted according to their index using sorted().
         """
         def get_key(mirror):
             return mirror[2]
