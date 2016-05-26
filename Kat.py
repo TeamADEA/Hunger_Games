@@ -149,27 +149,10 @@ class Kat(object):
             return "\n"
         full_report = "\n"
         for i in range(len(self.instruction_set_1)):
-            ins_string = (str(i) + '.) IF ('+ str(self.instruction_set_1[i][0][0][0][0])+\
-                     ',' + str(self.instruction_set_1[i][0][0][0][1]) + ') IS ')
-            if(self.instruction_set_1[i][0][0][0][2] == GRASS):
-                ins_string += "[GRASS] "
-            elif(self.instruction_set_1[i][0][0][0][2] == LAVA):
-                ins_string += "[LAVA] "
-            elif(self.instruction_set_1[i][0][0][0][2] == BERRY):
-                ins_string += "[BERRY] "
-            elif(self.instruction_set_1[i][0][0][0][2] == KAT):
-                ins_string += "[KAT] "
-            else:
-                ins_string += "[WALL] "
-
-            if(self.instruction_set_1[i][0][1] == UP):
-                ins_string += "MOVE [UP]"
-            elif(self.instruction_set_1[i][0][1] == RIGHT):
-                ins_string += "MOVE [RIGHT]"
-            elif(self.instruction_set_1[i][0][1] == DOWN):
-                ins_string += "MOVE [DOWN]"
-            else:
-                ins_string += "MOVE [LEFT]"
+            rel_coord = str((self.instruction_set_1[i][0][0][0][0],self.instruction_set_1[i][0][0][0][1]))
+            tile_state = TILE_STRING[self.instruction_set_1[i][0][0][0][2]]
+            move_string = MOVE_STRING[self.instruction_set_1[i][0][1]]
+            ins_string = "%s.) IF %s IS %s %s" % (str(i), rel_coord, tile_state, move_string)
             print (ins_string)
             full_report += ins_string + "\n"
         return full_report

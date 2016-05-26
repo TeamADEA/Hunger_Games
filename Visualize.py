@@ -31,7 +31,7 @@ class Visualizer():
         generation = self.info.text(.5,.95,genNum, fontsize = 18 )
         ins = ""
         if (type(kats)==list):
-            for i in range(5):
+            for i in range(len(kats)):
                ins += str("PREVIOUS " +str(i) + " INSTRUCTION SET: " + kats[i].print_ins_1() + "\n")
         else:
             ins += str("PREVIOUS INSTRUCTION SET: " + kats.print_ins_1())
