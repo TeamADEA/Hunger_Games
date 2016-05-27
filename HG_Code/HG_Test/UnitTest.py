@@ -5,7 +5,6 @@
 import unittest
 #from .. import Mutate as mu
 #import Model as mo  #not running model
-
 #from .. import Kat
 #from .. import Visualize 
 #from .. import SimManager
@@ -37,7 +36,7 @@ class HungerGridTests(TestCaseSuperClass, test_hunger_grid.HungerGridTestCase): 
 class HGSettingsTests(TestCaseSuperClass, test_hg_settings.HGSettingsTestCase): pass
 class ModelTests(TestCaseSuperClass, test_model.ModelTestCase): pass
 
-class Run_Unit_Test():
+class Run_Unit_Test(object):
     def run_test(self):
         verbosity_On = True
         #verbosity_On = False

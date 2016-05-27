@@ -9,7 +9,7 @@ KATS_KOLOR    = '#552222'
 WALL_COLOR    = '#898989'
 HUNGER_COLOR = col.ListedColormap([GRASS_COLOR, LAVA_COLOR, BERRY_COLOR, KATS_KOLOR, WALL_COLOR])
 
-class Visualizer():
+class Visualizer(object):
     """Visualize the simulation.
 
     Attributes

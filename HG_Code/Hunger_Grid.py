@@ -13,7 +13,7 @@ LAVA_CHANCE = .02
 BERRY_CHANCE = .05
 
 
-class hunger_grid():
+class hunger_grid(object):
 
     def __init__(self):
         self.hung_grid = self.createHungerGrid()

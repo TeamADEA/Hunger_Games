@@ -13,7 +13,7 @@ NUM_KATS = NUM_OF_TRIALS
 # MOVE = {[-1,0]:"UP", [0,1]:"RIGHT", [1,0]:"DOWN", [0,-1]:"LEFT"}
 MOVE = [[-1,0],[0,1],[1,0],[0,-1],[0,0]]
 
-class sim_manager():
+class sim_manager(object):
     """
     Attributes
     ----------
