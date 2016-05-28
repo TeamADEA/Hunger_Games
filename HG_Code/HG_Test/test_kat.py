@@ -10,6 +10,7 @@ class KatTestCase(object):
         """Test to see if Kat's variables upon initialization has the correct value.
         """
         self.kat = Kat.Kat()
+        self.assertIsInstance(self.kat, Kat.Kat, "fdfd")
         self.assertEqual(self.kat.xLoc, 0, "_init_ failed, Kat initial x location should be 0")
         self.assertEqual(self.kat.yLoc, 0, "_inti_ failed, Kat initial y location should be 0")
         self.assertEqual(len(self.kat.instruction_set_1), 0, \
@@ -66,7 +67,23 @@ class KatTestCase(object):
         self.kat = Kat.Kat(15, 15)
         self.grid = Hunger_Grid.hunger_grid()
         self.grid.hung_grid[self.kat.yLoc+0, self.kat.xLoc+1] = 2
-        #self.assertTrue(self.kat.place_is_state(self.grid, (0, 1, 2)), \
-        #"place_is_state() failed, not checking location correctly")
-        #self.assertTrue(self.kat.place_is_state(self.grid, (0, 1, 3)), \
-        #"place_is_state() failed, not checking location correctly")
+        self.assertTrue(self.kat.place_is_state(self.grid.hung_grid, (0, 1, 2)), \
+        "place_is_state() failed, not checking location correctly")
+        self.assertFalse(self.kat.place_is_state(self.grid.hung_grid, (0, 1, 3)), \
+        "place_is_state() failed, not checking location correctly")
+        
+    def test_kat_is_valid_move(self):
+        """Test to see if is_valid_move really test the cell and give back correct result.
+        """
+        self.kat = Kat.Kat(15, 15)
+        self.grid = Hunger_Grid.hunger_grid()
+        self.grid.hung_grid[self.kat.yLoc+0, self.kat.xLoc+1] = 3
+        self.grid.hung_grid[self.kat.yLoc+1, self.kat.xLoc+0] = 2
+        self.assertFalse(self.kat.is_valid_move(self.grid.hung_grid, 1), \
+        "is_valid_move() failed, right side should be a Kat, so no moving")
+        self.assertTrue(self.kat.is_valid_move(self.grid.hung_grid, 2), \
+        "is_valid_move() failed, down should be berry, so can move")
+        self.kat.xLoc = 31
+        self.assertFalse(self.kat.is_valid_move(self.grid.hung_grid, 1), \
+        "is_valid_move() failed, right side should be wall, so no moving")
+        
