@@ -99,7 +99,7 @@ class sim_manager(object):
                 elif(self.grid[nextY, nextX] == GRASS):
                     self.kats[kat_num].take_step(nextY, nextX)
                     self.grid[self.kats[kat_num].yLoc, self.kats[kat_num].xLoc] = KAT
-        self.playback.append(copy.deepcopy(self.grid))
+        self.playback.append([copy.deepcopy(self.grid), self.kats[kat_num].print_ins_1()])
     
     def start_kat(self, kat_num):
         self.grid[self.kats[kat_num].yLoc, self.kats[kat_num].xLoc] = KAT

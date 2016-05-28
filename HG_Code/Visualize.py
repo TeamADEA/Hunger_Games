@@ -26,17 +26,19 @@ class Visualizer(object):
         self.info.axis('off')
 
     def show(self, grid, kats, gen):
-        self.img.set_data(grid)
+        self.img.set_data(grid[0])
         genNum = str("Generation " + str(gen))
         generation = self.info.text(.5,.95,genNum, fontsize = 18 )
-        ins = ""
+        ins = str("CURRENT INSTRUCTION SET: " + grid[1])
+        """
         if (type(kats)==list):
             for i in range(len(kats)):
                ins += str("PREVIOUS " +str(i) + " INSTRUCTION SET: " + kats[i].print_ins_1() + "\n")
         else:
             ins += str("PREVIOUS INSTRUCTION SET: " + kats.print_ins_1())
+        """
         ins_set = self.info.text(.5,.8,ins,  verticalalignment='top',
-                    horizontalalignment='left', fontsize = 16)
+                    horizontalalignment='left', fontsize = 12)
         plt.draw()
         plt.pause(.01)
         generation.remove()
