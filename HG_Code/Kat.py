@@ -145,8 +145,9 @@ class Kat(object):
 		"""
         print ("\nKat T1: ")
         if(len(self.instruction_set_1) == 0):
-            print ("NO T1 INSTRUCTIONS")
-            return "\n"
+            full_report = "NO T1 INSTRUCTIONS"
+            print full_report
+            return full_report
         full_report = "\n"
         for i in range(len(self.instruction_set_1)):
             rel_coord = str((self.instruction_set_1[i][0][0][0][0],self.instruction_set_1[i][0][0][0][1]))
