@@ -85,7 +85,10 @@ def create_compound(kat, num_mutate, instruction_1_size):
 	Combination of two lower tier instruction into one higher level
 	instruction.
 	"""
-    temp_instr = np.random.randint(0, high=instruction_1_size, size=2)
+	while True:
+	    temp_instr = np.random.randint(0, high=instruction_1_size, size=2)
+		if temp_instr[0] != temp_instr[1]:
+		    break
     temp_instr_1 = kat.instruction_set_1[temp_instr[0]]
     temp_instr_2 = kat.instruction_set_1[temp_instr[1]]
     #                   Place/state of 1st|Place/state of second|Decision of first

@@ -38,8 +38,8 @@ class ModelTests(TestCaseSuperClass, test_model.ModelTestCase): pass
 
 class Run_Unit_Test(object):
     def run_test(self):
-        verbosity_On = True
-        #verbosity_On = False
+        #verbosity_On = True
+        verbosity_On = False
         suite = unittest.TestSuite()
         suite.addTest(unittest.makeSuite(SuperClassTests))
         suite.addTest(unittest.makeSuite(KatTests))
