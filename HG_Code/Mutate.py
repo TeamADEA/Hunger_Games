@@ -109,10 +109,10 @@ def generate_behavior(kat):
 	"""
     yGrab, xGrab = 0, 0
     while (yGrab,xGrab) == (0,0):
-        yGrab = random.randint(-VISION_RANGE,VISION_RANGE+1)
-        xGrab = random.randint(-VISION_RANGE,VISION_RANGE+1)
-    init_decision = random.randint(0,4)
-    state = random.randint(0,5)
+        yGrab = random.randint(-VISION_RANGE,VISION_RANGE)
+        xGrab = random.randint(-VISION_RANGE,VISION_RANGE)
+    init_decision = random.randint(0,3)
+    state = random.randint(0,4)
     new_instruction = [[[( yGrab,  xGrab, state)],init_decision,0],\
                         [[( xGrab, -yGrab, state)],(init_decision+1)%4,1],\
                         [[(-yGrab, -xGrab, state)],(init_decision+2)%4,2],\
