@@ -1,4 +1,5 @@
 from .. import Mutate as mu
+from .. import Kat
 
 class MutateTestCase(object):
     """Testing mutate functions.
@@ -7,7 +8,11 @@ class MutateTestCase(object):
     def test_mutate_change_state(self):
         """Test to see if mutate does change the state of mirrors.
         """
-        pass
+        self.kat = Kat.Kat()
+        mu.generate_behavior(self.kat)
+        for i in range(4):
+            newPlaceState = (self.kat.instruction_set_1[0][i][0][2])
+        #self.kat.instruction_set_1[
     
     def test_mutate_rotate(self):
         """Test to see if mutate does rotate decisions.

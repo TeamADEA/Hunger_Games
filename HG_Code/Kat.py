@@ -191,9 +191,11 @@ class Kat(object):
             return mirror[2]
         yGrab, xGrab = 0, 0
         while (yGrab,xGrab) == (0,0):
-            yGrab = random.randint(-2,2)
-            xGrab = random.randint(-2,2)
-        init_decision = random.randint(0,3)
+			#randint is exclusive
+			print "infinite loop in generate_behavior in kat"
+            #yGrab = random.randint(-2,2)
+            #xGrab = random.randint(-2,2)
+        #init_decision = random.randint(0,3)
         state = grid[self.yLoc + yGrab][self.xLoc + xGrab]
         instruction = [[[( yGrab,  xGrab, state)],init_decision,0],\
                        [[( xGrab, -yGrab, state)],(init_decision+1)%4,1],\
