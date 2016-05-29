@@ -59,8 +59,8 @@ class Kat(object):
         for instruction_set in [self.instruction_set_1, \
                                 self.instruction_set_2, \
                                 self.instruction_set_3]:
-            for instruction in instruction_set:
-                instruction = sorted(instruction, key=get_key)
+            for i in range(len(instruction_set)):
+                instruction_set[i] = sorted(instruction_set[i], key=get_key)
         self.steps_taken = 0
         self.berries_eaten = 0
         self.dead = False

@@ -35,8 +35,8 @@ class KatTestCase(object):
         np.random.shuffle(self.kat.instruction_set_1[0])
         self.kat.reset()
         #failed....
-        #self.assertEqual(self.kat.instruction_set_1[0][0][2], 0, \
-        #"reset() failed, instruction was not sorted on reset")
+        self.assertEqual(self.kat.instruction_set_1[0][0][2], 0, \
+        "reset() failed, instruction was not sorted on reset")
         
     def test_kat_clone(self):
         """Testing to see if clone() will actually clone a different Kat agent.
