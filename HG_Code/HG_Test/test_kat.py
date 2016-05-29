@@ -29,8 +29,7 @@ class KatTestCase(object):
         self.assertEqual(self.kat.steps_taken, 0, "reset() failed, Steps taken should be reset to 0")
         self.assertEqual(self.kat.berries_eaten, 0, "reset() failed, Berries eaten should be reset to 0")
         self.assertFalse(self.kat.dead, "Kat should not be dead")
-        self.kat.generate_behavior(self.grid.hung_grid)
-        #mu.generate_behavior(self.kat)
+        mu.generate_behavior(self.kat)
         self.assertEqual(self.kat.instruction_set_1[0][0][2], 0, \
         "reset() failed, instruction index initialized incorrectly")
         np.random.shuffle(self.kat.instruction_set_1[0])
@@ -60,6 +59,13 @@ class KatTestCase(object):
         self.kat = Kat.Kat(15, 15)
         self.grid = Hunger_Grid.hunger_grid()
         self.grid.hung_grid[self.kat.yLoc+0, self.kat.xLoc+1] = 2
+        self.instruction = [[[(0, 1, 2)], 0, 0],\
+                            [[(1, 0, 4)], 1, 1],\
+                            [[(0, -1, 4)], 2, 2],\
+                            [[(-1, 0, 4)], 3, 3]]
+        self.kat.instruction_set_1.append(self.instruction)
+        self.assertTrue(self.kat.make_decision(self.grid.hung_grid) == 0, \
+        "make_decision failed(), kat did not use the correct mirror and correct decision")
         
     def test_kat_place_is_state(self):
         """Testing to see if place_is_state is checking right cell.
