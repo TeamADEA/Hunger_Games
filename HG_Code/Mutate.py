@@ -4,29 +4,29 @@ import random
 from hg_settings import *
 
 # Assume mutation of only one instruction (default) from each set
-def mutate_kat(kat, mutate_fraction = .5):
+def mutate_kat(kat):
     """Mutate the Kat agent by changing its instruction.
-
-    Attributes
-    ----------
-    mutate_fraction
-        the fraction of instructions to mutate
     """
     inst_size = len(kat.instruction_set_1)
-    if(inst_size > 0):
-        num_mutate = int(max(1,inst_size * mutate_fraction))
+    
+    generate_behavior(kat, GENERATE_CHANCE)
+    if(inst_size > 0 ):
+        change_state(kat, CHANGE_STATE_CHANCE, inst_size)
+        rotate(kat, ROTATE_CHANCE, inst_size)
+        flip(kat, FLIP_CHANCE, inst_size)
+        shuffle(kat, SHUFFLE_CHANCE)
+        shift(kat, SHIFT_CHANCE)
+        delete_behavior(kat.instruction_set_1, T1_DELETE_CHANCE)
 
-        change_state(kat, num_mutate,inst_size)
-        rotate(kat, num_mutate,inst_size)
-        flip(kat, num_mutate,inst_size)
-        #create_compound(kat, num_mutate,inst_size)
-        shuffle_instructions(kat)
-    generate_behavior(kat)
-
-def change_state(kat, num_mutate, instruction_1_size):
+def change_state(kat, chance_per_instruction, instruction_1_size):
     """Mutate function that will randomly reasign the state of the given number
     of instructions.
     """
+    num_mutate = 0
+    for i in range(instruction_1_size):
+        if(np.random.randint(0,100) <= chance_per_instruction):
+            num_mutate += 1
+    
     rand_chosen_instr_set1 = np.random.randint(0, high=instruction_1_size, size=num_mutate)
     for instruction in rand_chosen_instr_set1:
         newState = np.random.randint(0,5)
@@ -36,10 +36,15 @@ def change_state(kat, num_mutate, instruction_1_size):
             kat.instruction_set_1[instruction][i][0][0] = newTuple
 
 
-def rotate(kat, num_mutate, instruction_1_size):
+def rotate(kat, chance_per_instruction, instruction_1_size):
     """Mutate function that will randomly rotate the decision of
     the given number of instructions.
     """
+    
+    num_mutate = 0
+    for i in range(len(kat.instruction_set_1)):
+        if(np.random.randint(0,100) <= chance_per_instruction):
+            num_mutate += 1
     # Getting the size of the instruction set and choose instructions
     # randomly to mutate.
     rand_chosen_instr_set1 = np.random.randint(0, high=instruction_1_size, size=num_mutate)
@@ -56,11 +61,20 @@ def rotate(kat, num_mutate, instruction_1_size):
             if mirror == -1:
                 kat.instruction_set_1[instruction][mirror+1][1] = temp_decision_set1
 
-def flip(kat, num_mutate, instruction_1_size):
+def flip(kat,chance_per_instruction, instruction_1_size):
         """Mutate function that will randomly flip the decision of the
         number given number of instructions.
-
+        
+        this function is pretty old and was built when we only had a rudimentary 
+        understanding of how instruction sets would pan out.
+        
+        it could use some cleaning up
         """
+        num_mutate = 0
+        for i in range(len(kat.instruction_set_1)):
+            if(np.random.randint(0,100) <= chance_per_instruction):
+                num_mutate += 1
+                
         rand_chosen_instr_set1 = np.random.randint(0, high=instruction_1_size, size=num_mutate)
         for instruction in rand_chosen_instr_set1:
             #saving first mirror
@@ -85,10 +99,10 @@ def create_compound(kat, num_mutate, instruction_1_size):
 	Combination of two lower tier instruction into one higher level
 	instruction.
 	"""
-	while True:
-	    temp_instr = np.random.randint(0, high=instruction_1_size, size=2)
-		if temp_instr[0] != temp_instr[1]:
-		    break
+    while True:
+	temp_instr = np.random.randint(0, high=instruction_1_size, size=2)
+	if temp_instr[0] != temp_instr[1]:
+	    break
     temp_instr_1 = kat.instruction_set_1[temp_instr[0]]
     temp_instr_2 = kat.instruction_set_1[temp_instr[1]]
     #                   Place/state of 1st|Place/state of second|Decision of first
@@ -99,25 +113,79 @@ def create_compound(kat, num_mutate, instruction_1_size):
     #print new_instruction
     kat.instruction_set_2.append(new_instruction)
 
-def shuffle_instructions(kat):
-    """Shuffle instructions in each set.
+def shuffle_instructions(kat, chance):
+    """
+    chance is the absolute chance of shuffling
+    
+    Shuffle instructions in each set.
 	"""
-    np.random.shuffle(kat.instruction_set_1)
-    np.random.shuffle(kat.instruction_set_2)
-    np.random.shuffle(kat.instruction_set_3)
+    if(np.random.randint(0,100) <= chance):
+        np.random.shuffle(kat.instruction_set_1)
+        np.random.shuffle(kat.instruction_set_2)
+        np.random.shuffle(kat.instruction_set_3)
 
-def generate_behavior(kat):
-    """Generate a new behavior
+def shift_instructions(kat, chance_per_instruction):
+    """
+    chance_per_instruction = 5 for 5% chance
+    
+    this function goes through each instruction
+    in each set for the given kat, and based on the chance_per_instruction
+    variable will randomly swap instructions with the one above it or below it.
+    
+    The purpose of this function is to give the kat a smother an easier way
+    to increase fitness through reordering instructions"""
+    for i_set in [kat.instruction_set_1,kat.instruction_set_2]:
+        if(len(i_set) > 1):
+            for i in range(len(i_set)):
+                roll = np.random.randint(0,100)
+                print (roll)
+                if(roll <= chance_per_instruction):
+                    direction = np.random.randint(0,2)
+                    if(direction == 0):
+                        direction = -1
+                    if(i == 0):
+                        direction = 1
+                    if(i == (len(i_set) - 1)):
+                        direction = -1
+                    print (i), direction
+                    temp = i_set[(i + direction)]
+                    i_set[i+direction] = i_set[i]
+                    i_set[i] = temp
+    
+def generate_behavior(kat, chance):
+    """
+    chance is the absolute chance of generating a new behavior
+    
+    Generate a new behavior
 	Unlike the generate_behavior method in Kat, the state is randomly chosen.
 	"""
-    yGrab, xGrab = 0, 0
-    while (yGrab,xGrab) == (0,0):
-        yGrab = random.randint(-VISION_RANGE,VISION_RANGE)
-        xGrab = random.randint(-VISION_RANGE,VISION_RANGE)
-    init_decision = random.randint(0,3)
-    state = random.randint(0,4)
-    new_instruction = [[[( yGrab,  xGrab, state)],init_decision,0],\
-                        [[( xGrab, -yGrab, state)],(init_decision+1)%4,1],\
-                        [[(-yGrab, -xGrab, state)],(init_decision+2)%4,2],\
-                        [[(-xGrab,  yGrab, state)],(init_decision+3)%4,3]]
-    kat.instruction_set_1.append(new_instruction)
+    if(np.random.randint(0,100) <= chance):
+        yGrab, xGrab = 0, 0
+        while (yGrab,xGrab) == (0,0):
+            yGrab = random.randint(-VISION_RANGE,VISION_RANGE)
+            xGrab = random.randint(-VISION_RANGE,VISION_RANGE)
+        init_decision = random.randint(0,3)
+        state = random.randint(0,4)
+        new_instruction = [[[( yGrab,  xGrab, state)],init_decision,0],\
+                            [[( xGrab, -yGrab, state)],(init_decision+1)%4,1],\
+                            [[(-yGrab, -xGrab, state)],(init_decision+2)%4,2],\
+                            [[(-xGrab,  yGrab, state)],(init_decision+3)%4,3]]
+        kat.instruction_set_1.append(new_instruction)
+    
+def delete_behavior(i_set, chance_per_instruction):
+    """
+    chance_per_instruction = 5 for 5% chance
+    i_set = instruction set of a kat
+    
+    this function iterates through each instruction in the set
+    and will randomly delete instructions based on the chance given.
+    """
+    i = 0
+    while(i < len(i_set)):
+        if(np.random.randint(0,100) <= chance_per_instruction):
+            i_set.pop(i)
+        else:
+            i += 1
+            
+            
+            
