@@ -75,7 +75,7 @@ class Kat(object):
         The metrics to consider are the number of steps the Kat
         agent has taken and the amount of berries eaten.
         """
-        return self.steps_taken + (self.berries_eaten * 10)
+        return self.steps_taken * STEP_VALUE + (self.berries_eaten * BERRY_VALUE)
 
     # Only reads 1 instruction set at the moment
     def make_decision(self, grid):

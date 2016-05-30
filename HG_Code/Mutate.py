@@ -14,9 +14,9 @@ def mutate_kat(kat):
         change_state(kat, CHANGE_STATE_CHANCE, inst_size)
         rotate(kat, ROTATE_CHANCE, inst_size)
         flip(kat, FLIP_CHANCE, inst_size)
-        shuffle(kat, SHUFFLE_CHANCE)
-        shift(kat, SHIFT_CHANCE)
-        delete_behavior(kat.instruction_set_1, T1_DELETE_CHANCE)
+        shuffle_instructions(kat, SHUFFLE_CHANCE)
+        shift_instructions(kat, SHIFT_CHANCE)
+        delete_behavior(kat.instruction_set_1, DELETE_CHANCE_EXP)
 
 def change_state(kat, chance_per_instruction, instruction_1_size):
     """Mutate function that will randomly reasign the state of the given number
@@ -170,9 +170,13 @@ def generate_behavior(kat, chance):
                             [[( xGrab, -yGrab, state)],(init_decision+1)%4,1],\
                             [[(-yGrab, -xGrab, state)],(init_decision+2)%4,2],\
                             [[(-xGrab,  yGrab, state)],(init_decision+3)%4,3]]
-        kat.instruction_set_1.append(new_instruction)
+        position = np.random.randint(0,2)
+        if(len(kat.instruction_set_1) >= 1):
+            kat.instruction_set_1.insert(position,new_instruction)
+        else:
+            kat.instruction_set_1.insert(0,new_instruction)
     
-def delete_behavior(i_set, chance_per_instruction):
+def delete_behavior(i_set, chance_exponent):
     """
     chance_per_instruction = 5 for 5% chance
     i_set = instruction set of a kat
@@ -180,11 +184,15 @@ def delete_behavior(i_set, chance_per_instruction):
     this function iterates through each instruction in the set
     and will randomly delete instructions based on the chance given.
     """
+    chance = 2
     i = 0
     while(i < len(i_set)):
-        if(np.random.randint(0,100) <= chance_per_instruction):
+        if(np.random.randint(0,100) <= chance):
             i_set.pop(i)
+            print (chance),i
+            return
         else:
+            chance *= chance_exponent
             i += 1
             
             
