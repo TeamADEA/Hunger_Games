@@ -3,6 +3,7 @@ import numpy as np
 import random
 from hg_settings import *
 
+MUTATE_DEBUG = False # used for debug purposes
 # Assume mutation of only one instruction (default) from each set
 def mutate_kat(kat):
     """Mutate the Kat agent by changing its instruction.
@@ -138,7 +139,8 @@ def shift_instructions(kat, chance_per_instruction):
         if(len(i_set) > 1):
             for i in range(len(i_set)):
                 roll = np.random.randint(0,100)
-                print (roll)
+                if MUTATE_DEBUG:
+                    print (roll)
                 if(roll <= chance_per_instruction):
                     direction = np.random.randint(0,2)
                     if(direction == 0):
@@ -147,7 +149,8 @@ def shift_instructions(kat, chance_per_instruction):
                         direction = 1
                     if(i == (len(i_set) - 1)):
                         direction = -1
-                    print (i), direction
+                    if MUTATE_DEBUG:
+                        print (i), direction
                     temp = i_set[(i + direction)]
                     i_set[i+direction] = i_set[i]
                     i_set[i] = temp
@@ -189,7 +192,8 @@ def delete_behavior(i_set, chance_exponent):
     while(i < len(i_set)):
         if(np.random.randint(0,100) <= chance):
             i_set.pop(i)
-            print (chance),i
+            if MUTATE_DEBUG:
+                print (chance),i
             return
         else:
             chance *= chance_exponent

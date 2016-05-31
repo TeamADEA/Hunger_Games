@@ -18,6 +18,7 @@ STEP_SIZE = -1 # 0 = only last frame,
 
 tki_breakdown = np.zeros(NUM_SIMS*6).reshape(NUM_SIMS, 6)
 full_graph = np.zeros(SEPERATE_MODELS*NUM_SIMS).reshape(SEPERATE_MODELS, NUM_SIMS)
+full_graph_bk = np.zeros(SEPERATE_MODELS*2).reshape(SEPERATE_MODELS, 2)
 
 def one_sim(seed_kat, grid, gen , multi_cat=False):
     """Run one simulation of number of time steps (default: 300)
@@ -78,19 +79,19 @@ def model(seed_kat, vis, grid, specie):
     top_kats.append(fit_score)
     avg_kats.append(avg_fitness)
     playback(vis, play, seed_kat, 1)
-    
-    for i in np.arange(2, (NUM_SIMS+1)):
-        print "\n######################## Specie:",specie," | Gen:",i, "#######################"
-        temp_top = seed_kats
-        seed_kat, fit_score, play, avg_fitness, seed_kats = one_sim(seed_kats, grid, (i-1), multi_cat=True)
-        if fit_score < top_kats[-1]:
-            seed_kats = temp_top
-            top_kats.append(top_kats[-1])
-        else:
-            top_kats.append(fit_score)
-        avg_kats.append(avg_fitness)
-        playback(vis, play,copy.deepcopy(seed_kats),i)
-        print "######################## END GEN:",i,"################################\n"
+    if (SEPERATE_MODELS > 1):
+        for i in np.arange(2, (NUM_SIMS+1)):
+            print "\n######################## START: Specie:",specie," | Gen:",i, "#####################"
+            temp_top = seed_kats
+            seed_kat, fit_score, play, avg_fitness, seed_kats = one_sim(seed_kats, grid, (i-1), multi_cat=True)
+            if fit_score < top_kats[-1]:
+                seed_kats = temp_top
+                top_kats.append(top_kats[-1])
+            else:
+                top_kats.append(fit_score)
+            avg_kats.append(avg_fitness)
+            playback(vis, play,copy.deepcopy(seed_kats),i)
+            print "######################## END: Specie:",specie," | Gen:",i, "#######################\n"
     #vis.graph(top_kats)
     return copy.deepcopy(list(top_kats))
 
@@ -102,11 +103,12 @@ vis = Visualizer(grid)
 start_time = time.time()
 
 for i in range(SEPERATE_MODELS):
-    grid = hunger_grid()
+    grid = hunger_grid(i*.01)
     full_graph[i] = model(progenitor, vis, grid, i)
+    full_graph_bk[i] = [grid.lava_chance, grid.berry_chance]
 
 tki_breakdown /= SEPERATE_MODELS
-vis.graph(full_graph)
+vis.graph(full_graph, full_graph_bk)
 vis.ins_graph(tki_breakdown)
 #print tki_breakdown[:]
 print("--- TIME TO COMPLETE MODEL: %s seconds ---" % (time.time() - start_time))
