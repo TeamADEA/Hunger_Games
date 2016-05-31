@@ -27,7 +27,7 @@ class Visualizer(object):
         self.ax.axis('off')
         self.info.axis('off')
 
-    def show(self, grid, kats, gen):
+    def show(self, grid, kats, gen, specie):
         """
         Show the current Kat and the current grid
         
@@ -37,13 +37,15 @@ class Visualizer(object):
                 cmap to represent walls, kats, lava, grass, and berries
         kats: array containing the winning kats
         gen: the current Kat generation.
+        specie: Current specie gen is in
         """
         self.img.set_data(grid[0])
-        genNum = str("Generation " + str(gen))
+        genNum = str("Specie " + str(specie) +" | Generation " + str(gen) +\
+                " | Kat " + str(grid[2]+1) + " | Step " + str(grid[3]+1))
         generation = self.info.text(.5,.95,genNum, fontsize = 18 )
         ins = str("CURRENT INSTRUCTION SET: " + grid[1])
-        ins_set = self.info.text(.5,.8,ins,  verticalalignment='top',
-                    horizontalalignment='left', fontsize = 12)
+        ins_set = self.info.text(.5,.9,ins,  verticalalignment='top',
+                    horizontalalignment='left', fontsize = 16)
         plt.draw()
         plt.pause(.01)
         generation.remove()
@@ -61,15 +63,15 @@ class Visualizer(object):
         """
         plt.figure(figsize=(12,6))
         plt.subplot(121)
-        for i in range(SEPERATE_MODELS): 
+        for i in range(NUM_OF_SPECIES): 
             legend = str("Specie " + str(i) + ": Lava = " + \
                 str(p_array[i][0] * 100) +  "% | Berry = " + \
                 str(p_array[i][1]*100) + "%, Max Fitness:" + \
                 str(np.max(array[i])))
             plt.plot(array[i], label = legend)
         plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
-        title = str('Fitness over ' + str(SEPERATE_MODELS) + ' Species, and ' +\
-                str(NUM_OF_TRIALS) + ' Generations')
+        title = str('Fitness over ' + str(NUM_OF_SPECIES) + ' Species, and ' +\
+                str(NUM_OF_INDIVIDUALS) + ' Generations')
         plt.title(title)
         plt.xlabel('Number of generations')
         plt.ylabel('Fitness')
@@ -89,24 +91,24 @@ class Visualizer(object):
         """
         plt.figure(3) 
         plt.subplot(211)
-        index = np.arange(SEPERATE_MODELS)
+        index = np.arange(NUM_OF_SPECIES)
         max_fitness = np.amax(array, axis = 1)
         avg_fitness = np.average(array, axis = 1)
         
         width = 0.35       # the width of the bars
-        max_bar = plt.bar(index, max_fitness, width, color='r', \
+        plt.bar(index, max_fitness, width, color='r', \
                     label = 'MAX Fitness')
-        avg_bar = plt.bar(index + width, avg_fitness, width, color='y', \
+        plt.bar(index + width, avg_fitness, width, color='y', \
                     label = 'AVG Fitness')
         plt.ylabel('Fitness Score')
-        plt.legend()
+        #plt.legend()
         #plt.legend((max_bar[0], avg_bar[0]), ('Max', 'Avg'))
         plt.subplot(212)
         lava_array = p_array[:,0]
         berry_array = p_array[:,1]
         plt.bar(index, lava_array, width, color = LAVA_COLOR, label='Lava Chance')
         plt.bar(index+width, berry_array, width, color = BERRY_COLOR, label='Berry Chance')
-        plt.legend()
+        #plt.legend()
         plt.xlabel('Simulations')
         plt.ylabel('Percent Chance')  
         plt.show()  
@@ -124,7 +126,7 @@ class Visualizer(object):
         
         plt.subplot(211)
         title = str('AVG: # Of Instructions VS % Of Instruction Types FOR [' + \
-                str(NUM_SIMS) + '] GENERATIONS')
+                str(NUM_OF_GENERATIONS) + '] GENERATIONS')
         plt.title(title)
         plt.ylabel('# Of Instructions')
         plt.ylim(0, np.max(array[:,5])+1)

@@ -8,7 +8,7 @@ from hg_settings import *
 
 
 GRID_DIMENSION = 34
-NUM_KATS = NUM_OF_TRIALS
+NUM_KATS = NUM_OF_INDIVIDUALS
 
 # MOVE = {[-1,0]:"UP", [0,1]:"RIGHT", [1,0]:"DOWN", [0,-1]:"LEFT"}
 MOVE = [[-1,0],[0,1],[1,0],[0,-1],[0,0]]
@@ -39,7 +39,7 @@ class sim_manager(object):
         if not multi_cat:
             self.kats = [seedKat.clone() for i in range(NUM_KATS)]
         else:
-            temp_kats = seedKat * (NUM_OF_TRIALS/5)
+            temp_kats = seedKat * (NUM_OF_INDIVIDUALS/5)
             self.kats = []
             for kat in temp_kats:
                 self.kats.append(kat.clone())
@@ -73,7 +73,7 @@ class sim_manager(object):
         print self.grid[self.kats[kat_num].yLoc+1, self.kats[kat_num].xLoc-1]
         print self.grid[self.kats[kat_num].yLoc, self.kats[kat_num].xLoc-1]
 
-    def update(self, kat_num):
+    def update(self, kat_num, step_num):
         """Update the Kat agents at each time step.
 
         Only update Kat agents that are alive. First ask
@@ -99,7 +99,11 @@ class sim_manager(object):
                 elif(self.grid[nextY, nextX] == GRASS):
                     self.kats[kat_num].take_step(nextY, nextX)
                     self.grid[self.kats[kat_num].yLoc, self.kats[kat_num].xLoc] = KAT
-        self.playback.append([copy.deepcopy(self.grid), self.kats[kat_num].print_ins_1(PRINT = False)])
+        
+        self.playback.append([copy.deepcopy(self.grid), \
+                            self.kats[kat_num].print_ins_1(PRINT = False),
+                            kat_num,
+                            step_num])
     
     def start_kat(self, kat_num):
         self.grid[self.kats[kat_num].yLoc, self.kats[kat_num].xLoc] = KAT

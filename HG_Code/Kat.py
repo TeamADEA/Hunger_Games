@@ -140,12 +140,13 @@ class Kat(object):
     def print_ins_1(self, PRINT = True):
         """Print Kat agent's tier 1 instructions
 
-		Prints all the place, state, and decision of the instructions.
-		"""
+	Prints all the place, state, and decision of the instructions.
+	
+	"""
         if PRINT:
             print ("\nKat T1: ")
         if(len(self.instruction_set_1) == 0):
-            full_report = "NO T1 INSTRUCTIONS"
+            full_report = "\nNO T1 INSTRUCTIONS"
             if PRINT:
                 print full_report
             return full_report
