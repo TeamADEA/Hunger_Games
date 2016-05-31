@@ -82,13 +82,13 @@ def flip(kat, num_mutate, instruction_1_size):
 def create_compound(kat, num_mutate, instruction_1_size):
     """Create new compound instruction.
 
-	Combination of two lower tier instruction into one higher level
-	instruction.
-	"""
-	while True:
-	    temp_instr = np.random.randint(0, high=instruction_1_size, size=2)
-		if temp_instr[0] != temp_instr[1]:
-		    break
+    Combination of two lower tier instruction into one higher level
+    instruction.
+    """
+    while True:
+        temp_instr = np.random.randint(0, high=instruction_1_size, size=2)
+        if temp_instr[0] != temp_instr[1]:
+            break
     temp_instr_1 = kat.instruction_set_1[temp_instr[0]]
     temp_instr_2 = kat.instruction_set_1[temp_instr[1]]
     #                   Place/state of 1st|Place/state of second|Decision of first
@@ -101,15 +101,15 @@ def create_compound(kat, num_mutate, instruction_1_size):
 
 def shuffle_instructions(kat):
     """Shuffle instructions in each set.
-	"""
+    """
     np.random.shuffle(kat.instruction_set_1)
     np.random.shuffle(kat.instruction_set_2)
     np.random.shuffle(kat.instruction_set_3)
 
 def generate_behavior(kat):
     """Generate a new behavior
-	Unlike the generate_behavior method in Kat, the state is randomly chosen.
-	"""
+    Unlike the generate_behavior method in Kat, the state is randomly chosen.
+    """
     yGrab, xGrab = 0, 0
     while (yGrab,xGrab) == (0,0):
         yGrab = random.randint(-VISION_RANGE,VISION_RANGE)

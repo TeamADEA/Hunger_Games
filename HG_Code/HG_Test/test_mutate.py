@@ -48,8 +48,3 @@ class MutateTestCase(object):
         self.kat = Kat.Kat()
         mu.generate_behavior(self.kat)
         mu.generate_behavior(self.kat)
-    
-    def test_mutate_generate_behavior(kat):
-        """Test to see if mutate does generate a new behavior.
-        """
-        pass
