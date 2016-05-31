@@ -110,7 +110,7 @@ def model(seed_kat, vis, grid, specie):
     seed_kat, fit_score, play, avg_fitness, seed_kats = one_sim(seed_kat, grid, 0)
     top_kats.append(fit_score)
     avg_kats.append(avg_fitness)
-    playback(vis, play, seed_kat, 1, 1)
+    playback(vis, play, seed_kat, 1, specie+1)
     if (NUM_OF_SPECIES > 1):
         for i in np.arange(2, (NUM_OF_GENERATIONS+1)):
             print "\n######################## START: Specie:",specie," | Gen:",i, "#####################"
@@ -122,7 +122,7 @@ def model(seed_kat, vis, grid, specie):
             else:
                 top_kats.append(fit_score)
             avg_kats.append(avg_fitness)
-            playback(vis, play,copy.deepcopy(seed_kats),i, specie)
+            playback(vis, play,copy.deepcopy(seed_kats),i, specie+1)
             print "######################## END: Specie:",specie," | Gen:",i, "#######################\n"
     return copy.deepcopy(list(top_kats))
 
