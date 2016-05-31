@@ -7,14 +7,25 @@ from hg_settings import *
 import Hunger_Grid as hg
 import Mutate as m
 
-grid  = hg.createHungerGrid(20,20)
 my_kat = Kat(10,10)
-my_kat.generate_behavior(grid)
-my_kat.generate_behavior(grid)
-my_kat.generate_behavior(grid)
-my_kat.generate_behavior(grid)
-my_kat.generate_behavior(grid)
+
+m.generate_behavior(my_kat, 100)
+m.delete_behavior(my_kat.instruction_set_1, 2)
 my_kat.print_ins_1()
-m.mutate_kat(my_kat,.8)
+
+m.generate_behavior(my_kat, 100)
+m.delete_behavior(my_kat.instruction_set_1, 2)
+my_kat.print_ins_1()
+
+m.generate_behavior(my_kat, 100)
+m.delete_behavior(my_kat.instruction_set_1, 2)
+my_kat.print_ins_1()
+
+m.generate_behavior(my_kat, 100)
+m.delete_behavior(my_kat.instruction_set_1, 2)
+my_kat.print_ins_1()
+
+m.generate_behavior(my_kat, 100)
+m.delete_behavior(my_kat.instruction_set_1, 2)
 my_kat.print_ins_1()
 

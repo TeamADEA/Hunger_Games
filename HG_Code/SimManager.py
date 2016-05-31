@@ -99,7 +99,7 @@ class sim_manager(object):
                 elif(self.grid[nextY, nextX] == GRASS):
                     self.kats[kat_num].take_step(nextY, nextX)
                     self.grid[self.kats[kat_num].yLoc, self.kats[kat_num].xLoc] = KAT
-        self.playback.append([copy.deepcopy(self.grid), self.kats[kat_num].print_ins_1()])
+        self.playback.append([copy.deepcopy(self.grid), self.kats[kat_num].print_ins_1(PRINT = False)])
     
     def start_kat(self, kat_num):
         self.grid[self.kats[kat_num].yLoc, self.kats[kat_num].xLoc] = KAT
@@ -143,11 +143,11 @@ class sim_manager(object):
         top_location = 0
         print "Kat Fitness: "
         for i in range(NUM_KATS):
-            print self.kats[i].calculate_fitness()
+            print i,": " ,self.kats[i].calculate_fitness()
             if(self.kats[i].calculate_fitness() > top_score):
                 top_score = self.kats[i].calculate_fitness()
                 top_location = i
-        print "Winning Score: ", top_score
+        print "Winning Score KAT ", top_location, ": " , top_score
         print "TOP KAT INS1: "
         self.kats[top_location].print_ins_1()
         return copy.deepcopy(self.kats[top_location].clone()), top_score

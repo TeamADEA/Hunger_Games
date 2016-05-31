@@ -75,7 +75,7 @@ class Kat(object):
         The metrics to consider are the number of steps the Kat
         agent has taken and the amount of berries eaten.
         """
-        return self.steps_taken + (self.berries_eaten * 10)
+        return self.steps_taken * STEP_VALUE + (self.berries_eaten * BERRY_VALUE)
 
     # Only reads 1 instruction set at the moment
     def make_decision(self, grid):
@@ -137,15 +137,17 @@ class Kat(object):
         else:
             return True
 
-    def print_ins_1(self):
+    def print_ins_1(self, PRINT = True):
         """Print Kat agent's tier 1 instructions
 
 		Prints all the place, state, and decision of the instructions.
 		"""
-        print ("\nKat T1: ")
+        if PRINT:
+            print ("\nKat T1: ")
         if(len(self.instruction_set_1) == 0):
             full_report = "NO T1 INSTRUCTIONS"
-            print full_report
+            if PRINT:
+                print full_report
             return full_report
         full_report = "\n"
         for i in range(len(self.instruction_set_1)):
@@ -153,7 +155,8 @@ class Kat(object):
             tile_state = TILE_STRING[self.instruction_set_1[i][0][0][0][2]]
             move_string = MOVE_STRING[self.instruction_set_1[i][0][1]]
             ins_string = "%s.) IF %s IS %s %s" % (str(i), rel_coord, tile_state, move_string)
-            print (ins_string)
+            if PRINT:
+                print (ins_string)
             full_report += ins_string + "\n"
         return full_report
 
