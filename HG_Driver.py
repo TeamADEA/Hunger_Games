@@ -12,7 +12,7 @@ unitTest.run_test()
 
 #RUN_MODEL (start_lava_%, end_lava_%, start_berry_%, end_berry_%, t_name = title)
 mo.run_model()
-mo.run_model(.02,.1,t_name='Increase Lava')
-mo.run_model(.02,.02,.05,.2,'Increase Berries')
-mo.run_model(.02,.1,.1,.05, 'Lava Up, Berry Down')
+#mo.run_model(.02,.1,t_name='Increase Lava')
+#mo.run_model(.02,.02,.05,.2,'Increase Berries')
+#mo.run_model(.02,.1,.1,.05, 'Lava Up, Berry Down')
 

@@ -31,13 +31,9 @@ def run_model(from_lava = .02, to_lava = .02, from_berry = .05, to_berry = .05, 
     # SETUP LAVA AND BERRY AMOUNTS
     if(from_lava == to_lava): # NO CHANGE IN LAVA AMOUNTS. SET ALL TO 1 VALUE
         lava_chance_array[:] = from_lava
-    #elif(from_lava > to_lava):  #CHANGE IN LAVA AMOUNT, CALCULATE STEP SIZE OF LAVA
-    else:
+    else: #CHANGE IN LAVA AMOUNT, CALCULATE STEP SIZE OF LAVA
         inc = (to_lava - from_lava) / NUM_OF_SPECIES
         lava_chance_array = np.arange(from_lava, to_lava, inc)
-    #else:
-    #    inc = (from_lava - to_lava) / NUM_OF_SPECIES
-    #    lava_chance_array = np.arange(
     if(from_berry == to_berry): # NO CHANCE IN BERRY AMOUNTS. SET ALL TO 1 VALUE
         berry_chance_array[:] = from_berry
     else: # CHANGE IN BERRY AMOUNT, CALCULATE STEP SIZE OF BERRY
@@ -49,6 +45,7 @@ def run_model(from_lava = .02, to_lava = .02, from_berry = .05, to_berry = .05, 
         full_graph[i] = model(progenitor, vis, grid, i, t_name)
         full_graph_bk[i] = [grid.lava_chance, grid.berry_chance]
     
+    # DISPLAY VARIOUS GRAPHS AND PLOTS
     tki_breakdown[:] /= NUM_OF_SPECIES
     vis.graph(full_graph, full_graph_bk, t_name)
     vis.ins_graph(tki_breakdown, t_name)
