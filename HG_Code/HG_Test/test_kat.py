@@ -29,7 +29,7 @@ class KatTestCase(object):
         self.assertEqual(self.kat.steps_taken, 0, "reset() failed, Steps taken should be reset to 0")
         self.assertEqual(self.kat.berries_eaten, 0, "reset() failed, Berries eaten should be reset to 0")
         self.assertFalse(self.kat.dead, "Kat should not be dead")
-        mu.generate_behavior(self.kat)
+        mu.generate_behavior(self.kat, 100)
         self.assertEqual(self.kat.instruction_set_1[0][0][2], 0, \
         "reset() failed, instruction index initialized incorrectly")
         np.random.shuffle(self.kat.instruction_set_1[0])
@@ -51,7 +51,7 @@ class KatTestCase(object):
         self.kat = Kat.Kat()
         self.kat.steps_taken = 50
         self.kat.berries_eaten = 5
-        self.assertEqual(self.kat.calculate_fitness(), 100, "calculate_fitness() failed, incorrect calculation")
+        self.assertEqual(self.kat.calculate_fitness(), 550, "calculate_fitness() failed, incorrect calculation")
         
     def test_kat_make_decision(self):
         """Testing to see if make_decision() return decision that is to be expected.

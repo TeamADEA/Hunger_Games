@@ -17,7 +17,7 @@ class HungerGridTestCase(object):
         """Test to see if hunger grid create what is expected
         """
         self.grid = Hunger_Grid.hunger_grid()
-        self.grid.newGrid = Hunger_Grid.hunger_grid().createHungerGrid(M=30, N=30, P_LAVA = 1.0)
+        self.grid.newGrid = Hunger_Grid.hunger_grid().create_hunger_grid(M=30, N=30, P_LAVA = 1.0)
         self.assertTrue(self.grid.newGrid.size == 900, "Grid size is incorrect")
         self.assertTrue(self.grid.newGrid[2, 2] == 1, "Lava chance is not acting correctly")
         self.assertTrue(self.grid.newGrid[-3, -3] == 1, "Lava chance is not acting correctly")
