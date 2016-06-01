@@ -3,11 +3,33 @@ import numpy as np
 import random
 from hg_settings import *
 
+
+
+
+
+
+
+
 MUTATE_DEBUG = False # used for debug purposes
 # Assume mutation of only one instruction (default) from each set
-def mutate_kat(kat):
+def mutate_kat(kat, mutate_chance):
     """Mutate the Kat agent by changing its instruction.
     """
+    #MUTATION CONSTANTS % CHANCE PER INSTRUCTION
+    MUTATE_PROBABILITY = mutate_chance[0]
+    FLIP_CHANCE = 1 * MUTATE_PROBABILITY
+    ROTATE_CHANCE = 1 * MUTATE_PROBABILITY
+    CHANGE_STATE_CHANCE = 1 * MUTATE_PROBABILITY
+    SHIFT_CHANCE = 2 * MUTATE_PROBABILITY
+    COMPOUND_CHANCE = 1 * MUTATE_PROBABILITY
+    
+    #MUTATION CONSTANTS % ABSOLUTE CHANCE
+    GENERATE_CHANCE = mutate_chance[1]
+    SHUFFLE_CHANCE = 5
+    
+    #DELETION CHANCE EXPONENTIAL
+    DELETE_CHANCE_EXP = 1.5
+    
     inst_size = len(kat.instruction_set_1)
     
     generate_behavior(kat, GENERATE_CHANCE)
@@ -43,7 +65,8 @@ def rotate(kat, chance_per_instruction, instruction_1_size):
     """Mutate function that will randomly rotate the decision of
     the given number of instructions.
     """
-    
+    if MUTATE_DEBUG:
+        print "ROT: ", chance_per_instruction
     num_mutate = 0
     for i in range(len(kat.instruction_set_1)):
         if(np.random.randint(0,100) <= chance_per_instruction):
@@ -186,7 +209,9 @@ def generate_behavior(kat, chance):
     
     Generate a new behavior
 	Unlike the generate_behavior method in Kat, the state is randomly chosen.
-	"""
+    """
+    print"CHANCE: ", chance
+  	
     if(np.random.randint(0,100) <= chance):
         yGrab, xGrab = 0, 0
         while (yGrab,xGrab) == (0,0):
@@ -198,11 +223,8 @@ def generate_behavior(kat, chance):
                             [[( xGrab, -yGrab, state)],(init_decision+1)%4,1],\
                             [[(-yGrab, -xGrab, state)],(init_decision+2)%4,2],\
                             [[(-xGrab,  yGrab, state)],(init_decision+3)%4,3]]
-        position = np.random.randint(0,2)
-        if(len(kat.instruction_set_1) >= 1):
-            kat.instruction_set_1.insert(position,new_instruction)
-        else:
-            kat.instruction_set_1.insert(0,new_instruction)
+
+        kat.instruction_set_1.insert(0,new_instruction)
     
 def delete_behavior(i_set, chance_exponent):
     """

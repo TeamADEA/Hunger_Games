@@ -20,7 +20,8 @@ tki_breakdown = np.zeros(NUM_OF_GENERATIONS*6).reshape(NUM_OF_GENERATIONS, 6)
 full_graph = np.zeros(NUM_OF_SPECIES*NUM_OF_GENERATIONS).reshape(NUM_OF_SPECIES, NUM_OF_GENERATIONS)
 full_graph_bk = np.zeros(NUM_OF_SPECIES*2).reshape(NUM_OF_SPECIES, 2)
 
-def run_model(from_lava = .02, to_lava = .02, from_berry = .05, to_berry = .05, from_mut=10, to_mut=10, t_name = 'Default'):
+def run_model(from_lava = .02, to_lava = .02, from_berry = .05, to_berry = .05\
+                , from_mut=10, to_mut=10, from_gen = 33, to_gen = 33,t_name = 'Default'):
     progenitor = Kat(0,0)
     grid = hunger_grid()
     vis = Visualizer(grid)
@@ -31,29 +32,34 @@ def run_model(from_lava = .02, to_lava = .02, from_berry = .05, to_berry = .05, 
         if(from_num == to_num):
             array[:] = from_num
         else:
-            inc = (to_num - from_num) / NUM_OF_SPECIES
-            array = np.arange(from_num, to_num, inc)
+            inc = (float(to_num) - from_num) / float(NUM_OF_SPECIES)
+            array = np.arange(from_num, to_num, inc, dtype='float')
         return copy.deepcopy(array)
     
     lava_chance_array = calc_steps(from_lava, to_lava) 
     berry_chance_array = calc_steps(from_berry, to_berry)
     mutate_chance_array = calc_steps(from_mut, to_mut)
-    print "FLIP_CHANCE: ", FLIP_CHANCE
+    generate_chance_array = calc_steps(from_gen, to_gen)
+    
+    print "\n", generate_chance_array
+    print mutate_chance_array
     for i in range(NUM_OF_SPECIES): # MAIN LOOP OF SIMULATION RUNNING
+        mutation_var = [mutate_chance_array[i]]
+        mutation_var.append(generate_chance_array[i])
         grid = hunger_grid(lava_chance_array[i], berry_chance_array[i])
-        full_graph[i] = model(progenitor, vis, grid, i, t_name)
+        full_graph[i] = model(progenitor, vis, grid, i, mutation_var,t_name)
         full_graph_bk[i] = [grid.lava_chance, grid.berry_chance]
     
     # DISPLAY VARIOUS GRAPHS AND PLOTS
     tki_breakdown[:] /= NUM_OF_SPECIES
     vis.graph(full_graph, full_graph_bk, t_name)
     vis.ins_graph(tki_breakdown, t_name)
-    vis.chance_vs_fitness(full_graph, full_graph_bk, mutate_chance_array,t_name)
+    vis.chance_vs_fitness(full_graph, full_graph_bk, mutate_chance_array, generate_chance_array,t_name)
     print("--- %s MODEL COMPLETE ---" % (t_name))
     print("--- TIME TO COMPLETE MODEL: %s seconds ---" % (time.time() - start_time))
     vis.show_plots()
 
-def one_sim(seed_kat, grid, gen , multi_cat=False):
+def one_sim(seed_kat, grid, mut ,gen, multi_cat=False):
     """Run one simulation of number of time steps (default: 300)
 
     First initialize a sim_manager with first Kat agent.
@@ -61,10 +67,10 @@ def one_sim(seed_kat, grid, gen , multi_cat=False):
 	Kat and top fitness score, returns it.
     """
     if not multi_cat:
-        sim_temp = sim_manager(seed_kat, grid)
+        sim_temp = sim_manager(seed_kat, grid, mut)
         top_kat = seed_kat
     else:
-        sim_temp = sim_manager(seed_kat, grid, multi_cat=True)
+        sim_temp = sim_manager(seed_kat, grid, mut, multi_cat=True)
         top_kat = seed_kat[0]
 
     for i in range(NUM_OF_INDIVIDUALS):
@@ -96,7 +102,7 @@ def playback(vis, pb, best_kats, gen, specie, t_name):
             vis.show(pb[i], copy.deepcopy(best_kats), gen, specie, t_name)
 
 
-def model(seed_kat, vis, grid, specie, t_name):
+def model(seed_kat, vis, grid, specie, mut,t_name):
     """Run multiple simulation of number of time steps each,
 	(default: 300 simulations).
 
@@ -108,7 +114,7 @@ def model(seed_kat, vis, grid, specie, t_name):
     top_kats = []
     avg_kats = []
     print "Specie:",specie," | Gen: 1"
-    seed_kat, fit_score, play, avg_fitness, seed_kats = one_sim(seed_kat, grid, 0)
+    seed_kat, fit_score, play, avg_fitness, seed_kats = one_sim(seed_kat, grid, mut, 0,)
     top_kats.append(fit_score)
     avg_kats.append(avg_fitness)
     playback(vis, play, seed_kat, 1, specie+1, t_name)
@@ -117,7 +123,7 @@ def model(seed_kat, vis, grid, specie, t_name):
             print "\nMODEL NAME: %s" % (t_name)
             print "\n######################## START: Specie:",specie+1," | Gen:",i, "#####################"
             temp_top = seed_kats
-            seed_kat, fit_score, play, avg_fitness, seed_kats = one_sim(seed_kats, grid, (i-1), multi_cat=True)
+            seed_kat, fit_score, play, avg_fitness, seed_kats = one_sim(seed_kats, grid, mut, (i-1), multi_cat=True)
             if fit_score < top_kats[-1]:
                 seed_kats = temp_top
                 top_kats.append(top_kats[-1])

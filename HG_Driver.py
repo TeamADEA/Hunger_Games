@@ -10,9 +10,14 @@ from HG_Code import Mutate as mu
 unitTest = UT.Run_Unit_Test()
 unitTest.run_test()
 
-#RUN_MODEL (start_lava_%, end_lava_%, start_berry_%, end_berry_%, t_name = title)
+#mo.run_model(from_lava = .02, to_lava = .02, from_berry = .05, to_berry = .05,\
+#            from_mut=10, to_mut=10, from_gen = 33, to_gen = 33,t_name = 'Default')
 #mo.run_model()
-#mo.run_model(.02,.1,t_name='Increase Lava')
-#mo.run_model(.02,.02,.05,.2,'Increase Berries')
-mo.run_model(.02,.3,.1,.05, 10, 40,'Lava Up, Berry Down')
+
+#mo.run_model() #Default
+mo.run_model(.02,.02,.05,.05, 10, 10, 80, 110, 'Generate Behavior Only')
+
+
+
+
 

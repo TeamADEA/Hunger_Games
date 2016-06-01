@@ -81,7 +81,7 @@ class Visualizer(object):
         plt.ylim(0, (np.max(array) + 10))
         #plt.draw()
         
-    def chance_vs_fitness(self, array, p_array, m_array, t_name):
+    def chance_vs_fitness(self, array, p_array, m_array, g_array,t_name):
         """
         Plot 2 bar graphs of avg and max fitness vs lava and berry chance
         
@@ -91,6 +91,8 @@ class Visualizer(object):
         p_array: a numpy array containing the lava and berry chances that
                 hunger_grid used on map generation
         t_name: Test Name if running mulitple tests in a row
+        m_array: array containing chance of certain mutations occuring
+        g_array: array containing chance of generate behaviors occuring
         """
         plt.figure() 
         plt.subplot(311)
@@ -117,10 +119,10 @@ class Visualizer(object):
         plt.xlabel('Simulations')
         plt.ylabel('Percent Chance')
         plt.subplot(313)
-        lava_array = p_array[:,0]
-        berry_array = p_array[:,1]
-        plt.bar(index, m_array, width, color = LAVA_COLOR, label='Lime')
-        #plt.bar(index+width, berry_array, width, color = BERRY_COLOR, label='Berry Chance')
+        plt.bar(index, (m_array/100), width, color = '#32CD32', label = "Mutation Probability")
+        print len(m_array)
+        plt.bar(index+width, (g_array/100), width, color = '#551A8B', label = "Generate Probability")
+        print len(g_array)
         #plt.legend()
         plt.xlabel('Simulations')
         plt.ylabel('Percent Chance')    

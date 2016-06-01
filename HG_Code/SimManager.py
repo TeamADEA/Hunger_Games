@@ -34,7 +34,7 @@ class sim_manager(object):
 	    A Visualizer class used to visualize simulation, observe
         simulation, and diagnose possible problem.
     """
-    def __init__(self, seedKat, hunger_grid, multi_cat=False):
+    def __init__(self, seedKat, hunger_grid, mutate_var, multi_cat=False):
         self.grid = np.array(hunger_grid.get_grid())
 
         if not multi_cat:
@@ -53,7 +53,7 @@ class sim_manager(object):
         for i in range(NUM_KATS):
             #self.kats[i] = seedKat.clone()
             if(i >= AMT_CLONE):
-                m.mutate_kat(self.kats[i])
+                m.mutate_kat(self.kats[i], mutate_var)
 
         for k in self.kats:
             self.setKatPosition(k)
@@ -110,27 +110,11 @@ class sim_manager(object):
         self.grid[self.kats[kat_num].yLoc, self.kats[kat_num].xLoc] = KAT
     
     def setKatPosition(self, kat):
-        """Set the Kat agent's initial position.
-
-        A Kat agent object is passed in, a random cell is
-		selected (inside the wall), and until it finds
-		a cell with GRASS as the state, it will continue
-		call itself recursively.
+        """Set the Kat agent's initial position to center of map.
         """
         kat.xLoc = GRID_DIMENSION/2
         kat.yLoc = GRID_DIMENSION/2
-        """
-        randX = np.random.randint(2, GRID_DIMENSION - 3)
-        randY = np.random.randint(2, GRID_DIMENSION - 3)
 
-        if(self.grid[randY,randX] == GRASS):
-            kat.xLoc = randX
-            kat.yLoc = randY
-            self.grid[randY, randX] = 3
-            return
-        else:
-            self.setKatPosition(kat)
-        """
 
     def return_playback(self):
         return self.playback
