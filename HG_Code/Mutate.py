@@ -3,13 +3,6 @@ import numpy as np
 import random
 from hg_settings import *
 
-
-
-
-
-
-
-
 MUTATE_DEBUG = False # used for debug purposes
 # Assume mutation of only one instruction (default) from each set
 def mutate_kat(kat, mutate_chance):
@@ -223,7 +216,6 @@ def generate_behavior(kat, chance):
                             [[( xGrab, -yGrab, state)],(init_decision+1)%4,1],\
                             [[(-yGrab, -xGrab, state)],(init_decision+2)%4,2],\
                             [[(-xGrab,  yGrab, state)],(init_decision+3)%4,3]]
-
         kat.instruction_set_1.insert(0,new_instruction)
     
 def delete_behavior(i_set, chance_exponent):

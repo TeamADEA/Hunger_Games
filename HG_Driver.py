@@ -20,4 +20,3 @@ mo.run_model(.02,.02,.05,.05, 10, 10, 80, 110, 'Generate Behavior Only')
 
 
 
-
