@@ -113,7 +113,7 @@ def model(seed_kat, vis, grid, specie, mut,t_name):
     """
     top_kats = []
     avg_kats = []
-    print "Specie:",specie," | Gen: 1"
+    print "Species:",specie," | Gen: 1"
     seed_kat, fit_score, play, avg_fitness, seed_kats = one_sim(seed_kat, grid, mut, 0,)
     top_kats.append(fit_score)
     avg_kats.append(avg_fitness)
@@ -121,7 +121,7 @@ def model(seed_kat, vis, grid, specie, mut,t_name):
     if (NUM_OF_SPECIES > 1):
         for i in np.arange(2, (NUM_OF_GENERATIONS+1)):
             print "\nMODEL NAME: %s" % (t_name)
-            print "\n######################## START: Specie:",specie+1," | Gen:",i, "#####################"
+            print "\n######################## START: Species:",specie+1," | Gen:",i, "#####################"
             temp_top = seed_kats
             seed_kat, fit_score, play, avg_fitness, seed_kats = one_sim(seed_kats, grid, mut, (i-1), multi_cat=True)
             if fit_score < top_kats[-1]:
@@ -131,6 +131,6 @@ def model(seed_kat, vis, grid, specie, mut,t_name):
                 top_kats.append(fit_score)
             avg_kats.append(avg_fitness)
             playback(vis, play,copy.deepcopy(seed_kats),i, specie+1, t_name)
-            print "######################## END: Specie:",specie+1," | Gen:",i, "#######################\n"
+            print "######################## END: Species:",specie+1," | Gen:",i, "#######################\n"
     return copy.deepcopy(list(top_kats))
 

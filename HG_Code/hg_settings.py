@@ -19,20 +19,22 @@ STEP_VALUE = 1
 BERRY_VALUE = 100
 
 # NUMBER OF PURE CLONES WITHIN A GENERATION
-AMT_CLONE = 1
+#having this be 5 will ensure that each of the 5 seed kats is cloned without mutation
+AMT_CLONE = 5
 
 # AMOUNT OF TRIALS TO FIND BEST KAT
 #NUM_OF_TRIALS = 20 # Should be divisible by 5
+#as the top 5 kats will be used to seed the next generation
 NUM_OF_INDIVIDUALS = 25 # Should be divisible by 5
 
 # NUMBER OF GENERATIONS
 #NUM_SIMS = 10 # OLD NAMING SCHEME
-NUM_OF_GENERATIONS = 50
+NUM_OF_GENERATIONS = 100
 
 
 #HOW MANY TIMES THE MODEL WILL RUN IN A ROW
 #SEPERATE_MODELS = 1 #OLD NAMING SCHEME
-NUM_OF_SPECIES = 10
+NUM_OF_SPECIES = 5
 
 
 # MAXIMUM STEPS PER SIMULATION
