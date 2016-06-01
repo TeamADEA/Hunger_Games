@@ -15,3 +15,4 @@ mo.run_model()
 mo.run_model(.02,.1,t_name='Increase Lava')
 mo.run_model(.02,.02,.05,.2,'Increase Berries')
 mo.run_model(.02,.1,.1,.05, 'Lava Up, Berry Down')
+

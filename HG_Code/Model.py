@@ -24,7 +24,6 @@ def run_model(from_lava = .02, to_lava = .02, from_berry = .05, to_berry = .05, 
     progenitor = Kat(0,0)
     grid = hunger_grid()
     vis = Visualizer(grid)
-    
     start_time = time.time()
     lava_chance_array = np.arange(1, NUM_OF_SPECIES+1, dtype='float')
     berry_chance_array = np.arange(1, NUM_OF_SPECIES+1, dtype='float')
@@ -32,15 +31,18 @@ def run_model(from_lava = .02, to_lava = .02, from_berry = .05, to_berry = .05, 
     # SETUP LAVA AND BERRY AMOUNTS
     if(from_lava == to_lava): # NO CHANGE IN LAVA AMOUNTS. SET ALL TO 1 VALUE
         lava_chance_array[:] = from_lava
-    else:  #CHANGE IN LAVA AMOUNT, CALCULATE STEP SIZE OF LAVA
+    #elif(from_lava > to_lava):  #CHANGE IN LAVA AMOUNT, CALCULATE STEP SIZE OF LAVA
+    else:
         inc = (to_lava - from_lava) / NUM_OF_SPECIES
-        lava_chance_array *= inc
-    
+        lava_chance_array = np.arange(from_lava, to_lava, inc)
+    #else:
+    #    inc = (from_lava - to_lava) / NUM_OF_SPECIES
+    #    lava_chance_array = np.arange(
     if(from_berry == to_berry): # NO CHANCE IN BERRY AMOUNTS. SET ALL TO 1 VALUE
         berry_chance_array[:] = from_berry
     else: # CHANGE IN BERRY AMOUNT, CALCULATE STEP SIZE OF BERRY
         inc = (to_berry - from_berry) / NUM_OF_SPECIES
-        berry_chance_array *= inc
+        berry_chance_array = np.arange(from_berry, to_berry, inc)
     
     for i in range(NUM_OF_SPECIES): # MAIN LOOP OF SIMULATION RUNNING
         grid = hunger_grid(lava_chance_array[i], berry_chance_array[i])
