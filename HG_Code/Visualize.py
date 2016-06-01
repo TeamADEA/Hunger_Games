@@ -19,7 +19,7 @@ class Visualizer(object):
         The environment that Kat agent lives in.
     """
     def __init__(self, grid):
-        self.fig = plt.figure(figsize=(12,6))
+        self.fig = plt.figure(1, figsize=(12,6))
         self.ax = self.fig.add_axes((-.25,0,1,1))
         self.info = self.fig.add_axes((0,0,1,1))
         self.img = self.ax.imshow(grid.get_grid(), cmap= HUNGER_COLOR,\
@@ -79,7 +79,7 @@ class Visualizer(object):
         plt.xlabel('Number of generations')
         plt.ylabel('Fitness')
         plt.ylim(0, (np.max(array) + 10))
-        plt.draw()
+        #plt.draw()
         
     def chance_vs_fitness(self, array, p_array, t_name):
         """
@@ -116,7 +116,7 @@ class Visualizer(object):
         #plt.legend()
         plt.xlabel('Simulations')
         plt.ylabel('Percent Chance')  
-        plt.draw()  
+        #plt.draw()  
     
     def ins_graph(self, array, t_name):
         """
@@ -149,4 +149,5 @@ class Visualizer(object):
         #plt.show()
 
     def show_plots(self):
+        plt.close(1)
         plt.show()
