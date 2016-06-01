@@ -27,7 +27,7 @@ class Visualizer(object):
         self.ax.axis('off')
         self.info.axis('off')
 
-    def show(self, grid, kats, gen, specie):
+    def show(self, grid, kats, gen, specie, t_name):
         """
         Show the current Kat and the current grid
         
@@ -38,20 +38,22 @@ class Visualizer(object):
         kats: array containing the winning kats
         gen: the current Kat generation.
         specie: Current specie gen is in
+        t_name: Test Name if running mulitple tests in a row
         """
         self.img.set_data(grid[0])
         genNum = str("Specie " + str(specie) +" | Generation " + str(gen) +\
-                " | Kat " + str(grid[2]+1) + " | Step " + str(grid[3]+1))
-        generation = self.info.text(.5,.95,genNum, fontsize = 18 )
+                " | Kat " + str(grid[2]+1) + " | Step " + str(grid[3]+1) + \
+                "\n" + t_name)
+        generation = self.info.text(.5,.90,genNum, fontsize = 18 )
         ins = str("CURRENT INSTRUCTION SET: " + grid[1])
-        ins_set = self.info.text(.5,.9,ins,  verticalalignment='top',
+        ins_set = self.info.text(.5,.88,ins,  verticalalignment='top',
                     horizontalalignment='left', fontsize = 16)
         plt.draw()
         plt.pause(.01)
         generation.remove()
         ins_set.remove()
 
-    def graph(self, array, p_array):
+    def graph(self, array, p_array, t_name):
         """
         Plot the graph of the highest kat scores over generations and species
         
@@ -60,6 +62,7 @@ class Visualizer(object):
         array : a numpy array containing all the 'Winning' Kat fitness scores
         p_array: a numpy array containing the lava and berry chances that
                 hunger_grid used on map generation
+        t_name: Test Name if running mulitple tests in a row
         """
         plt.figure(figsize=(12,6))
         plt.subplot(121)
@@ -71,15 +74,14 @@ class Visualizer(object):
             plt.plot(array[i], label = legend)
         plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
         title = str('Fitness over ' + str(NUM_OF_SPECIES) + ' Species, and ' +\
-                str(NUM_OF_INDIVIDUALS) + ' Generations')
+                str(NUM_OF_INDIVIDUALS) + ' Generations\n' + t_name )
         plt.title(title)
         plt.xlabel('Number of generations')
         plt.ylabel('Fitness')
         plt.ylim(0, (np.max(array) + 10))
-        plt.show()
-        self.chance_vs_fitness(array, p_array)
+        plt.draw()
         
-    def chance_vs_fitness(self, array, p_array):
+    def chance_vs_fitness(self, array, p_array, t_name):
         """
         Plot 2 bar graphs of avg and max fitness vs lava and berry chance
         
@@ -88,19 +90,22 @@ class Visualizer(object):
         array : a numpy array containing all the 'Winning' Kat fitness scores
         p_array: a numpy array containing the lava and berry chances that
                 hunger_grid used on map generation
+        t_name: Test Name if running mulitple tests in a row
         """
-        plt.figure(3) 
+        plt.figure() 
         plt.subplot(211)
         index = np.arange(NUM_OF_SPECIES)
         max_fitness = np.amax(array, axis = 1)
         avg_fitness = np.average(array, axis = 1)
-        
+        title = str('Avg and Max Fitness over ' + str(NUM_OF_SPECIES) + ' Species, and ' +\
+                str(NUM_OF_INDIVIDUALS) + ' Generations\n' + t_name )        
         width = 0.35       # the width of the bars
         plt.bar(index, max_fitness, width, color='r', \
                     label = 'MAX Fitness')
         plt.bar(index + width, avg_fitness, width, color='y', \
                     label = 'AVG Fitness')
         plt.ylabel('Fitness Score')
+        plt.title(title)
         #plt.legend()
         #plt.legend((max_bar[0], avg_bar[0]), ('Max', 'Avg'))
         plt.subplot(212)
@@ -111,9 +116,9 @@ class Visualizer(object):
         #plt.legend()
         plt.xlabel('Simulations')
         plt.ylabel('Percent Chance')  
-        plt.show()  
+        plt.draw()  
     
-    def ins_graph(self, array):
+    def ins_graph(self, array, t_name):
         """
         Plot the graph of the average types of instructions winning Kats had
         
@@ -121,12 +126,13 @@ class Visualizer(object):
         ----------
         array : 2d array containing the number of instructions a Kat had and a
                 breakdown of the percentage of each instruction type
+        t_name: Test Name if running mulitple tests in a row
         """
-        plt.figure(1)
+        plt.figure()
         
         plt.subplot(211)
         title = str('AVG: # Of Instructions VS % Of Instruction Types FOR [' + \
-                str(NUM_OF_GENERATIONS) + '] GENERATIONS')
+                str(NUM_OF_GENERATIONS) + '] GENERATIONS\n'+ t_name)
         plt.title(title)
         plt.ylabel('# Of Instructions')
         plt.ylim(0, np.max(array[:,5])+1)
@@ -140,4 +146,7 @@ class Visualizer(object):
         plt.plot(array[:,2], color=BERRY_COLOR)
         plt.plot(array[:,3], color=KATS_KOLOR)
         plt.plot(array[:,3], color=WALL_COLOR)
+        #plt.show()
+
+    def show_plots(self):
         plt.show()
