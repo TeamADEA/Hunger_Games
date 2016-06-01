@@ -5,6 +5,7 @@ import Mutate as m
 from Kat import Kat
 from Visualize import Visualizer
 from hg_settings import *
+import time
 
 
 GRID_DIMENSION = 34
@@ -176,3 +177,4 @@ class sim_manager(object):
         """
         tk = self.top_kats()
         return tk[0].report_ins()
+

@@ -90,21 +90,20 @@ class Kat(object):
         """
         for instruction_set in [self.instruction_set_3, self.instruction_set_2, self.instruction_set_1]:
             for instruction in instruction_set:
-                breaker = False
+                #print("heheh")
                 for mirror in instruction:
+                    #print(mirror)
                     for plc_state in mirror[0]:
                         if not self.place_is_state(grid, plc_state):
-                            breaker = True
-                            break
-                    if breaker == False:
-                        if self.is_valid_move(grid, mirror[1]):
-                            #print mirror[0]
-                            return mirror[1] # Return its decision
-                        else:
-                            np.random.shuffle(instruction) # Shuffle mirror
-                            #temp = instruction.pop(0)#new method for shuffling
-                            #instruction.append(temp)
-                            break
+                            if self.is_valid_move(grid, mirror[1]):
+                                #print mirror[0]
+                                return mirror[1] # Return its decision
+                            else:
+                                np.random.shuffle(instruction) # Shuffle mirror
+                                #temp = instruction.pop(0)#new method for shuffling
+                                #instruction.append(temp)
+                                return DO_NOTHING
+                            
         #return self.generate_behavior(grid)
         return DO_NOTHING
 

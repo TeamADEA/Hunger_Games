@@ -20,26 +20,25 @@ tki_breakdown = np.zeros(NUM_OF_GENERATIONS*6).reshape(NUM_OF_GENERATIONS, 6)
 full_graph = np.zeros(NUM_OF_SPECIES*NUM_OF_GENERATIONS).reshape(NUM_OF_SPECIES, NUM_OF_GENERATIONS)
 full_graph_bk = np.zeros(NUM_OF_SPECIES*2).reshape(NUM_OF_SPECIES, 2)
 
-def run_model(from_lava = .02, to_lava = .02, from_berry = .05, to_berry = .05, t_name = 'Default'):
+def run_model(from_lava = .02, to_lava = .02, from_berry = .05, to_berry = .05, from_mut=10, to_mut=10, t_name = 'Default'):
     progenitor = Kat(0,0)
     grid = hunger_grid()
     vis = Visualizer(grid)
     start_time = time.time()
-    lava_chance_array = np.arange(1, NUM_OF_SPECIES+1, dtype='float')
-    berry_chance_array = np.arange(1, NUM_OF_SPECIES+1, dtype='float')
     
-    # SETUP LAVA AND BERRY AMOUNTS
-    if(from_lava == to_lava): # NO CHANGE IN LAVA AMOUNTS. SET ALL TO 1 VALUE
-        lava_chance_array[:] = from_lava
-    else: #CHANGE IN LAVA AMOUNT, CALCULATE STEP SIZE OF LAVA
-        inc = (to_lava - from_lava) / NUM_OF_SPECIES
-        lava_chance_array = np.arange(from_lava, to_lava, inc)
-    if(from_berry == to_berry): # NO CHANCE IN BERRY AMOUNTS. SET ALL TO 1 VALUE
-        berry_chance_array[:] = from_berry
-    else: # CHANGE IN BERRY AMOUNT, CALCULATE STEP SIZE OF BERRY
-        inc = (to_berry - from_berry) / NUM_OF_SPECIES
-        berry_chance_array = np.arange(from_berry, to_berry, inc)
+    def calc_steps(from_num, to_num):
+        array = np.arange(1, NUM_OF_SPECIES+1, dtype='float')
+        if(from_num == to_num):
+            array[:] = from_num
+        else:
+            inc = (to_num - from_num) / NUM_OF_SPECIES
+            array = np.arange(from_num, to_num, inc)
+        return copy.deepcopy(array)
     
+    lava_chance_array = calc_steps(from_lava, to_lava) 
+    berry_chance_array = calc_steps(from_berry, to_berry)
+    mutate_chance_array = calc_steps(from_mut, to_mut)
+    print "FLIP_CHANCE: ", FLIP_CHANCE
     for i in range(NUM_OF_SPECIES): # MAIN LOOP OF SIMULATION RUNNING
         grid = hunger_grid(lava_chance_array[i], berry_chance_array[i])
         full_graph[i] = model(progenitor, vis, grid, i, t_name)
@@ -49,7 +48,7 @@ def run_model(from_lava = .02, to_lava = .02, from_berry = .05, to_berry = .05, 
     tki_breakdown[:] /= NUM_OF_SPECIES
     vis.graph(full_graph, full_graph_bk, t_name)
     vis.ins_graph(tki_breakdown, t_name)
-    vis.chance_vs_fitness(full_graph, full_graph_bk, t_name)
+    vis.chance_vs_fitness(full_graph, full_graph_bk, mutate_chance_array,t_name)
     print("--- %s MODEL COMPLETE ---" % (t_name))
     print("--- TIME TO COMPLETE MODEL: %s seconds ---" % (time.time() - start_time))
     vis.show_plots()
@@ -128,5 +127,4 @@ def model(seed_kat, vis, grid, specie, t_name):
             playback(vis, play,copy.deepcopy(seed_kats),i, specie+1, t_name)
             print "######################## END: Specie:",specie+1," | Gen:",i, "#######################\n"
     return copy.deepcopy(list(top_kats))
-
 

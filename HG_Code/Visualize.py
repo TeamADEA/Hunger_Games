@@ -74,14 +74,14 @@ class Visualizer(object):
             plt.plot(array[i], label = legend)
         plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
         title = str('Fitness over ' + str(NUM_OF_SPECIES) + ' Species, and ' +\
-                str(NUM_OF_INDIVIDUALS) + ' Generations\n' + t_name )
+                str(NUM_OF_GENERATIONS) + ' Generations\n' + t_name )
         plt.title(title)
         plt.xlabel('Number of generations')
         plt.ylabel('Fitness')
         plt.ylim(0, (np.max(array) + 10))
         #plt.draw()
         
-    def chance_vs_fitness(self, array, p_array, t_name):
+    def chance_vs_fitness(self, array, p_array, m_array, t_name):
         """
         Plot 2 bar graphs of avg and max fitness vs lava and berry chance
         
@@ -93,7 +93,7 @@ class Visualizer(object):
         t_name: Test Name if running mulitple tests in a row
         """
         plt.figure() 
-        plt.subplot(211)
+        plt.subplot(311)
         index = np.arange(NUM_OF_SPECIES)
         max_fitness = np.amax(array, axis = 1)
         avg_fitness = np.average(array, axis = 1)
@@ -108,15 +108,23 @@ class Visualizer(object):
         plt.title(title)
         #plt.legend()
         #plt.legend((max_bar[0], avg_bar[0]), ('Max', 'Avg'))
-        plt.subplot(212)
+        plt.subplot(312)
         lava_array = p_array[:,0]
         berry_array = p_array[:,1]
         plt.bar(index, lava_array, width, color = LAVA_COLOR, label='Lava Chance')
         plt.bar(index+width, berry_array, width, color = BERRY_COLOR, label='Berry Chance')
         #plt.legend()
         plt.xlabel('Simulations')
-        plt.ylabel('Percent Chance')  
-        #plt.draw()  
+        plt.ylabel('Percent Chance')
+        plt.subplot(313)
+        lava_array = p_array[:,0]
+        berry_array = p_array[:,1]
+        plt.bar(index, m_array, width, color = LAVA_COLOR, label='Lime')
+        #plt.bar(index+width, berry_array, width, color = BERRY_COLOR, label='Berry Chance')
+        #plt.legend()
+        plt.xlabel('Simulations')
+        plt.ylabel('Percent Chance')    
+
     
     def ins_graph(self, array, t_name):
         """

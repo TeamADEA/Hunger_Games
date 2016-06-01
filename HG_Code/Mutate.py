@@ -18,6 +18,8 @@ def mutate_kat(kat):
         shuffle_instructions(kat, SHUFFLE_CHANCE)
         shift_instructions(kat, SHIFT_CHANCE)
         delete_behavior(kat.instruction_set_1, DELETE_CHANCE_EXP)
+    else:
+        generate_behavior(kat, 100)
 
 def change_state(kat, chance_per_instruction, instruction_1_size):
     """Mutate function that will randomly reasign the state of the given number
