@@ -21,6 +21,10 @@ STEPS_PER_SIM =300
 STEP_VALUE = 1
 BERRY_VALUE = 100
 
+# FIXED MAP FEATURES
+WALLS_OF_DEATH  = False  # Walls are lava
+WALL_PILLARS    = False  # Wall tiles periodically jut out
+
 """
 Variables below this point should not be changed as they are integral to the 
 functioning of the program
@@ -52,8 +56,4 @@ TILE_STRING = ["[GRASS]","[LAVA]","[BERRY]","[KAT]","[WALL]"]
 # KAT'S VISION RANGE
 VISION_RANGE = 1
 
-# FIXED MAP FEATURES
-WALLS_OF_DEATH  = False  # Walls are lava
-WALL_PILLARS    = False  # Wall tiles periodically jut out
-MAZE            = False
 
