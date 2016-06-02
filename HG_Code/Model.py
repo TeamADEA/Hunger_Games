@@ -45,8 +45,9 @@ def run_model(from_lava = .02, to_lava = .02, from_berry = .05, to_berry = .05\
     generate_chance_array = calc_steps(from_gen, to_gen)
     
     #open output file
+    file_name = t_name + '.txt'
     __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
-    out_file = open(os.path.join(__location__,t_name), 'a')
+    out_file = open(os.path.join(__location__,file_name), 'a')
     
     print "\n", generate_chance_array
     print mutate_chance_array
@@ -111,7 +112,7 @@ def playback(vis, pb, best_kats, gen, specie, t_name):
     if (STEP_SIZE == -1):
         return
     if (STEP_SIZE == 0):
-        vis.show(pb[-1], best_kats, gen)
+        vis.show(pb[-1], best_kats, gen, specie, t_name)
     else:
         for i in np.arange(0,len(pb), STEP_SIZE):
             vis.show(pb[i], copy.deepcopy(best_kats), gen, specie, t_name)
