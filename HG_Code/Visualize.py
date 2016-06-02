@@ -114,14 +114,15 @@ class Visualizer(object):
                     label = 'AVG Fitness')
         plt.ylabel('Fitness Score')
         plt.title(title)
-        #plt.legend()
-        #plt.legend((max_bar[0], avg_bar[0]), ('Max', 'Avg'))
+        if DISPLAY_LEGENDS:
+            plt.legend()
         plt.subplot(312)
         lava_array = p_array[:,0]
         berry_array = p_array[:,1]
         plt.bar(index, lava_array, width, color = LAVA_COLOR, label='Lava Chance')
         plt.bar(index+width, berry_array, width, color = BERRY_COLOR, label='Berry Chance')
-        #plt.legend()
+        if DISPLAY_LEGENDS:
+            plt.legend()
         plt.xlabel('Simulations')
         plt.ylabel('Percent Chance')
         plt.subplot(313)
@@ -129,7 +130,8 @@ class Visualizer(object):
         print len(m_array)
         plt.bar(index+width, (g_array/100), width, color = '#551A8B', label = "Generate Probability")
         print len(g_array)
-        #plt.legend()
+        if DISPLAY_LEGENDS:
+            plt.legend()
         plt.xlabel('Simulations')
         plt.ylabel('Percent Chance')
         saveFile =  str(os.path.dirname(os.path.realpath(__file__)) + \
@@ -161,11 +163,13 @@ class Visualizer(object):
         plt.subplot(212)
         plt.xlabel('Number of generations')
         plt.ylabel('% Of Instrucitions')
-        plt.plot(array[:,0], color=GRASS_COLOR)
-        plt.plot(array[:,1], color=LAVA_COLOR )
-        plt.plot(array[:,2], color=BERRY_COLOR)
-        plt.plot(array[:,3], color=KATS_KOLOR)
-        plt.plot(array[:,3], color=WALL_COLOR)
+        plt.plot(array[:,0], color=GRASS_COLOR, label = 'AVG Grass Instructions')
+        plt.plot(array[:,1], color=LAVA_COLOR, label = 'AVG Lava Instructions' )
+        plt.plot(array[:,2], color=BERRY_COLOR, label = 'AVG Berry Instructions')
+        plt.plot(array[:,3], color=KATS_KOLOR, label = 'AVG Kats Instructions')
+        plt.plot(array[:,4], color=WALL_COLOR, label = 'AVG Wall Instructions')
+        if DISPLAY_LEGENDS:
+            plt.legend()
         saveFile = str(os.path.dirname(os.path.realpath(__file__)) + \
                 '\\Graph_Output\\'  + t_name + ' - instruction graph.png')
         plt.savefig(saveFile)    
