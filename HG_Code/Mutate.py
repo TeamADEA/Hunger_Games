@@ -205,6 +205,7 @@ def generate_behavior(kat, chance):
     """
     if MUTATE_DEBUG:
         print"CHANCE: ", chance
+
   	
     if(np.random.randint(0,100) <= chance):
         yGrab, xGrab = 0, 0
@@ -217,17 +218,19 @@ def generate_behavior(kat, chance):
                             [[( xGrab, -yGrab, state)],(init_decision+1)%4,1],\
                             [[(-yGrab, -xGrab, state)],(init_decision+2)%4,2],\
                             [[(-xGrab,  yGrab, state)],(init_decision+3)%4,3]]
-        kat.instruction_set_1.insert(0,new_instruction)
+        position = np.random.randint(0,2)
+        if(len(kat.instruction_set_1) > 0):
+            kat.instruction_set_1.insert(position,new_instruction)
+        else:
+            kat.instruction_set_1.insert(0,new_instruction)
     
 def delete_behavior(i_set, chance_exponent):
-    """
-    chance_per_instruction = 5 for 5% chance
-    i_set = instruction set of a kat
-    
+    """    
     this function iterates through each instruction in the set
-    and will randomly delete instructions based on the chance given.
+    and will randomly delete instructions.
+    Chance starts at 1% for the first instruction, and increases exponentially
     """
-    chance = 2
+    chance = 1
     i = 0
     while(i < len(i_set)):
         if(np.random.randint(0,100) <= chance):
