@@ -94,8 +94,8 @@ def one_sim(seed_kat, grid, mut ,gen, out_file, multi_cat=False):
 
     #file output
     for k in top_kats:
-        out_file.write("Fittness: ")
-        out_file.write(str(k.calculate_fitness))
+        out_file.write("\nFittness: ")
+        out_file.write(str(k.calculate_fitness()))
         out_file.write(k.print_ins_1(False))
     
     for kat in top_kats:
