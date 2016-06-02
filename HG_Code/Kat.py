@@ -155,8 +155,9 @@ class Kat(object):
         for i in range(len(self.instruction_set_1)):
             rel_coord = str((self.instruction_set_1[i][0][0][0][0],self.instruction_set_1[i][0][0][0][1]))
             tile_state = TILE_STRING[self.instruction_set_1[i][0][0][0][2]]
+            IS_chunk = [str((self.instruction_set_1[i][0][0][k][0],self.instruction_set_1[i][0][0][k][1]))+" IS "+TILE_STRING[self.instruction_set_1[i][0][0][k][2]] for k in xrange(len(self.instruction_set_1[i][0][0]))]
             move_string = MOVE_STRING[self.instruction_set_1[i][0][1]]
-            ins_string = "%s.) IF %s IS %s %s" % (str(i), rel_coord, tile_state, move_string)
+            ins_string = "%s.) IF %s %s" % (str(i), IS_chunk, move_string)
             if PRINT:
                 print (ins_string)
             full_report += ins_string + "\n"

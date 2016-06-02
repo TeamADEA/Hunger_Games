@@ -32,6 +32,7 @@ def mutate_kat(kat, mutate_chance):
         flip(kat, FLIP_CHANCE, inst_size)
         shuffle_instructions(kat, SHUFFLE_CHANCE)
         shift_instructions(kat, SHIFT_CHANCE)
+        create_compound(kat, COMPOUND_CHANCE,inst_size)
         delete_behavior(kat.instruction_set_1, DELETE_CHANCE_EXP)
     else:
         generate_behavior(kat, 100)
@@ -117,6 +118,8 @@ def create_compound(kat, num_mutate, instruction_1_size):
     Combination of two lower tier instruction into one higher level
     instruction.
     """
+    if instruction_1_size < 2:
+        return
     while True:
         temp_instr = np.random.randint(0, high=instruction_1_size, size=2)
         if temp_instr[0] != temp_instr[1]:
@@ -130,7 +133,7 @@ def create_compound(kat, num_mutate, instruction_1_size):
                        [[temp_instr_1[2][0][0],temp_instr_2[2][0][0]],temp_instr_1[2][1],2],\
                        [[temp_instr_1[3][0][0],temp_instr_2[3][0][0]],temp_instr_1[3][1],3]]
     #print new_instruction
-    kat.instruction_set_2.append(new_instruction)
+    kat.instruction_set_1.insert(random.randint(0,instruction_1_size//2),new_instruction)
 
 #def shuffle_instructions(kat):
 #    """Shuffle instructions in each set.

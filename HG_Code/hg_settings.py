@@ -2,7 +2,7 @@
 The variables below can be changed to manipulate the simulations
 """
 # DISPLAY THE GRAPHS OR NOT
-DISPLAY_GRAPHS = False
+DISPLAY_GRAPHS = True
 DISPLAY_LEGENDS = False
 
 #number of kats in each generation
@@ -27,7 +27,7 @@ BERRY_VALUE = 100
 
 # FIXED MAP FEATURES
 WALLS_OF_DEATH  = False  # Walls are lava
-WALL_PILLARS    = False  # Wall tiles periodically jut out
+WALL_PILLARS    = True  # Wall tiles periodically jut out
 
 """
 Variables below this point should not be changed as they are integral to the 
@@ -57,6 +57,6 @@ WALL  = 4
 TILE_STRING = ["[GRASS]","[LAVA]","[BERRY]","[KAT]","[WALL]"]
 
 # KAT'S VISION RANGE
-VISION_RANGE = 1
+VISION_RANGE = 2
 
 

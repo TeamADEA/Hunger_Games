@@ -11,7 +11,7 @@ import os
 
 
 
-STEP_SIZE = -1 # 0 = only last frame,
+STEP_SIZE = 10 # 0 = only last frame,
                 # 1 = every frame,
                 # N = every N frames
                 # -1 = don't show
