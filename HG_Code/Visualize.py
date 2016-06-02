@@ -1,7 +1,9 @@
 import matplotlib.pyplot as plt
 import matplotlib.colors as col
 import numpy as np
+import os 
 from hg_settings import *
+
 LAVA_COLOR    = '#FF6600'
 GRASS_COLOR   = '#A5D414'
 BERRY_COLOR   = '#7722FF'
@@ -64,7 +66,8 @@ class Visualizer(object):
                 hunger_grid used on map generation
         t_name: Test Name if running mulitple tests in a row
         """
-        plt.figure(figsize=(12,6))
+        fig_title = t_name + " Fitness over time"
+        plt.figure(fig_title, figsize=(14,6))
         plt.subplot(121)
         for i in range(NUM_OF_SPECIES): 
             legend = str("Specie " + str(i) + ": Lava = " + \
@@ -79,7 +82,9 @@ class Visualizer(object):
         plt.xlabel('Number of generations')
         plt.ylabel('Fitness')
         plt.ylim(0, (np.max(array) + 10))
-        #plt.draw()
+        saveFile = str(os.path.dirname(os.path.realpath(__file__)) +\
+                '\\Graph_Output\\'  +  t_name + ' - Fitness over time.png')
+        plt.savefig(saveFile)    
         
     def chance_vs_fitness(self, array, p_array, m_array, g_array,t_name):
         """
@@ -94,13 +99,14 @@ class Visualizer(object):
         m_array: array containing chance of certain mutations occuring
         g_array: array containing chance of generate behaviors occuring
         """
-        plt.figure() 
+        fig_title = t_name + " Chance vs Fitness"
+        plt.figure(fig_title) 
         plt.subplot(311)
         index = np.arange(NUM_OF_SPECIES)
         max_fitness = np.amax(array, axis = 1)
         avg_fitness = np.average(array, axis = 1)
         title = str('Avg and Max Fitness over ' + str(NUM_OF_SPECIES) + ' Species, and ' +\
-                str(NUM_OF_INDIVIDUALS) + ' Generations\n' + t_name )        
+                str(NUM_OF_GENERATIONS) + ' Generations\n' + t_name )        
         width = 0.35       # the width of the bars
         plt.bar(index, max_fitness, width, color='r', \
                     label = 'MAX Fitness')
@@ -125,7 +131,10 @@ class Visualizer(object):
         print len(g_array)
         #plt.legend()
         plt.xlabel('Simulations')
-        plt.ylabel('Percent Chance')    
+        plt.ylabel('Percent Chance')
+        saveFile =  str(os.path.dirname(os.path.realpath(__file__)) + \
+                '\\Graph_Output\\'  + t_name + ' - chance vs fitness.png')
+        plt.savefig(saveFile)    
 
     
     def ins_graph(self, array, t_name):
@@ -138,7 +147,8 @@ class Visualizer(object):
                 breakdown of the percentage of each instruction type
         t_name: Test Name if running mulitple tests in a row
         """
-        plt.figure()
+        fig_title = t_name + " Avg Instructions"
+        plt.figure(fig_title)
         
         plt.subplot(211)
         title = str('AVG: # Of Instructions VS % Of Instruction Types FOR [' + \
@@ -156,8 +166,13 @@ class Visualizer(object):
         plt.plot(array[:,2], color=BERRY_COLOR)
         plt.plot(array[:,3], color=KATS_KOLOR)
         plt.plot(array[:,3], color=WALL_COLOR)
-        #plt.show()
+        saveFile = str(os.path.dirname(os.path.realpath(__file__)) + \
+                '\\Graph_Output\\'  + t_name + ' - instruction graph.png')
+        plt.savefig(saveFile)    
 
     def show_plots(self):
         plt.close(1)
-        plt.show()
+        if (DISPLAY_GRAPHS):
+            plt.show()
+        else:
+            plt.close()

@@ -203,7 +203,8 @@ def generate_behavior(kat, chance):
     Generate a new behavior
 	Unlike the generate_behavior method in Kat, the state is randomly chosen.
     """
-    print"CHANCE: ", chance
+    if MUTATE_DEBUG:
+        print"CHANCE: ", chance
   	
     if(np.random.randint(0,100) <= chance):
         yGrab, xGrab = 0, 0
@@ -231,8 +232,6 @@ def delete_behavior(i_set, chance_exponent):
     while(i < len(i_set)):
         if(np.random.randint(0,100) <= chance):
             i_set.pop(i)
-            if MUTATE_DEBUG:
-                print (chance),i
             return
         else:
             chance *= chance_exponent

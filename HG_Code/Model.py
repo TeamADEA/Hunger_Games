@@ -21,7 +21,10 @@ full_graph = np.zeros(NUM_OF_SPECIES*NUM_OF_GENERATIONS).reshape(NUM_OF_SPECIES,
 full_graph_bk = np.zeros(NUM_OF_SPECIES*2).reshape(NUM_OF_SPECIES, 2)
 
 def run_model(from_lava = .02, to_lava = .02, from_berry = .05, to_berry = .05\
-                , from_mut=10, to_mut=10, from_gen = 33, to_gen = 33,t_name = 'Default'):
+                , from_mut=10, to_mut=10, from_gen = 33, to_gen = 33, \
+                t_name = 'Default', frames = -1):
+    global STEP_SIZE
+    STEP_SIZE = frames
     progenitor = Kat(0,0)
     grid = hunger_grid()
     vis = Visualizer(grid)
