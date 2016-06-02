@@ -13,10 +13,10 @@ unitTest.run_test()
 #mo.run_model(from_lava = .02, to_lava = .02, from_berry = .05, to_berry = .05,\
 #            from_mut=10, to_mut=10, from_gen = 33, to_gen = 33,t_name = 'Default')
 mo.run_model(.00,.00,.1,.1, 10, 10, 33, 33, "No Lava")
-mo.run_model(.1,.1,0.0,0.0, 10, 10, 33, 33, "No Berries")
-mo.run_model(.1,.1,.1,.1,10,10,33,33,"Lava & Berries")
+#mo.run_model(.1,.1,0.0,0.0, 10, 10, 33, 33, "No Berries")
+#mo.run_model(.1,.1,.1,.1,10,10,33,33,"Lava & Berries")
 
-#mo.run_model() #Default
+mo.run_model() #Default
 #mo.run_model(.02,.02,.05,.05, 10, 10, 80, 110, 'Generate Behavior Only')
 
 
