@@ -101,9 +101,9 @@ class Kat(object):
                                 instruction.insert(0, temp_mirror)
                                 return instruction[i][1] # Return its decision
                             else:
-                                np.random.shuffle(instruction) # Shuffle mirror
-                                #temp = instruction.pop(0)#new method for shuffling
-                                #instruction.append(temp)
+                                #np.random.shuffle(instruction) # Shuffle mirror
+                                temp = instruction.pop(0)#new method for shuffling
+                                instruction.append(temp)
                                 return DO_NOTHING
                             
         #return self.generate_behavior(grid)
