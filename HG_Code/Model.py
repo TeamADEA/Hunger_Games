@@ -30,21 +30,25 @@ def run_model(from_lava = .02, to_lava = .02, from_berry = .05, to_berry = .05\
     vis = Visualizer(grid)
     start_time = time.time()
     
+    # Calculate the seed settings for each specie. This is used to run multiple
+    # species in a row without needing to manually set it 
     def calc_steps(from_num, to_num):
         array = np.arange(1, NUM_OF_SPECIES+1, dtype='float')
-        if(from_num == to_num):
+        if(from_num == to_num): # If values match. fill with only 1 value
             array[:] = from_num
         else:
+            # fill with incemental steps
             inc = (float(to_num) - from_num) / float(NUM_OF_SPECIES)
             array = np.arange(from_num, to_num, inc, dtype='float')
         return copy.deepcopy(array)
     
+    #Fill arrays for each specie, these array determine % of land for each specie
     lava_chance_array = calc_steps(from_lava, to_lava) 
     berry_chance_array = calc_steps(from_berry, to_berry)
     mutate_chance_array = calc_steps(from_mut, to_mut)
     generate_chance_array = calc_steps(from_gen, to_gen)
     
-    #open output file
+    #open output file, file will be named after the test given name.
     file_name = t_name + '.txt'
     __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
     out_file = open(os.path.join(__location__,file_name), 'a')
@@ -60,6 +64,7 @@ def run_model(from_lava = .02, to_lava = .02, from_berry = .05, to_berry = .05\
     
     #close output file
     out_file.close()
+    
     # DISPLAY VARIOUS GRAPHS AND PLOTS
     tki_breakdown[:] /= NUM_OF_SPECIES
     vis.graph(full_graph, full_graph_bk, t_name)
@@ -98,7 +103,7 @@ def one_sim(seed_kat, grid, mut ,gen, out_file, multi_cat=False):
 
     #file output
     for k in top_kats:
-        out_file.write("\nFittness: ")
+        out_file.write("\nFitness: ")
         out_file.write(str(k.calculate_fitness()))
         out_file.write(k.print_ins_1(False))
     
@@ -129,7 +134,7 @@ def model(seed_kat, vis, grid, specie, mut,t_name, out_file):
     """
     top_kats = []
     avg_kats = []
-    print "Species:",specie," | Gen: 1"
+    print "Species:",specie,"| Gen: 1"
     seed_kat, fit_score, play, avg_fitness, seed_kats = one_sim(seed_kat, grid, mut, 0,out_file)
     top_kats.append(fit_score)
     avg_kats.append(avg_fitness)
@@ -152,7 +157,8 @@ def model(seed_kat, vis, grid, specie, mut,t_name, out_file):
             out_file.write("###########")
             
             print "\nMODEL NAME: %s" % (t_name)
-            print "\n######################## START: Species:",specie+1," | Gen:",i, "#####################"
+            print "\n############### START: Species:",specie+1," OF ", NUM_OF_SPECIES ," | Gen:",i, "#######################\n"
+            
             temp_top = seed_kats
             seed_kat, fit_score, play, avg_fitness, seed_kats = one_sim(seed_kats, grid, mut, (i-1),out_file, multi_cat=True)
             if fit_score < top_kats[-1]:
@@ -162,11 +168,14 @@ def model(seed_kat, vis, grid, specie, mut,t_name, out_file):
                 top_kats.append(fit_score)
             avg_kats.append(avg_fitness)
             playback(vis, play,copy.deepcopy(seed_kats),i, specie+1, t_name)
-            print "######################## END: Species:",specie+1," | Gen:",i, "#######################\n"
+
+            print "\n############### END: Species:",specie+1," OF ", NUM_OF_SPECIES ," | Gen:",i, "#######################\n"
             
             #file output
             out_file.write("######### END: Species:")
             out_file.write(str(specie+1))
+            out_file.write(" OF ")
+            out_file.write(str(NUM_OF_SPECIES))
             out_file.write(" | Gen:")
             out_file.write(str(i))
             out_file.write("###########\n")

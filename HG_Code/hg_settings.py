@@ -12,14 +12,14 @@ NUM_OF_INDIVIDUALS = 25 # Should be divisible by 5
 
 # NUMBER OF GENERATIONS
 #NUM_SIMS = 10 # OLD NAMING SCHEME
-NUM_OF_GENERATIONS = 100
+NUM_OF_GENERATIONS = 50
 
 #HOW MANY TIMES THE MODEL WILL RUN IN A ROW
 #SEPERATE_MODELS = 1 #OLD NAMING SCHEME
-NUM_OF_SPECIES = 10
+NUM_OF_SPECIES = 5
 
 # MAXIMUM STEPS PER SIMULATION
-STEPS_PER_SIM =300
+STEPS_PER_SIM = 150
 
 #FITNESS VALUES
 STEP_VALUE = 1
@@ -27,7 +27,7 @@ BERRY_VALUE = 100
 
 # FIXED MAP FEATURES
 WALLS_OF_DEATH  = False  # Walls are lava
-WALL_PILLARS    = True  # Wall tiles periodically jut out
+WALL_PILLARS    = False  # Wall tiles periodically jut out
 
 """
 Variables below this point should not be changed as they are integral to the 
